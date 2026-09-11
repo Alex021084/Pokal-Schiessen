@@ -1,67 +1,26 @@
 <!doctype html>
-<html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Pokalschießen</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pokalschießen</title><link rel="stylesheet" href="style.css"></head>
 <body>
-  <header>
-    <h1>🎯 Pokalschießen</h1>
-    <p>Schießzettel erstellen</p>
-  </header>
-
-  <main class="app">
-    <section class="card form-card">
-      <h2>Neuen Scheibensatz erstellen</h2>
-
-      <label>Verein
-        <input id="verein" type="text" placeholder="z. B. Badenstedt">
-      </label>
-
-      <div class="grid two">
-        <label>Mannschaft
-          <select id="mannschaft">
-            <option>Herren</option>
-            <option>Damen</option>
-          </select>
-        </label>
-
-        <label>Schießart
-          <select id="schiessart">
-            <option>Sandsack</option>
-            <option>Nagel</option>
-          </select>
-        </label>
-      </div>
-
-      <label>Telefon
-        <input id="telefon" type="tel" inputmode="tel" placeholder="z. B. 042859249848">
-      </label>
-
-      <div class="grid two">
-        <label>Nummer der ersten Scheibe
-          <input id="startnummer" type="number" inputmode="numeric" value="21346" min="1">
-        </label>
-
-        <label>Anzahl Scheibensätze
-          <input id="anzahl" type="number" inputmode="numeric" value="1" min="1" max="44">
-        </label>
-      </div>
-
-      <button id="previewBtn" class="primary">Vorschau erstellen</button>
-    </section>
-
-    <section class="card preview-card">
-      <div class="preview-actions">
-        <h2>Vorschau</h2>
-        <button id="printBtn" class="secondary">🖨️ Drucken</button>
-      </div>
-      <div id="printArea"></div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<header><h1>🎯 Pokalschießen</h1><p>Schießzettel erstellen</p></header>
+<main>
+<section class="card">
+<h2>Neue Mannschaft</h2>
+<label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label>
+<div class="grid">
+<label>Mannschaft<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label>
+<label>Telefon<input id="telefon" type="tel" inputmode="tel"></label>
+</div>
+<div class="sets">
+<h3>Satz 1</h3>
+<div class="set"><label>Schießart<select id="art1"><option>Sandsack</option><option>Nagel</option></select></label>
+<label>Erste Scheibennummer<input id="start1" type="number" inputmode="numeric" value="21346"></label></div>
+<h3>Satz 2</h3>
+<div class="set"><label>Schießart<select id="art2"><option>Nagel</option><option>Sandsack</option></select></label>
+<label>Erste Scheibennummer<input id="start2" type="number" inputmode="numeric" value="21350"></label></div>
+<p class="hint">Die Nummern werden innerhalb jedes Satzes automatisch fortlaufend vergeben: 3 Schützenscheiben + 1 Teilerscheibe.</p>
+</div>
+<button id="make">Vorschau erstellen</button>
+</section>
+<section class="card"><div class="actions"><h2>Vorschau</h2><button id="print">🖨️ Drucken</button></div><div id="out"></div></section>
+</main><script src="script.js"></script></body></html>

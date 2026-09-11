@@ -1,19 +1,14 @@
-# Pokal-Schiessen-App
+# Pokal-Schiessen-App v4
 
-Erste Version der Webapp für das Pokalschießen.
+Für iPhone und iPad.
 
-## Funktionen
-- Verein
-- Herren/Damen
-- Telefon
-- Sandsack/Nagel
-- Start-Scheibennummer
-- Anzahl Scheibensätze
-- Automatische fortlaufende Nummerierung:
-  - Schütze 1
-  - Schütze 2
-  - Schütze 3
-  - Teiler
-- Druck als A4-Hochformat
+Eine Mannschaft kauft genau zwei Scheibensätze. Für jeden Satz wird **die erste Scheibennummer separat eingegeben**. Die Nummerierung beginnt in jedem Satz neu und läuft nur innerhalb dieses Satzes weiter:
 
-Die App ist für die Nutzung auf einem iPad/iOS-Tablet optimiert und funktioniert auch am PC.
+- Schütze 1 = Startnummer
+- Schütze 2 = Startnummer + 1
+- Schütze 3 = Startnummer + 2
+- Teilerscheibe = Startnummer + 3
+
+Satz 1 und Satz 2 können unabhängig als Sandsack oder Nagel gewählt werden.
+
+Das Teilergebnis und die Schussergebnisse werden handschriftlich eingetragen.
