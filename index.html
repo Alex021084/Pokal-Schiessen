@@ -18,7 +18,7 @@ input,select{width:100%;min-height:48px;margin-top:7px;padding:10px 12px;border:
 .sets h3{margin:8px 0 2px}
 button{min-height:50px;border:0;border-radius:11px;padding:0 18px;font-size:17px;font-weight:700;background:#438f46;color:#fff}
 #make{width:100%;margin-top:14px}
-.hidden{display:none}
+.hidden{display:none!important}
 .preview-modal{position:fixed;inset:0;background:#000b;z-index:20;display:flex;flex-direction:column}
 .preview-toolbar{background:#1d1f22;color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .preview-actions{display:flex;gap:8px}
@@ -68,7 +68,7 @@ button{min-height:50px;border:0;border-radius:11px;padding:0 18px;font-size:17px
 </section>
 </main>
 
-<div id="previewModal" class="preview-modal hidden">
+<div id="previewModal" class="preview-modal hidden" aria-hidden="true">
 <div class="preview-toolbar"><strong>Pokalschießen – Vorschau</strong>
 <div class="preview-actions"><button id="print">🖨️ Drucken</button><button id="close" class="close-btn">Schließen</button></div>
 </div>
@@ -134,10 +134,11 @@ function render(){
  o+='</article>';
  $('out').innerHTML=o;
  $('previewModal').classList.remove('hidden');
+ $('previewModal').setAttribute('aria-hidden','false');
  document.body.style.overflow='hidden';
 }
 $('make').addEventListener('click',render);
-$('close').addEventListener('click',()=>{ $('previewModal').classList.add('hidden'); document.body.style.overflow=''; });
+$('close').addEventListener('click',()=>{ $('previewModal').classList.add('hidden'); $('previewModal').setAttribute('aria-hidden','true'); document.body.style.overflow=''; });
 $('print').addEventListener('click',()=>window.print());
 </script>
 </body>
