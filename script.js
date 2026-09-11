@@ -1,7 +1,81 @@
-const $=id=>document.getElementById(id);
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function toggleStart(selectId,wrapId){$(selectId).addEventListener("change",()=>{$(wrapId).classList.toggle("hidden",!$(selectId).value);if($(selectId).value)$(wrapId.replace("Wrap","")).focus()})}
-toggleStart("art1","startWrap1");toggleStart("art2","startWrap2");
-function sheet(v,m,t,a,s,n){return `<article class="sheet"><div class="head"><div class="logo">Vereins-<br>logo</div><div><div class="title">Pokalschießen</div><div class="sub">beim Schützenverein Ostereistedt</div></div><div></div></div><div class="info"><div>Verein:<br><b>${esc(v||"________________")}</b></div><div class="center"><b>${esc(m)}</b></div><div class="right"><b>Satz ${n}</b></div></div><div class="phone">Telefon: ${esc(t||"________________")}</div><div class="art">${esc(a)}</div><p style="text-align:center;font-weight:800;text-decoration:underline">Wertungsschüsse:</p><table><tr><th>Name des Schützen/in</th><th>Schuss 1</th><th>Schuss 2</th><th>Schuss 3</th><th>Gesamt</th><th>Scheiben<br>Nr.</th></tr><tr><td>1</td><td></td><td></td><td></td><td></td><td><b>${s}</b></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td><b>${s+1}</b></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td><b>${s+2}</b></td></tr></table><div class="total"><span>Gesamtergebnis: &nbsp; ______</span></div><div class="teiler"><div class="teiler-box"><b>Teilerscheibe Nr.</b><b>${s+3}</b><span>Teilergebnis: <i class="write-line"></i></span></div></div><div class="foot">Startgeld von 8,00 € erhalten<br><br>____________________________</div></article>`}
-function make(){let v=$("verein").value,m=$("mannschaft").value,t=$("telefon").value,a1=$("art1").value,a2=$("art2").value,s1=Number($("start1").value),s2=Number($("start2").value);if(!a1||!a2||!s1||!s2){alert("Bitte für beide Sätze die Schießart und die erste Scheibennummer auswählen.");return}$("#out").innerHTML=sheet(v,m,t,a1,s1,1)+sheet(v,m,t,a2,s2,2)}
-$("make").onclick=make;$("print").onclick=()=>print();
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+
+function showStart(selectId, wrapId, inputId) {
+  const el = $(selectId);
+  const update = () => {
+    const active = !!el.value;
+    $(wrapId).classList.toggle('hidden', !active);
+  };
+  el.addEventListener('change', update);
+  update();
+}
+
+function sheet(data) {
+  const {verein, telefon, mannschaft, art1, start1, art2, start2} = data;
+  const nums1 = [start1, start1 + 1, start1 + 2];
+  const teiler1 = start1 + 3;
+  const nums2 = [start2, start2 + 1, start2 + 2];
+  const teiler2 = start2 + 3;
+
+  return `
+  <article class="sheet">
+    <img class="sheet-bg" src="assets/template-clean.png" alt="Druckvorlage">
+    <div class="overlay">
+      <div class="value verein">${esc(verein)}</div>
+      <div class="value telefon">${esc(telefon)}</div>
+
+      <div class="value art1">${esc(mannschaft)} – ${esc(art1)}</div>
+      <div class="value art2">${esc(mannschaft)} – ${esc(art2)}</div>
+
+      <div class="value sn1">${nums1[0]}</div>
+      <div class="value sn2">${nums1[1]}</div>
+      <div class="value sn3">${nums1[2]}</div>
+      <div class="value teiler1">${teiler1}</div>
+
+      <div class="value sn4">${nums2[0]}</div>
+      <div class="value sn5">${nums2[1]}</div>
+      <div class="value sn6">${nums2[2]}</div>
+      <div class="value teiler2">${teiler2}</div>
+    </div>
+  </article>`;
+}
+
+function make() {
+  const verein = $('verein').value.trim();
+  const telefon = $('telefon').value.trim();
+  const mannschaft = $('mannschaft').value;
+  const art1 = $('art1').value;
+  const art2 = $('art2').value;
+  const s1 = Number($('start1').value);
+  const s2 = Number($('start2').value);
+
+  if (!art1 || !art2 || !Number.isInteger(s1) || s1 < 1 || !Number.isInteger(s2) || s2 < 1) {
+    alert('Bitte für beide Sätze die Schießart und die erste Scheibennummer eingeben.');
+    return;
+  }
+
+  $('out').innerHTML = sheet({verein, telefon, mannschaft, art1, start1:s1, art2, start2:s2});
+  const modal = $('previewModal');
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('preview-open');
+}
+
+function closePreview() {
+  const modal = $('previewModal');
+  modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('preview-open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  showStart('art1', 'startWrap1', 'start1');
+  showStart('art2', 'startWrap2', 'start2');
+  $('make').addEventListener('click', make);
+  // Fallback for mobile browsers where delegated/button events can be unreliable.
+  $('make').onclick = make;
+  $('closePreview').addEventListener('click', closePreview);
+  $('previewModal').addEventListener('click', e => { if (e.target === $('previewModal')) closePreview(); });
+  $('print').addEventListener('click', () => window.print());
+});
