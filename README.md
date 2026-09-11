@@ -38,3 +38,6 @@ Die separate Vorschau-Karte unter dem Formular wurde entfernt. „Schießzettel 
 
 ## v18
 Fehlerbehebung für iOS/Safari: Die Formular- und Button-Ereignisse werden erst nach dem vollständigen Laden der Seite registriert. Dadurch funktioniert „Schießzettel fertigstellen“ zuverlässig.
+
+## v19
+Die Zahlungszeile lautet jetzt „Startgeld von 8,00 € erhalten“.
