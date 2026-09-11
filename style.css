@@ -360,3 +360,15 @@ body.preview-open{overflow:hidden}
     margin:0!important;
   }
 }
+
+/* v16: Vereinswappen in der Druck-/PDF-Vorschau klein halten */
+#out img.logo,
+#out .logo,
+.preview-content #out img.logo {
+  width: 42px !important;
+  height: 42px !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
