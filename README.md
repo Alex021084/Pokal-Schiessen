@@ -1,3 +1,1 @@
-Pokal-Schießen App v27
-
-Einzelne index.html ohne assets-Ordner. Die Druckvorlage ist direkt in der HTML-Datei eingebettet.
+Pokalschießen-App v28. Druckvorlage als echte HTML/CSS-Elemente, Wappen eingebettet, kein assets-Ordner.
