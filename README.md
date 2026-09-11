@@ -1,40 +1,13 @@
-# Pokal-Schiessen-App v6
-Der Button heißt „Schießzettel fertigstellen“. Nach dem Klick wird die Vorschau automatisch erstellt und auf dem Bildschirm angezeigt. Die App ist für iPhone und iPad ausgelegt. Pro Satz wird die erste Scheibennummer separat eingegeben und die Nummerierung läuft nur innerhalb dieses Satzes weiter.
+# Pokal-Schiessen-App v5
 
-## v7
-Beim Drucken werden Satz 1 und Satz 2 verkleinert und untereinander auf **eine DIN-A4-Seite** gesetzt.
+Für iPhone und iPad.
 
+Pro Mannschaft genau zwei Scheibensätze. Für jeden Satz wird zuerst die Schießart ausgewählt. **Erst danach erscheint automatisch die Eingabe für die erste Scheibennummer dieses Satzes.**
 
-## v8.1
-- Verwendet das hochgeladene Vereinswappen.
-- Der Ausdruck besteht aus **genau zwei Schießzetteln auf einer DIN-A4-Seite**.
-- Beide Zettel nutzen jeweils ungefähr eine halbe A4-Seite.
-- Die Tabellenzeilen sind bewusst größer, damit Schusswerte und Namen handschriftlich gut eingetragen werden können.
+Die Nummerierung ist pro Satz unabhängig:
+- Schütze 1 = Startnummer
+- Schütze 2 = Startnummer + 1
+- Schütze 3 = Startnummer + 2
+- Teilerscheibe = Startnummer + 3
 
-## v9
-Gesamtergebnis und Teilerscheibe/Teilergebnis sind in der Druckansicht größer und weiter links positioniert. Beide Bereiche haben nun dieselbe Breite und exakt dieselbe linke Ausrichtung, damit die Ergebnisfelder sauber untereinander stehen.
-
-
-## v11
-Die Druckschrift wurde jetzt ausdrücklich auf eine leichtere Schriftstärke gesetzt. Die großen Ergebnisfelder und Schreibflächen bleiben unverändert.
-
-## v12
-Verein und Telefon sind in beiden Sätzen gleich groß und gleich typografisch formatiert. Die Unterstriche bei beiden Feldern sind entfernt.
-
-## v13
-Verein und Telefon werden nun direkt als gleich große, normale Textzeilen ausgegeben. Unterstriche und Unterstreichungen an diesen Feldern wurden entfernt. Das echte Vereinswappen wird direkt in der Schießzettel-Vorlage verwendet.
-
-## v14
-Das echte Vereinswappen des Schützenverein Ostereistedt wurde eingebunden.
-
-## v15
-Die Vorschau wird nach „Schießzettel fertigstellen“ automatisch in einem eigenen Vollbild-Fenster geöffnet. Der Drucken-Button befindet sich dort oben. Die Vorschau kann geschlossen und später wieder geöffnet werden.
-
-## v16
-Das Vereinswappen wird in der Vorschau/Druckausgabe wieder klein (ca. 42 × 42 px) dargestellt und kann nicht mehr riesig aufgezogen werden.
-
-## v17
-Die separate Vorschau-Karte unter dem Formular wurde entfernt. „Schießzettel fertigstellen“ öffnet die Vorschau direkt in einem eigenen Fenster. Die Event-Verknüpfung wurde für iOS/Safari robuster gemacht und Satz 2 wird korrekt als Satz 2 ausgegeben.
-
-## v18
-Fehlerbehebung für iOS/Safari: Die Formular- und Button-Ereignisse werden erst nach dem vollständigen Laden der Seite registriert. Dadurch funktioniert „Schießzettel fertigstellen“ zuverlässig.
+Satz 1 und Satz 2 können unabhängig Sandsack oder Nagel sein. Das Teilergebnis wird handschriftlich eingetragen.
