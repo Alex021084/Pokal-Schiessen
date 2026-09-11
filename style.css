@@ -248,3 +248,41 @@ th,td{padding:4px 3px}
     font-weight:500!important;
   }
 }
+
+/* v12: Verein/Telefon sauber und identisch */
+@media print{
+  .sheet .info,
+  .sheet .info label,
+  .sheet .info .label,
+  .sheet .info b{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+  }
+  .sheet .info{
+    font-size:11px!important;
+  }
+  .sheet .info b{
+    font-size:11px!important;
+    font-weight:400!important;
+  }
+  .sheet .phone,
+  .sheet .phone *{
+    font-size:11px!important;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+    border-bottom:0!important;
+    text-decoration:none!important;
+  }
+  .sheet .info input,
+  .sheet .info .value{
+    font-size:11px!important;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+    border-bottom:0!important;
+  }
+}
+
+@media print{
+  .sheet .info{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;font-size:11px!important}
+  .sheet .info > div:first-child > div{font-size:11px!important;font-weight:400!important;border:0!important;text-decoration:none!important;margin:0 0 1.5mm!important}
+  .sheet .phone{border:0!important;padding:0!important;margin:0!important;font-size:11px!important}
+  .sheet .info b{font-size:11px!important;font-weight:400!important}
+  .sheet .info input,.sheet .info .value{border:0!important;text-decoration:none!important}
+}

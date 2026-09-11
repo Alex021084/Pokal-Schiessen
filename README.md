@@ -17,3 +17,9 @@ Gesamtergebnis und Teilerscheibe/Teilergebnis sind in der Druckansicht größer 
 
 ## v11
 Die Druckschrift wurde jetzt ausdrücklich auf eine leichtere Schriftstärke gesetzt. Die großen Ergebnisfelder und Schreibflächen bleiben unverändert.
+
+## v12
+Verein und Telefon sind in beiden Sätzen gleich groß und gleich typografisch formatiert. Die Unterstriche bei beiden Feldern sind entfernt.
+
+## v13
+Verein und Telefon werden nun direkt als gleich große, normale Textzeilen ausgegeben. Unterstriche und Unterstreichungen an diesen Feldern wurden entfernt. Das echte Vereinswappen wird direkt in der Schießzettel-Vorlage verwendet.
