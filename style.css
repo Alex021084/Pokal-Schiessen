@@ -178,51 +178,73 @@ th,td{padding:4px 3px}
   }
 }
 
+/* v11: ausdrücklich dezente Druckschrift */
 @media print{
-  .title{
-    font-size:20px!important;
-    font-weight:700!important;
+  .sheet .title,
+  .sheet .info b,
+  .sheet .art,
+  .sheet .total,
+  .sheet .total span,
+  .sheet .teiler,
+  .sheet .teiler-box,
+  .sheet th{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
   }
-  .sub{
+
+  .sheet .title{
+    font-size:18px!important;
+    font-weight:600!important;
+  }
+  .sheet .sub{
+    font-size:9px!important;
+    font-weight:400!important;
+  }
+  .sheet .info{
     font-size:10px!important;
     font-weight:400!important;
   }
-  .info{
-    font-size:11px!important;
+  .sheet .info b{
+    font-size:10px!important;
+    font-weight:500!important;
   }
-  .info b{
-    font-weight:600!important;
-  }
-  .art{
-    font-size:14px!important;
-    font-weight:600!important;
+  .sheet .art{
+    font-size:13px!important;
+    font-weight:500!important;
   }
   .sheet p{
-    font-size:10px!important;
+    font-size:9px!important;
+    font-weight:400!important;
   }
-  th{
-    font-size:10px!important;
-    font-weight:600!important;
+  .sheet th{
+    font-size:9px!important;
+    font-weight:500!important;
   }
-  td{
+  .sheet td{
     font-size:10px!important;
     font-weight:400!important;
   }
-  td b{
-    font-weight:600!important;
+  .sheet td b{
+    font-weight:500!important;
   }
-  .total{
-    font-size:12px!important;
-    font-weight:600!important;
-  }
-  .total span{
-    font-size:12px!important;
-    font-weight:600!important;
-  }
-  .teiler{
+  .sheet .total{
     font-size:11px!important;
+    font-weight:500!important;
+    margin-left:105mm!important;
   }
-  .teiler-box{
+  .sheet .total span{
     font-size:11px!important;
+    font-weight:500!important;
+  }
+  .sheet .teiler{
+    font-size:10px!important;
+    font-weight:400!important;
+    margin-left:105mm!important;
+  }
+  .sheet .teiler-box{
+    font-size:10px!important;
+    font-weight:400!important;
+  }
+  .sheet .teiler-box b{
+    font-weight:500!important;
   }
 }

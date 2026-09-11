@@ -15,5 +15,5 @@ Beim Drucken werden Satz 1 und Satz 2 verkleinert und untereinander auf **eine D
 Gesamtergebnis und Teilerscheibe/Teilergebnis sind in der Druckansicht größer und weiter links positioniert. Beide Bereiche haben nun dieselbe Breite und exakt dieselbe linke Ausrichtung, damit die Ergebnisfelder sauber untereinander stehen.
 
 
-## v10
-Die Druckschrift wurde insgesamt dezenter gestaltet: Überschrift, Herren, Sandsack/Nagel, Tabellenüberschriften und Ergebnisfelder sind weniger fett, bleiben aber gut lesbar. Die größeren Schreibflächen bleiben erhalten.
+## v11
+Die Druckschrift wurde jetzt ausdrücklich auf eine leichtere Schriftstärke gesetzt. Die großen Ergebnisfelder und Schreibflächen bleiben unverändert.
