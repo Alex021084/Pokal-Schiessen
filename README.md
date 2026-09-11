@@ -5,5 +5,8 @@ Der Button heißt „Schießzettel fertigstellen“. Nach dem Klick wird die Vor
 Beim Drucken werden Satz 1 und Satz 2 verkleinert und untereinander auf **eine DIN-A4-Seite** gesetzt.
 
 
-## v8
-Die Druckansicht orientiert sich stärker am gelieferten Original. Beide Schießzettel stehen auf einer DIN-A4-Seite. Die Tabellenzeilen wurden bewusst größer gelassen, damit Schüsse und Gesamtergebnis gut handschriftlich eingetragen werden können. Das Vereinslogo aus dem Beispiel ist eingebunden.
+## v8.1
+- Verwendet das hochgeladene Vereinswappen.
+- Der Ausdruck besteht aus **genau zwei Schießzetteln auf einer DIN-A4-Seite**.
+- Beide Zettel nutzen jeweils ungefähr eine halbe A4-Seite.
+- Die Tabellenzeilen sind bewusst größer, damit Schusswerte und Namen handschriftlich gut eingetragen werden können.

@@ -20,4 +20,120 @@ th,td{padding:4px 3px}
 .foot{margin-top:8px;font-size:9px}
 }
 @page{size:A4 portrait;margin:0}}
+/* Vereinswappen */
 .club-logo{width:60px;height:60px;object-fit:contain}
+
+/* Druck: exakt zwei Zettel auf einer DIN-A4-Seite */
+@media print{
+  html,body{margin:0!important;padding:0!important;background:#fff!important}
+  header,.card:first-child,.actions{display:none!important}
+  main{display:block!important;max-width:none!important;margin:0!important;padding:0!important}
+  .card{display:block!important;background:#fff!important;box-shadow:none!important;border-radius:0!important;margin:0!important;padding:0!important}
+  #out{display:block!important}
+
+  .sheet{
+    width:210mm!important;
+    height:148.5mm!important;
+    min-height:148.5mm!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:6mm 9mm 4mm!important;
+    border:0!important;
+    overflow:hidden!important;
+    page-break-after:avoid!important;
+    break-after:avoid!important;
+    position:relative;
+  }
+  .sheet + .sheet{
+    border-top:1px dashed #888!important;
+  }
+
+  .head{
+    display:grid!important;
+    grid-template-columns:25mm 1fr 25mm!important;
+    align-items:center!important;
+    margin:0!important;
+  }
+  .club-logo{width:18mm!important;height:18mm!important;object-fit:contain!important}
+  .title{font-size:20px!important;line-height:1.05!important;margin:0!important}
+  .sub{font-size:10px!important;margin-top:1mm!important}
+
+  .info{
+    display:grid!important;
+    grid-template-columns:1fr 1fr 1fr!important;
+    gap:6mm!important;
+    margin:3mm 0 2mm!important;
+    font-size:11px!important;
+    line-height:1.1!important;
+  }
+  .phone{
+    font-size:10px!important;
+    padding-bottom:1.5mm!important;
+    border-bottom:1px solid #777!important;
+  }
+  .art{
+    font-size:15px!important;
+    margin:2mm 0 1mm!important;
+  }
+  .sheet p{
+    font-size:10px!important;
+    margin:1mm 0!important;
+  }
+
+  table{
+    width:100%!important;
+    border-collapse:collapse!important;
+    table-layout:fixed!important;
+    font-size:10px!important;
+  }
+  th,td{
+    border:1px solid #555!important;
+    padding:0 2mm!important;
+    height:10.5mm!important;
+    vertical-align:middle!important;
+  }
+  th{font-weight:700!important;height:7mm!important}
+  th:first-child,td:first-child{width:38%!important}
+  th:nth-child(2),td:nth-child(2),
+  th:nth-child(3),td:nth-child(3),
+  th:nth-child(4),td:nth-child(4){width:11%!important}
+  th:nth-child(5),td:nth-child(5){width:10%!important}
+  th:nth-child(6),td:nth-child(6){width:8%!important}
+
+  .total{
+    margin-top:2.5mm!important;
+    font-size:11px!important;
+  }
+  .total span{
+    display:inline-block!important;
+    min-width:42mm!important;
+    padding:2mm 4mm!important;
+    border:1px solid #555!important;
+  }
+
+  .teiler{
+    margin-top:2.5mm!important;
+    text-align:right!important;
+    font-size:10px!important;
+  }
+  .teiler-box{
+    display:inline-flex!important;
+    align-items:center!important;
+    gap:4mm!important;
+    border:1px solid #555!important;
+    padding:2mm 3mm!important;
+  }
+  .write-line{
+    display:inline-block!important;
+    width:28mm!important;
+    height:5mm!important;
+    border-bottom:1px solid #555!important;
+  }
+  .foot{
+    margin-top:2mm!important;
+    font-size:9px!important;
+    line-height:1.15!important;
+  }
+
+  @page{size:A4 portrait;margin:0!important}
+}
