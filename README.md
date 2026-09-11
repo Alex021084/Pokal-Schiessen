@@ -10,3 +10,10 @@ Beim Drucken werden Satz 1 und Satz 2 verkleinert und untereinander auf **eine D
 - Der Ausdruck besteht aus **genau zwei Schießzetteln auf einer DIN-A4-Seite**.
 - Beide Zettel nutzen jeweils ungefähr eine halbe A4-Seite.
 - Die Tabellenzeilen sind bewusst größer, damit Schusswerte und Namen handschriftlich gut eingetragen werden können.
+
+## v9
+Gesamtergebnis und Teilerscheibe/Teilergebnis sind in der Druckansicht größer und weiter links positioniert. Beide Bereiche haben nun dieselbe Breite und exakt dieselbe linke Ausrichtung, damit die Ergebnisfelder sauber untereinander stehen.
+
+
+## v10
+Die Druckschrift wurde insgesamt dezenter gestaltet: Überschrift, Herren, Sandsack/Nagel, Tabellenüberschriften und Ergebnisfelder sind weniger fett, bleiben aber gut lesbar. Die größeren Schreibflächen bleiben erhalten.

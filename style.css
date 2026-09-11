@@ -137,3 +137,92 @@ th,td{padding:4px 3px}
 
   @page{size:A4 portrait;margin:0!important}
 }
+
+@media print{
+  .total{
+    margin-top:2.5mm!important;
+    text-align:left!important;
+    margin-left:105mm!important;
+    font-size:13px!important;
+  }
+  .total span{
+    display:block!important;
+    width:72mm!important;
+    min-width:72mm!important;
+    min-height:10mm!important;
+    padding:2.5mm 4mm!important;
+    border:1px solid #555!important;
+    font-size:13px!important;
+  }
+
+  .teiler{
+    margin-top:2.5mm!important;
+    text-align:left!important;
+    margin-left:105mm!important;
+    font-size:12px!important;
+  }
+  .teiler-box{
+    display:flex!important;
+    width:72mm!important;
+    min-height:10mm!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:3mm!important;
+    padding:2.5mm 3mm!important;
+    border:1px solid #555!important;
+    font-size:12px!important;
+  }
+  .write-line{
+    width:25mm!important;
+    height:6mm!important;
+  }
+}
+
+@media print{
+  .title{
+    font-size:20px!important;
+    font-weight:700!important;
+  }
+  .sub{
+    font-size:10px!important;
+    font-weight:400!important;
+  }
+  .info{
+    font-size:11px!important;
+  }
+  .info b{
+    font-weight:600!important;
+  }
+  .art{
+    font-size:14px!important;
+    font-weight:600!important;
+  }
+  .sheet p{
+    font-size:10px!important;
+  }
+  th{
+    font-size:10px!important;
+    font-weight:600!important;
+  }
+  td{
+    font-size:10px!important;
+    font-weight:400!important;
+  }
+  td b{
+    font-weight:600!important;
+  }
+  .total{
+    font-size:12px!important;
+    font-weight:600!important;
+  }
+  .total span{
+    font-size:12px!important;
+    font-weight:600!important;
+  }
+  .teiler{
+    font-size:11px!important;
+  }
+  .teiler-box{
+    font-size:11px!important;
+  }
+}
