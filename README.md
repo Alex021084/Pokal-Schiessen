@@ -26,3 +26,6 @@ Verein und Telefon werden nun direkt als gleich große, normale Textzeilen ausge
 
 ## v14
 Das echte Vereinswappen des Schützenverein Ostereistedt wurde eingebunden.
+
+## v15
+Die Vorschau wird nach „Schießzettel fertigstellen“ automatisch in einem eigenen Vollbild-Fenster geöffnet. Der Drucken-Button befindet sich dort oben. Die Vorschau kann geschlossen und später wieder geöffnet werden.
