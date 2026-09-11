@@ -372,3 +372,13 @@ body.preview-open{overflow:hidden}
   object-fit: contain !important;
   display: block !important;
 }
+
+/* v17: Keine separate Vorschau-Karte unter dem Formular */
+.preview-card{display:none!important}
+
+/* v17: Vorschau-Fenster sicher über der Seite und gut auf iPhone/iPad */
+.preview-modal{
+  position:fixed!important;
+  inset:0!important;
+  z-index:99999!important;
+}

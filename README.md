@@ -32,3 +32,6 @@ Die Vorschau wird nach „Schießzettel fertigstellen“ automatisch in einem ei
 
 ## v16
 Das Vereinswappen wird in der Vorschau/Druckausgabe wieder klein (ca. 42 × 42 px) dargestellt und kann nicht mehr riesig aufgezogen werden.
+
+## v17
+Die separate Vorschau-Karte unter dem Formular wurde entfernt. „Schießzettel fertigstellen“ öffnet die Vorschau direkt in einem eigenen Fenster. Die Event-Verknüpfung wurde für iOS/Safari robuster gemacht und Satz 2 wird korrekt als Satz 2 ausgegeben.
