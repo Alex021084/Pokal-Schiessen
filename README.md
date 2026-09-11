@@ -1,12 +1,6 @@
-Pokal-Schiessen App v24
+Pokal-Schiessen App v25
 
-WICHTIG: Für GitHub Pages müssen index.html, script.js und style.css direkt im veröffentlichten Ordner liegen. Der Ordner assets muss daneben liegen.
+GitHub Pages: Lade index.html, script.js und style.css direkt in den Hauptordner deines Repositorys.
+Kein assets-Ordner nötig – die Druckvorlage ist direkt in script.js eingebettet.
 
-Struktur:
-index.html
-script.js
-style.css
-assets/template-clean.png
-assets/template.png
-
-Nach Eingabe der Daten: „Schießzettel erstellen“ → fertige Vorschau in eigenem Fenster → „Drucken“.
+Ablauf: Daten eingeben → Schießzettel erstellen → Vorschau → Drucken.
