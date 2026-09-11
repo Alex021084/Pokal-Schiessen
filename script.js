@@ -1,19 +1,7 @@
 const $=id=>document.getElementById(id);
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function sheet(v,m,t,a,s,n){return `<article class="sheet">
-<div class="head"><div class="logo">Vereins-<br>logo</div><div><div class="title">Pokalschießen</div><div class="sub">beim Schützenverein Ostereistedt</div></div><div></div></div>
-<div class="info"><div>Verein:<br><b>${esc(v||"________________")}</b></div><div class="center"><b>${esc(m)}</b></div><div class="right"><b>Satz ${n}</b></div></div>
-<div class="phone">Telefon: ${esc(t||"________________")}</div><div class="art">${esc(a)}</div>
-<p style="text-align:center;font-weight:800;text-decoration:underline">Wertungsschüsse:</p>
-<table><tr><th>Name des Schützen/in</th><th>Schuss 1</th><th>Schuss 2</th><th>Schuss 3</th><th>Gesamt</th><th>Scheiben<br>Nr.</th></tr>
-<tr><td>1</td><td></td><td></td><td></td><td></td><td><b>${s}</b></td></tr>
-<tr><td>2</td><td></td><td></td><td></td><td></td><td><b>${s+1}</b></td></tr>
-<tr><td>3</td><td></td><td></td><td></td><td></td><td><b>${s+2}</b></td></tr></table>
-<div class="total"><span>Gesamtergebnis: &nbsp; ______</span></div>
-<div class="teiler"><div class="teiler-box"><b>Teilerscheibe Nr.</b> <b>${s+3}</b> <span>Teilergebnis: <i class="write-line"></i></span></div></div>
-<div class="foot">Startgeld von 8,00 € erhalten<br><br>____________________________</div>
-</article>`}
-function make(){const v=$("verein").value,m=$("mannschaft").value,t=$("telefon").value;
-const s1=Number($("start1").value)||1,s2=Number($("start2").value)||1;
-$("out").innerHTML=sheet(v,m,t,$("art1").value,s1,1)+sheet(v,m,t,$("art2").value,s2,2)}
-$("make").onclick=make;$("print").onclick=()=>print();make();
+function toggleStart(selectId,wrapId){$(selectId).addEventListener("change",()=>{$(wrapId).classList.toggle("hidden",!$(selectId).value);if($(selectId).value)$(wrapId.replace("Wrap","")).focus()})}
+toggleStart("art1","startWrap1");toggleStart("art2","startWrap2");
+function sheet(v,m,t,a,s,n){return `<article class="sheet"><div class="head"><div class="logo">Vereins-<br>logo</div><div><div class="title">Pokalschießen</div><div class="sub">beim Schützenverein Ostereistedt</div></div><div></div></div><div class="info"><div>Verein:<br><b>${esc(v||"________________")}</b></div><div class="center"><b>${esc(m)}</b></div><div class="right"><b>Satz ${n}</b></div></div><div class="phone">Telefon: ${esc(t||"________________")}</div><div class="art">${esc(a)}</div><p style="text-align:center;font-weight:800;text-decoration:underline">Wertungsschüsse:</p><table><tr><th>Name des Schützen/in</th><th>Schuss 1</th><th>Schuss 2</th><th>Schuss 3</th><th>Gesamt</th><th>Scheiben<br>Nr.</th></tr><tr><td>1</td><td></td><td></td><td></td><td></td><td><b>${s}</b></td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td><b>${s+1}</b></td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td><b>${s+2}</b></td></tr></table><div class="total"><span>Gesamtergebnis: &nbsp; ______</span></div><div class="teiler"><div class="teiler-box"><b>Teilerscheibe Nr.</b><b>${s+3}</b><span>Teilergebnis: <i class="write-line"></i></span></div></div><div class="foot">Startgeld von 8,00 € erhalten<br><br>____________________________</div></article>`}
+function make(){let v=$("verein").value,m=$("mannschaft").value,t=$("telefon").value,a1=$("art1").value,a2=$("art2").value,s1=Number($("start1").value),s2=Number($("start2").value);if(!a1||!a2||!s1||!s2){alert("Bitte für beide Sätze die Schießart und die erste Scheibennummer auswählen.");return}$("#out").innerHTML=sheet(v,m,t,a1,s1,1)+sheet(v,m,t,a2,s2,2)}
+$("make").onclick=make;$("print").onclick=()=>print();

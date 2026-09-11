@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pokalschießen</title><link rel="stylesheet" href="style.css"></head>
 <body>
 <header><h1>🎯 Pokalschießen</h1><p>Schießzettel erstellen</p></header>
@@ -11,16 +11,31 @@
 <label>Mannschaft<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label>
 <label>Telefon<input id="telefon" type="tel" inputmode="tel"></label>
 </div>
+
 <div class="sets">
 <h3>Satz 1</h3>
-<div class="set"><label>Schießart<select id="art1"><option>Sandsack</option><option>Nagel</option></select></label>
-<label>Erste Scheibennummer<input id="start1" type="number" inputmode="numeric" value="21346"></label></div>
+<label>Schießart
+<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select>
+</label>
+<div id="startWrap1" class="hidden">
+<label>Erste Scheibennummer für Satz 1
+<input id="start1" type="number" inputmode="numeric" placeholder="z. B. 21346" min="1">
+</label>
+</div>
+
 <h3>Satz 2</h3>
-<div class="set"><label>Schießart<select id="art2"><option>Nagel</option><option>Sandsack</option></select></label>
-<label>Erste Scheibennummer<input id="start2" type="number" inputmode="numeric" value="21350"></label></div>
-<p class="hint">Die Nummern werden innerhalb jedes Satzes automatisch fortlaufend vergeben: 3 Schützenscheiben + 1 Teilerscheibe.</p>
+<label>Schießart
+<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select>
+</label>
+<div id="startWrap2" class="hidden">
+<label>Erste Scheibennummer für Satz 2
+<input id="start2" type="number" inputmode="numeric" placeholder="z. B. 21800" min="1">
+</label>
+</div>
+<p class="hint">Nach Auswahl der Schießart erscheint automatisch die passende Eingabe für die erste Scheibennummer.</p>
 </div>
 <button id="make">Vorschau erstellen</button>
 </section>
+
 <section class="card"><div class="actions"><h2>Vorschau</h2><button id="print">🖨️ Drucken</button></div><div id="out"></div></section>
 </main><script src="script.js"></script></body></html>
