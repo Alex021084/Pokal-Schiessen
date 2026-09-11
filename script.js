@@ -9,7 +9,25 @@ function showStart(selectId,wrapId,inputId){
     if(active) $(inputId).focus();
   });
 }
-function sheet(v,m,t,a,s,n){return `<article class="sheet"><div class="head"><img class="club-logo" src="pokal_logo.png" alt="Vereinswappen"><div><div class="title">Pokalschießen</div><div class="sub">beim Schützenverein Ostereistedt</div></div><div></div></div><div class="info"><div><div>Verein: ${esc(v||"")}</div><div>Telefon: ${esc(t||"")}</div></div><div class="center">${esc(m)}</div><div class="right">Satz ${n}</div></div><div class="art">${esc(a)}</div><p style="text-align:center;font-weight:600">Wertungsschüsse:</p><table><tr><th>Name des Schützen/in</th><th>Schuss 1</th><th>Schuss 2</th><th>Schuss 3</th><th>Gesamt</th><th>Scheiben<br>Nr.</th></tr><tr><td>1</td><td></td><td></td><td></td><td></td><td>${s}</td></tr><tr><td>2</td><td></td><td></td><td></td><td></td><td>${s+1}</td></tr><tr><td>3</td><td></td><td></td><td></td><td></td><td>${s+2}</td></tr></table><div class="total"><span>Gesamtergebnis: &nbsp; ______</span></div><div class="teiler"><div class="teiler-box"><span>Teilerscheibe Nr. ${s+3}</span><span>Teilergebnis: <i class="write-line"></i></span></div></div><div class="foot">Startgeld von 8,00 € erhalten<br><br>____________________________</div></article>`}
+function sheet(v,m,t,a,s,n){
+  const logo = n===1 ? '<img class="club-logo" src="pokal_logo.png" alt="Vereinswappen">' : '<div></div>';
+  return `<article class="sheet">
+    <div class="head">${logo}<div><div class="title">Pokalschießen</div><div class="sub">beim Schützenverein Ostereistedt</div></div><div></div></div>
+    <div class="info"><div><div>Verein: ${esc(v||"")}</div><div>Telefon: ${esc(t||"")}</div></div><div class="center">${esc(m)}</div><div></div></div>
+    <div class="art">${esc(m)} – ${esc(a)}</div>
+    <p class="wertung">Wertungsschüsse:</p>
+    <table><tr><th>Name des Schützen/in</th><th>Schuss 1</th><th>Schuss 2</th><th>Schuss 3</th><th>Gesamt</th><th>Scheiben<br>Nr.</th></tr>
+      <tr><td>1</td><td></td><td></td><td></td><td></td><td>${s}</td></tr>
+      <tr><td>2</td><td></td><td></td><td></td><td></td><td>${s+1}</td></tr>
+      <tr><td>3</td><td></td><td></td><td></td><td></td><td>${s+2}</td></tr>
+    </table>
+    <div class="results">
+      <div class="result-line"><span>Gesamtergebnis:</span><i></i></div>
+      <div class="result-line"><span>Tyler:</span><b>${s+3}</b><em class="sheet-number-box"></em></div>
+    </div>
+    <div class="signatures"><div><i></i><span>Startgeld von 8,00 € erhalten</span></div><div><i></i><span>Ausgewertet</span></div></div>
+  </article>`;
+}
 function make(){
   const v=$("verein").value.trim();
   const m=$("mannschaft").value;

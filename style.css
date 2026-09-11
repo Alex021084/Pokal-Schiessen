@@ -382,3 +382,40 @@ body.preview-open{overflow:hidden}
   inset:0!important;
   z-index:99999!important;
 }
+
+
+/* Final print layout: exactly two compact forms on one DIN A4 page */
+@media print{
+  header,.card:first-child,.preview-toolbar{display:none!important}
+  html,body{margin:0!important;padding:0!important;background:#fff!important}
+  main,.card,#out,.preview-modal,.preview-window,.preview-content{display:block!important;margin:0!important;padding:0!important;max-width:none!important;width:auto!important;height:auto!important;background:#fff!important;overflow:visible!important}
+  .sheet{width:210mm!important;height:148.5mm!important;min-height:148.5mm!important;margin:0!important;padding:6mm 9mm 4mm!important;border:0!important;overflow:hidden!important;page-break-after:avoid!important;break-after:avoid!important;position:relative!important}
+  .sheet+.sheet{border-top:1px dashed #888!important}
+  .head{display:grid!important;grid-template-columns:25mm 1fr 25mm!important;align-items:center!important;margin:0!important}
+  .club-logo{width:18mm!important;height:18mm!important;object-fit:contain!important}
+  .title{font-size:18px!important;line-height:1.05!important;font-weight:600!important}
+  .sub{font-size:10px!important;font-weight:400!important}
+  .info{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;gap:6mm!important;margin:3mm 0 2mm!important;font-size:11px!important;line-height:1.15!important}
+  .info>div:first-child>div{font-size:11px!important;margin-bottom:1mm!important}
+  .center{text-align:center!important}
+  .art{text-align:center!important;font-size:15px!important;font-weight:600!important;margin:2mm 0 1mm!important}
+  .wertung{text-align:center!important;font-size:10px!important;font-weight:400!important;margin:0 0 1.5mm!important}
+  table{width:100%!important;border-collapse:collapse!important;table-layout:fixed!important;font-size:10px!important}
+  th,td{border:1px solid #555!important;padding:0 2mm!important;height:10.5mm!important;vertical-align:middle!important;text-align:center!important}
+  th{height:7mm!important;font-weight:600!important}
+  th:first-child,td:first-child{width:38%!important;text-align:left!important}
+  th:nth-child(2),td:nth-child(2),th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){width:11%!important}
+  th:nth-child(5),td:nth-child(5){width:10%!important}
+  th:nth-child(6),td:nth-child(6){width:8%!important}
+  .results{margin-left:105mm!important;margin-top:3mm!important;width:72mm!important;font-size:11px!important}
+  .result-line{display:grid!important;grid-template-columns:42mm 30mm!important;align-items:center!important;min-height:8mm!important}
+  .result-line span{white-space:nowrap!important}
+  .result-line i{display:block!important;width:30mm!important;border-bottom:1px solid #555!important;height:5mm!important}
+  .result-line b{font-weight:400!important}
+  .sheet-number-box{display:block!important;width:8mm!important;height:7mm!important;border:1px solid #555!important;grid-column:2!important;justify-self:start!important;margin-top:-8mm!important;margin-left:30mm!important}
+  .signatures{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12mm!important;margin:9mm 0 0!important;font-size:10px!important;text-align:center!important}
+  .signatures>div{display:flex!important;flex-direction:column!important;align-items:center!important}
+  .signatures i{display:block!important;width:42mm!important;border-top:1px solid #555!important;height:4mm!important}
+  .signatures span{font-size:10px!important}
+  @page{size:A4 portrait;margin:0!important}
+}
