@@ -23,3 +23,6 @@ Verein und Telefon sind in beiden Sätzen gleich groß und gleich typografisch f
 
 ## v13
 Verein und Telefon werden nun direkt als gleich große, normale Textzeilen ausgegeben. Unterstriche und Unterstreichungen an diesen Feldern wurden entfernt. Das echte Vereinswappen wird direkt in der Schießzettel-Vorlage verwendet.
+
+## v14
+Das echte Vereinswappen des Schützenverein Ostereistedt wurde eingebunden.
