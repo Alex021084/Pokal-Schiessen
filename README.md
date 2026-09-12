@@ -1,8 +1,8 @@
-Pokal-Schießen App v32
+Pokal-Schießen App v33
 
-Die A4-Druckvorlage bleibt unverändert.
-Neu: Die Vorschau passt die komplette A4-Seite automatisch an die verfügbare
-Bildschirmbreite UND -höhe an. Damit ist die gesamte Vorlage auf einem
-iPhone-Bildschirm sichtbar, ohne horizontal abgeschnitten zu werden.
+Die richtige, vom Nutzer ausgewählte A4-Vorlage ist direkt in index.html eingebettet.
+Sie wird als kompaktes JPEG eingebettet, damit Safari die Vorlage zuverlässig lädt.
+Dadurch sind Überschrift, Wappen, Tabellen und Linien wieder sichtbar.
 
-Beim Drucken wird weiterhin die volle A4-Größe verwendet.
+Die Vorschau passt weiterhin komplett auf den Bildschirm.
+Beim Drucken wird die Seite als A4 ausgegeben.
