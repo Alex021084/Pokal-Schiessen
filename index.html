@@ -22,8 +22,8 @@ body > #printHost{display:block!important;position:relative!important;left:auto!
 </style></head><body>
 <header><h1>🎯 Pokalschießen</h1><p>Schießzettel erstellen</p></header><main><section class="card"><h2>Schießzettel</h2>
 <label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label><div class="grid"><label>Geschlecht<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label><label>Telefon<input id="telefon" type="tel" inputmode="tel"></label></div>
-<div class="sets"><h3>Satz 1</h3><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 1<input id="start1" type="number" inputmode="numeric" min="1" disabled required></label>
-<h3>Satz 2</h3><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 2<input id="start2" type="number" inputmode="numeric" min="1" disabled required></label></div>
+<div class="sets"><h3>Satz 1</h3><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt1">Sandsack</span><input id="start1" type="number" inputmode="numeric" min="1" disabled required></label>
+<h3>Satz 2</h3><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt2">Nagel</span><input id="start2" type="number" inputmode="numeric" min="1" disabled required></label></div>
 <button id="make" type="button">Schießzettel erstellen</button></section></main>
 <div id="previewModal" class="preview-modal hidden"><div class="preview-toolbar"><strong>Pokalschießen – Vorschau</strong><div class="preview-actions"><button id="print">🖨️ Drucken</button><button id="close" class="close-btn">Schließen</button></div></div><div class="preview-content"><div id="out"></div></div></div>
 <script>
@@ -159,6 +159,24 @@ function setupSheetInputs(){
 }
 setupSheetInputs();
 window.addEventListener('resize',fit);
+function updateSheetLabels(){
+  const a1=$('art1').value;
+  const a2=$('art2').value;
+  const l1=$('labelArt1'), l2=$('labelArt2');
+  if(l1) l1.textContent=a1 || 'Sandsack/Nagel';
+  if(l2) l2.textContent=a2 || 'Sandsack/Nagel';
+}
+$('art1').addEventListener('change',()=>{
+  updateSheetLabels();
+  const target=$('start1');
+  if(target){ target.focus(); target.select?.(); }
+});
+$('art2').addEventListener('change',()=>{
+  updateSheetLabels();
+  const target=$('start2');
+  if(target){ target.focus(); target.select?.(); }
+});
+updateSheetLabels();
 $('make').addEventListener('click',render);
 $('close').addEventListener('click',()=>{
   $('previewModal').classList.add('hidden');

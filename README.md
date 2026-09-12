@@ -1,6 +1,3 @@
-Pokal-Schiessen-App v66
+Pokal-Schiessen-App v67
 
-Grundlage: v64. Vorlage und Positionssystem unverändert.
-- Telefonnummer ist optional.
-- Nach Auswahl jeder Schießart wird das Feld für die erste Scheibennummer aktiviert und automatisch fokussiert.
-- Erste Scheibennummern sind für beide Sätze Pflicht.
+Nach Auswahl der Schießart zeigt das Eingabefeld dynamisch "Erste Scheibennummer für Sandsack" bzw. "Erste Scheibennummer für Nagel" an. Das Tastenfeld wird weiterhin automatisch auf das jeweilige Scheibennummernfeld fokussiert. Vorlage, gespeicherte Positionen und Druckfunktion bleiben unverändert.
