@@ -1,3 +1,5 @@
-# Pokal-Schießen-App v40
+# Pokal-Schießen-App v41
 
-Button-Fix plus bereinigte Vorlage: die festen Beispiel-Scheibennummern und Teiler-Nummern aus der Vorlage sind entfernt. Tabellenlinien bleiben erhalten. Die Scheibennummern werden ausschließlich aus der Eingabe erzeugt.
+Die fest auf der Vorlage aufgedruckten Scheibennummern und Teilerscheiben-Nummern
+wurden aus dem eingebetteten Vorlagenbild entfernt. Die Tabellenlinien bleiben
+erhalten. Die Nummern werden ausschließlich aus der Eingabe der App erzeugt.
