@@ -1,7 +1,2 @@
-# Pokal-Schießen-App v38
-
-Die Druckvorlage ist als bereinigtes Bild direkt in index.html eingebettet.
-Die alten Beispielwerte werden entfernt, ohne die Tabellenlinien zu überdecken.
-Die dynamischen Werte aus der App werden darüber gesetzt.
-
-Wichtig: Es gibt keine Abhängigkeit vom Asset-Ordner.
+# v39
+Schießzettel erstellen repariert. Die JavaScript-Syntax wurde korrigiert; die Vorschau mit kompletter eingebetteter Vorlage bleibt erhalten.
