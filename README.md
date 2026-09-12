@@ -1,3 +1,1 @@
-Pokalschießen App – v48
-
-Verwendet die zuletzt abgestimmte saubere Druckvorlage ohne fest eingetragene Scheibennummern. Die vier fortlaufenden Scheibennummern je Satz werden dynamisch aus der eingegebenen Startnummer erzeugt; die 4. Nummer steht rechts neben dem Teiler-Strich.
+Pokalschießen-App – saubere PDF-Vorlage eingebettet. Die hochgeladene Vorlage wird unverändert als Hintergrund verwendet; nur Vereinsname, Telefon, Geschlecht/Schießart und Scheibennummern werden dynamisch darübergelegt. Die 4. fortlaufende Nummer steht rechts neben dem jeweiligen Teiler-Strich.
