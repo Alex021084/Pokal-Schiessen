@@ -1,8 +1,7 @@
-Pokal-Schießen App v33
+# Pokal-Schießen-App v34
 
-Die richtige, vom Nutzer ausgewählte A4-Vorlage ist direkt in index.html eingebettet.
-Sie wird als kompaktes JPEG eingebettet, damit Safari die Vorlage zuverlässig lädt.
-Dadurch sind Überschrift, Wappen, Tabellen und Linien wieder sichtbar.
+Die Druckvorlage ist jetzt tatsächlich direkt in der `index.html` eingebettet.
+Dadurch werden Überschrift, Wappen und Tabellen auch ohne Asset-Ordner angezeigt.
 
-Die Vorschau passt weiterhin komplett auf den Bildschirm.
-Beim Drucken wird die Seite als A4 ausgegeben.
+Die App erzeugt die Vorschau aus dieser Vorlage und setzt nur die vom Benutzer
+ausgewählten Werte und Scheibennummern darüber.
