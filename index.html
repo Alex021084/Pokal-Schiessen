@@ -131,21 +131,48 @@ function setupSheetInputs(){
     input.required=selected;
   }
 
+  let activeNumberInput=null;
+
+  function keepInputVisible(input){
+    activeNumberInput=input;
+    const scroll=()=>{
+      if(document.activeElement!==input) return;
+      input.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+    };
+    setTimeout(scroll,80);
+    setTimeout(scroll,350);
+    setTimeout(scroll,700);
+  }
+
   function focusNumber(input){
     setTimeout(()=>{
       input.focus({preventScroll:true});
       if(input.select) input.select();
+      keepInputVisible(input);
     },120);
   }
 
   art1.addEventListener('change',()=>{
     activate(art1,start1);
+    updateSheetLabels();
     if(art1.value) focusNumber(start1);
   });
   art2.addEventListener('change',()=>{
     activate(art2,start2);
+    updateSheetLabels();
     if(art2.value) focusNumber(start2);
   });
+
+  start1.addEventListener('focus',()=>keepInputVisible(start1));
+  start2.addEventListener('focus',()=>keepInputVisible(start2));
+
+  if(window.visualViewport){
+    visualViewport.addEventListener('resize',()=>{
+      if(activeNumberInput && document.activeElement===activeNumberInput){
+        setTimeout(()=>activeNumberInput.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'}),80);
+      }
+    });
+  }
 
   start1.addEventListener('input',()=>{
     start1.value=start1.value.replace(/\D/g,'');
@@ -166,16 +193,6 @@ function updateSheetLabels(){
   if(l1) l1.textContent=a1 || 'Sandsack/Nagel';
   if(l2) l2.textContent=a2 || 'Sandsack/Nagel';
 }
-$('art1').addEventListener('change',()=>{
-  updateSheetLabels();
-  const target=$('start1');
-  if(target){ target.focus(); target.select?.(); }
-});
-$('art2').addEventListener('change',()=>{
-  updateSheetLabels();
-  const target=$('start2');
-  if(target){ target.focus(); target.select?.(); }
-});
 updateSheetLabels();
 $('make').addEventListener('click',render);
 $('close').addEventListener('click',()=>{
