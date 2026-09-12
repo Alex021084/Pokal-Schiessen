@@ -1,3 +1,3 @@
-Pokal-Schiessen-App v53
+Pokal-Schiessen-App v54
 
-Die in v52 gespeicherten Positionen werden aus dem Browser-Speicher übernommen. Die Schaltflächen 'Positionen bearbeiten' und 'Zurücksetzen' sind in dieser Version entfernt. Die gespeicherten Positionen bleiben dadurch unverändert.
+Druck-Fix: Die bestehende Vorlage und alle gespeicherten Positionen bleiben unverändert. Vor dem Drucken wird gewartet, bis die Vorlage geladen/decodiert ist; außerdem wird die Druckansicht für Safari/iPhone korrekt statisch aufgebaut.
