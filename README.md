@@ -1,3 +1,3 @@
-Pokal-Schiessen-App v52
+Pokal-Schiessen-App v53
 
-Verwendet die vom Nutzer hochgeladene Original-PDF als unveränderte Hintergrundvorlage. Alle 8 dynamischen Scheibennummern (3 je Tabelle plus die 4. Nummer neben dem Teiler) sind separat vorhanden und können im Modus 'Positionen bearbeiten' mit dem Finger verschoben werden.
+Die in v52 gespeicherten Positionen werden aus dem Browser-Speicher übernommen. Die Schaltflächen 'Positionen bearbeiten' und 'Zurücksetzen' sind in dieser Version entfernt. Die gespeicherten Positionen bleiben dadurch unverändert.
