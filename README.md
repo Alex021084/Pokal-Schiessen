@@ -1,4 +1,3 @@
-Pokal-Schiessen-App v51
+Pokal-Schiessen-App v52
 
-Verwendet die vom Nutzer hochgeladene PDF „Schießzettel Pokal App(5).pdf“ als unveränderte Druckvorlage.
-Neu: Im Vorschaumodus gibt es „📍 Positionen bearbeiten“. Alle dynamischen Eingabefelder können auf dem Schießzettel per Finger/Maus verschoben werden. Die Positionen werden im Browser gespeichert und beim nächsten Schießzettel wieder verwendet. „↺ Zurücksetzen“ stellt die Ausgangspositionen wieder her.
+Verwendet die vom Nutzer hochgeladene Original-PDF als unveränderte Hintergrundvorlage. Alle 8 dynamischen Scheibennummern (3 je Tabelle plus die 4. Nummer neben dem Teiler) sind separat vorhanden und können im Modus 'Positionen bearbeiten' mit dem Finger verschoben werden.
