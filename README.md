@@ -1,10 +1,7 @@
-# Pokal-Schießen-App v35
+# Pokal-Schießen-App v38
 
-Saubere Einbettung der Druckvorlage ohne Asset-Ordner.
+Die Druckvorlage ist als bereinigtes Bild direkt in index.html eingebettet.
+Die alten Beispielwerte werden entfernt, ohne die Tabellenlinien zu überdecken.
+Die dynamischen Werte aus der App werden darüber gesetzt.
 
-Korrekturen:
-- dynamische Werte liegen nicht mehr über den festen Beschriftungen
-- Herren/Damen und Sandsack/Nagel werden sauber ersetzt
-- alte Scheibennummern werden vollständig überdeckt
-- fünfstellige neue Scheibennummern bleiben klein und passend
-- Überschrift, Wappen und Tabellen bleiben aus der Vorlage erhalten
+Wichtig: Es gibt keine Abhängigkeit vom Asset-Ordner.
