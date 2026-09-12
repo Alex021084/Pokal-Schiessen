@@ -1,5 +1,7 @@
-# Pokalschießen App v68
+# Pokalschießen v70
 
-Änderung gegenüber v67: Beim Eingeben der Scheibennummer wird das Eingabefeld auf iPhone/iPad automatisch in den sichtbaren Bereich vor der Bildschirmtastatur gescrollt. Dadurch bleibt die eingegebene Nummer sichtbar, ohne manuell nach unten wischen zu müssen.
+Diese Version basiert auf der bisherigen funktionierenden v68.
 
-Vorlage, gespeicherte Positionen, Druckfunktion und die übrigen Funktionen wurden nicht geändert.
+Neu: Beim Tippen auf „Drucken“ wird aus der festen A4-Darstellung zuerst eine echte einseitige PDF erzeugt. Vorlage, gespeicherte Positionen und die Eingabemaske bleiben unverändert.
+
+Auf iPhone/iPad wird die fertige PDF über die iOS-Teilen-Funktion übergeben; dort kann „Drucken“ ausgewählt werden.
