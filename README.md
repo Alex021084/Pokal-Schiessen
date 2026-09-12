@@ -1,3 +1,3 @@
-# Pokalschießen App – v47
+Pokalschießen App – v48
 
-Verwendet die zuletzt abgestimmte Druckvorlage als eingebettete Vorlage (ohne Asset-Ordner). Dynamische Werte werden sauber über die Vorlage gelegt: Vereinsname rechts neben „Verein“, Telefonnummer rechts neben „Telefon“, Geschlecht/Schießart in den beiden Bereichen und die fortlaufenden Scheibennummern inklusive der 4. Nummer jeweils rechts neben dem Teiler-Strich.
+Verwendet die zuletzt abgestimmte saubere Druckvorlage ohne fest eingetragene Scheibennummern. Die vier fortlaufenden Scheibennummern je Satz werden dynamisch aus der eingegebenen Startnummer erzeugt; die 4. Nummer steht rechts neben dem Teiler-Strich.
