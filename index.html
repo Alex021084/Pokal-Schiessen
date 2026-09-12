@@ -21,7 +21,7 @@ body > #printHost{display:block!important;position:relative!important;left:auto!
 }
 </style></head><body>
 <header><h1>🎯 Pokalschießen</h1><p>Schießzettel erstellen</p></header><main><section class="card"><h2>Schießzettel</h2>
-<label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label><div class="grid"><label>Geschlecht<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label><label>Telefon <span style="font-weight:400;opacity:.65">(optional)</span><input id="telefon" type="tel" inputmode="tel"></label></div>
+<label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label><div class="grid"><label>Geschlecht<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label><label>Telefon<input id="telefon" type="tel" inputmode="tel"></label></div>
 <div class="sets"><h3>Satz 1</h3><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 1<input id="start1" type="number" inputmode="numeric" min="1" disabled required></label>
 <h3>Satz 2</h3><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 2<input id="start2" type="number" inputmode="numeric" min="1" disabled required></label></div>
 <button id="make" type="button">Schießzettel erstellen</button></section></main>
@@ -124,20 +124,38 @@ function setEditMode(on){
 }
 function setupSheetInputs(){
   const art1=$('art1'), art2=$('art2'), start1=$('start1'), start2=$('start2');
-  const sync=()=>{
-    start1.disabled=!art1.value;
-    start2.disabled=!art2.value;
-  };
+
+  function activate(art, input){
+    const selected=!!art.value;
+    input.disabled=!selected;
+    input.required=selected;
+  }
+
+  function focusNumber(input){
+    setTimeout(()=>{
+      input.focus({preventScroll:true});
+      if(input.select) input.select();
+    },120);
+  }
+
   art1.addEventListener('change',()=>{
-    sync();
-    if(art1.value){ start1.focus(); }
+    activate(art1,start1);
+    if(art1.value) focusNumber(start1);
   });
   art2.addEventListener('change',()=>{
-    sync();
-    if(art2.value){ start2.focus(); }
+    activate(art2,start2);
+    if(art2.value) focusNumber(start2);
   });
-  start1.addEventListener('input',()=>{ if(start1.value) start2.disabled=!art2.value; });
-  sync();
+
+  start1.addEventListener('input',()=>{
+    start1.value=start1.value.replace(/\D/g,'');
+  });
+  start2.addEventListener('input',()=>{
+    start2.value=start2.value.replace(/\D/g,'');
+  });
+
+  activate(art1,start1);
+  activate(art2,start2);
 }
 setupSheetInputs();
 window.addEventListener('resize',fit);
