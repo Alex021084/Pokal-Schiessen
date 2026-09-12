@@ -1,5 +1,4 @@
-# Pokal-Schießen-App v41
+# Pokalschießen App – richtige PDF-Vorlage
 
-Die fest auf der Vorlage aufgedruckten Scheibennummern und Teilerscheiben-Nummern
-wurden aus dem eingebetteten Vorlagenbild entfernt. Die Tabellenlinien bleiben
-erhalten. Die Nummern werden ausschließlich aus der Eingabe der App erzeugt.
+Diese Version verwendet die zuletzt hochgeladene PDF als feste Vorlage.
+Die Vorlage ist direkt in `index.html` eingebettet; es wird kein `assets`-Ordner benötigt.
