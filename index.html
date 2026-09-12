@@ -9,7 +9,7 @@ label{display:block;font-weight:650;margin:12px 0} input,select{width:100%;min-h
 button{min-height:50px;border:0;border-radius:11px;padding:0 18px;font-size:17px;font-weight:700;background:#438f46;color:#fff} #make{width:100%;margin-top:14px}
 .hidden{display:none!important} .preview-modal{position:fixed;inset:0;background:#000b;z-index:20;display:flex;flex-direction:column} .preview-toolbar{background:#1d1f22;color:#fff;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px} .preview-actions{display:flex;gap:8px} .preview-actions button{min-height:44px;font-size:15px} .close-btn{background:#505257}
 .preview-content{flex:1;overflow:auto;padding:16px 8px} #out{width:100%;margin:auto;display:flex;justify-content:center} .sheet{width:1452px;height:2054px;background:#fff;position:relative;overflow:hidden;transform-origin:top center;flex:0 0 1452px}
-.template{position:absolute;inset:0;width:1452px;height:2054px;z-index:1} .dyn{position:absolute;z-index:3;color:#111;white-space:nowrap} .value{font-size:22px;line-height:1.05} .heading{font-size:27px;font-weight:800;line-height:1} .kind{font-size:27px;font-weight:800;line-height:1} .smallnum{font-size:18px;line-height:1;text-align:center}
+.template{position:absolute;inset:0;width:1452px;height:2054px;z-index:1} .dyn{position:absolute;z-index:3;color:#111;white-space:nowrap} .value{font-size:22px;line-height:1.05} .heading{font-size:23px;font-weight:800;line-height:1} .kind{font-size:23px;font-weight:800;line-height:1} .smallnum{font-size:16px;line-height:1;text-align:center}
 @media(max-width:700px){.grid{grid-template-columns:1fr} .preview-content{padding:8px 0} .preview-actions button{padding:0 12px;font-size:14px}}
 @media print{@page{size:A4 portrait;margin:0} html,body{margin:0!important;background:#fff!important} header,.card,.preview-toolbar{display:none!important} main,.preview-modal,.preview-content,#out{display:block!important;margin:0!important;padding:0!important;width:auto!important;height:auto!important;overflow:visible!important;background:#fff!important} .sheet{width:1452px!important;height:2054px!important;transform:none!important;zoom:calc(210 / 1452 * 1px) !important;box-shadow:none!important}}
 </style></head><body>
@@ -31,14 +31,14 @@ function render(){
  const n1=[s1,s1+1,s1+2], n2=[s2,s2+1,s2+2];
  let o=`<article class="sheet"><img class="template" src="${IMG}" alt="Druckvorlage">`;
  // Exact supplied PDF remains the background. Values are overlaid only in the intended blank areas.
- o+=text(220,329,'value',verein);
- o+=text(620,329,'value',telefon);
- o+=text(66,304,'heading',m); o+=text(66,333,'kind',a1);
- o+=text(66,786,'heading',m); o+=text(66,815,'kind',a2);
- [424,473,522].forEach((y,i)=>o+=center(1315,y,95,'smallnum',n1[i]));
- [905,954,1003].forEach((y,i)=>o+=center(1315,y,95,'smallnum',n2[i]));
- o+=center(1315,675,95,'smallnum',s1+3);
- o+=center(1315,1160,95,'smallnum',s2+3);
+ o+=text(215,329,'value',verein);
+ o+=text(535,329,'value',telefon);
+ o+=text(82,397,'heading',m); o+=text(82,425,'kind',a1);
+ o+=text(82,1040,'heading',m); o+=text(82,1068,'kind',a2);
+ [604,653,702].forEach((y,i)=>o+=center(1320,y,95,'smallnum',n1[i]));
+ [1260,1309,1358].forEach((y,i)=>o+=center(1320,y,95,'smallnum',n2[i]));
+ o+=center(1320,752,95,'smallnum',s1+3);
+ o+=center(1320,1407,95,'smallnum',s2+3);
  o+='</article>'; $('out').innerHTML=o; $('previewModal').classList.remove('hidden'); document.body.style.overflow='hidden'; fit(); }
 function fit(){const c=document.querySelector('.preview-content'),s=document.querySelector('.sheet'); if(!c||!s)return; const scale=Math.min((c.clientWidth-8)/1452,(c.clientHeight-8)/2054,1); s.style.transform=`scale(${scale})`; document.getElementById('out').style.height=(2054*scale)+'px';}
 window.addEventListener('resize',fit); $('make').addEventListener('click',render); $('close').addEventListener('click',()=>{$('previewModal').classList.add('hidden');document.body.style.overflow=''}); $('print').addEventListener('click',()=>window.print());
