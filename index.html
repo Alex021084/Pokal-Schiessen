@@ -21,9 +21,9 @@ body > #printHost{display:block!important;position:relative!important;left:auto!
 }
 </style></head><body>
 <header><h1>🎯 Pokalschießen</h1><p>Schießzettel erstellen</p></header><main><section class="card"><h2>Schießzettel</h2>
-<label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label><div class="grid"><label>Geschlecht<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label><label>Telefon<input id="telefon" type="tel" inputmode="tel"></label></div>
-<div class="sets"><h3>Satz 1</h3><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 1<input id="start1" type="number" inputmode="numeric" min="1"></label>
-<h3>Satz 2</h3><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 2<input id="start2" type="number" inputmode="numeric" min="1"></label></div>
+<label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label><div class="grid"><label>Geschlecht<select id="mannschaft"><option>Herren</option><option>Damen</option></select></label><label>Telefon <span style="font-weight:400;opacity:.65">(optional)</span><input id="telefon" type="tel" inputmode="tel"></label></div>
+<div class="sets"><h3>Satz 1</h3><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 1<input id="start1" type="number" inputmode="numeric" min="1" disabled required></label>
+<h3>Satz 2</h3><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für Satz 2<input id="start2" type="number" inputmode="numeric" min="1" disabled required></label></div>
 <button id="make" type="button">Schießzettel erstellen</button></section></main>
 <div id="previewModal" class="preview-modal hidden"><div class="preview-toolbar"><strong>Pokalschießen – Vorschau</strong><div class="preview-actions"><button id="print">🖨️ Drucken</button><button id="close" class="close-btn">Schließen</button></div></div><div class="preview-content"><div id="out"></div></div></div>
 <script>
@@ -54,8 +54,8 @@ function center(id,x,y,w,cls,txt){
 function render(){
   const verein=$('verein').value.trim(), telefon=$('telefon').value.trim(), m=$('mannschaft').value, a1=$('art1').value, a2=$('art2').value;
   const s1=Number($('start1').value), s2=Number($('start2').value);
-  if(!verein||!telefon||!a1||!a2||!Number.isInteger(s1)||!Number.isInteger(s2)||s1<1||s2<1){
-    alert('Bitte Verein, Telefon sowie beide Schießarten und die ersten Scheibennummern eingeben.'); return;
+  if(!verein||!a1||!a2||!Number.isInteger(s1)||!Number.isInteger(s2)||s1<1||s2<1){
+    alert('Bitte Verein, beide Schießarten und jeweils die erste Scheibennummer eingeben. Die Telefonnummer ist optional.'); return;
   }
   const n1=[s1,s1+1,s1+2], n2=[s2,s2+1,s2+2];
   const p=positions;
@@ -122,6 +122,24 @@ function setEditMode(on){
   if(on) enableDragging();
   else document.querySelectorAll('[data-pos]').forEach(el=>el.classList.remove('editable'));
 }
+function setupSheetInputs(){
+  const art1=$('art1'), art2=$('art2'), start1=$('start1'), start2=$('start2');
+  const sync=()=>{
+    start1.disabled=!art1.value;
+    start2.disabled=!art2.value;
+  };
+  art1.addEventListener('change',()=>{
+    sync();
+    if(art1.value){ start1.focus(); }
+  });
+  art2.addEventListener('change',()=>{
+    sync();
+    if(art2.value){ start2.focus(); }
+  });
+  start1.addEventListener('input',()=>{ if(start1.value) start2.disabled=!art2.value; });
+  sync();
+}
+setupSheetInputs();
 window.addEventListener('resize',fit);
 $('make').addEventListener('click',render);
 $('close').addEventListener('click',()=>{
@@ -141,7 +159,7 @@ $('print').addEventListener('click',async()=>{
   const c=(x,y,size,val)=>`<text x="${x+50}" y="${y+size*0.82}" font-family="Arial,Helvetica,sans-serif" font-size="${size}px" text-anchor="middle" fill="#111">${escSvg(val)}</text>`;
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="296mm" viewBox="0 0 1452 2054">
     <image x="0" y="0" width="1452" height="2054" href="${IMG}" preserveAspectRatio="none"/>
-    ${t(p.verein[0],p.verein[1],20,400,verein)}${t(p.telefon[0],p.telefon[1],20,400,telefon)}
+    ${t(p.verein[0],p.verein[1],20,400,verein)}${telefon ? t(p.telefon[0],p.telefon[1],20,400,telefon) : ''}
     ${t(p.heading1[0],p.heading1[1],24,800,m)}${t(p.kind1[0],p.kind1[1],24,800,a1)}
     ${t(p.heading2[0],p.heading2[1],24,800,m)}${t(p.kind2[0],p.kind2[1],24,800,a2)}
     ${c(p.n11[0],p.n11[1],16,n1[0])}${c(p.n12[0],p.n12[1],16,n1[1])}${c(p.n13[0],p.n13[1],16,n1[2])}
