@@ -1,4 +1,1 @@
-# Pokalschießen App – richtige PDF-Vorlage
-
-Diese Version verwendet die zuletzt hochgeladene PDF als feste Vorlage.
-Die Vorlage ist direkt in `index.html` eingebettet; es wird kein `assets`-Ordner benötigt.
+Pokal-Schiessen-App – verwendet die vom Benutzer hochgeladene PDF Schießzettel Pokal App(3).pdf als feste, eingebettete Druckvorlage.
