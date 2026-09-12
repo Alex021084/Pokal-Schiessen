@@ -1,1 +1,1 @@
-v56: Druckansicht isoliert, A4 Hochformat, eine Seite. Vorlage/Positionen unverändert.
+v58: Druckausgabe als eine feste A4-SVG-Seite; Vorlage und Positionen unverändert.
