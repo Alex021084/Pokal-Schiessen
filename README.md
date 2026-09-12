@@ -1,1 +1,3 @@
-Pokal-Schiessen-App – verwendet die vom Benutzer hochgeladene PDF Schießzettel Pokal App(3).pdf als feste, eingebettete Druckvorlage.
+Pokal-Schiessen-App – v45
+
+Verwendet die zuletzt gelieferte PDF als unveränderte Druckvorlage. Dynamische App-Daten werden nur in den vorgesehenen freien Bereichen darübergelegt.
