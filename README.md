@@ -1,7 +1,10 @@
-# Pokal-Schießen-App v34
+# Pokal-Schießen-App v35
 
-Die Druckvorlage ist jetzt tatsächlich direkt in der `index.html` eingebettet.
-Dadurch werden Überschrift, Wappen und Tabellen auch ohne Asset-Ordner angezeigt.
+Saubere Einbettung der Druckvorlage ohne Asset-Ordner.
 
-Die App erzeugt die Vorschau aus dieser Vorlage und setzt nur die vom Benutzer
-ausgewählten Werte und Scheibennummern darüber.
+Korrekturen:
+- dynamische Werte liegen nicht mehr über den festen Beschriftungen
+- Herren/Damen und Sandsack/Nagel werden sauber ersetzt
+- alte Scheibennummern werden vollständig überdeckt
+- fünfstellige neue Scheibennummern bleiben klein und passend
+- Überschrift, Wappen und Tabellen bleiben aus der Vorlage erhalten
