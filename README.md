@@ -1,10 +1,11 @@
-# Pokalschießen – Redesign v7
+# Pokalschießen – Redesign v8
 
-- Die Vereinskasse ist ausschließlich auf der Startseite sichtbar.
-- Beim Öffnen eines Herren-/Damen-Schießzettels wird die komplette Startseitenansicht inklusive Kasse ausgeblendet; Zurück zeigt sie wieder.
-- Die Schießart-Auswahl wurde von nativen Dropdowns auf große, touchfreundliche Auswahlflächen für Sandsack und Nagel umgestellt.
-- Auswahl einer Schießart öffnet weiterhin das große Zahlen-Popup für die Start-Scheibennummer.
-- Preisberechnung: 16,00 € je vollständigem Schießzettel; 0,50 € je Preisscheibe.
-- Bestehende Vorschau, Positionsbearbeitung und Druck-/PDF-Funktion bleiben enthalten.
+- Sandsack-Auswahlfläche blau, Nagel-Auswahlfläche rot; beide ohne Symbole.
+- Vereinskasse mit Schaltfläche zum Zurücksetzen.
+- Auswertungsfenster mit Anzahl Sandsack-/Nagel-Sätze, Preisscheiben, Einnahmen und Vereinsübersicht.
+- Vereinsübersicht zeigt pro Verein den Status Herren und Damen: grüner Pfeil für geschossen, rotes Kreuz für noch nicht geschossen.
+- Schießzettel-Einträge und Preisscheibenanzahl werden lokal im Browser gespeichert und bleiben nach erneutem Öffnen erhalten.
+- Kasse und Auswertung werden beim Zurücksetzen gemeinsam geleert.
+- Preise: 16,00 € pro vollständigem Schießzettel und 0,50 € pro Preisscheibe.
 
 Wie bisher `index.html` öffnen oder die Projektdateien auf GitHub Pages veröffentlichen.

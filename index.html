@@ -103,6 +103,47 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .kind-option.is-active .kind-option-icon{background:#ffffff20}
 .kind-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 @media(max-width:420px){.kind-option{min-height:58px;padding:8px;font-size:14px;gap:7px}.kind-option-icon{width:30px;height:30px}}
+
+/* Schießart-Farben ohne Symbole */
+.kind-option{border:1.5px solid transparent;color:#fff;box-shadow:0 5px 13px rgba(0,0,0,.10)}
+.kind-option[data-kind-value="Sandsack"]{background:#2479bd;border-color:#1c67a4}
+.kind-option[data-kind-value="Nagel"]{background:#d94343;border-color:#c52f2f}
+.kind-option[data-kind-value="Sandsack"]:hover{background:#1b68a8}
+.kind-option[data-kind-value="Nagel"]:hover{background:#c83232}
+.kind-option.is-active{outline:3px solid #f4cf22;outline-offset:2px;filter:saturate(1.08);box-shadow:0 7px 17px rgba(0,0,0,.2)}
+.kind-option.is-active[data-kind-value="Sandsack"]{background:#155d98}
+.kind-option.is-active[data-kind-value="Nagel"]{background:#b92727}
+.kind-option-icon{display:none!important}
+.cash-actions{display:grid;gap:8px;margin-top:13px}
+.cash-actions button{min-height:43px;padding:8px 10px;border-radius:12px;font-size:12px;box-shadow:none}
+.cash-summary-button{background:#14502b;color:#fff}
+.cash-reset-button{background:#f8eeee;color:#a52a2a;border:1px solid #edcaca}
+.cash-summary-button:hover{background:#0b3c20}
+.cash-reset-button:hover{background:#f3dddd;color:#8e1e1e}
+.summary-modal{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(4,22,11,.76);backdrop-filter:blur(7px)}
+.summary-modal.hidden{display:none!important}
+.summary-dialog{width:min(100%,760px);max-height:min(90vh,900px);overflow:auto;padding:25px;border-radius:24px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.summary-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}
+.summary-kicker{margin:0 0 5px;color:#78917c;font-size:10px;font-weight:850;letter-spacing:.2em}
+.summary-header h2{margin:0;color:#17231b;font-size:25px}
+.summary-close{width:40px;min-height:40px;padding:0;border-radius:50%;background:#eef4ed;color:#31543a;box-shadow:none;font-size:25px}
+.summary-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.summary-stat{padding:13px;border:1px solid #e0e9df;border-radius:15px;background:#f7faf6}
+.summary-stat span{display:block;color:#718076;font-size:11px}
+.summary-stat strong{display:block;margin-top:5px;color:#173b22;font-size:22px;font-variant-numeric:tabular-nums}
+.summary-section-title{margin:19px 0 9px;color:#17231b;font-size:16px}
+.summary-table-wrap{overflow-x:auto;border:1px solid #e3ebe2;border-radius:14px}
+.summary-table{width:100%;border-collapse:collapse;font-size:13px}
+.summary-table th,.summary-table td{padding:11px 12px;text-align:left;border-bottom:1px solid #edf1ec;white-space:nowrap}
+.summary-table th{background:#f4f8f3;color:#627267;font-size:11px}
+.summary-table tr:last-child td{border-bottom:0}
+.status-yes{color:#188343;font-weight:900;font-size:18px}
+.status-no{color:#cf3434;font-weight:900;font-size:18px}
+.summary-empty{padding:18px;border-radius:13px;background:#f6f8f5;color:#718076;text-align:center;font-size:13px}
+.summary-income{display:flex;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:13px;background:#0d3a20;color:#fff}
+.summary-income strong{color:#f4cf22;font-size:20px}
+.summary-done{width:100%;margin-top:18px;background:#14502b}
+@media(max-width:560px){.summary-dialog{padding:19px 15px;border-radius:20px}.summary-stats{grid-template-columns:1fr 1fr}.summary-stat:last-child{grid-column:1/-1}.summary-header h2{font-size:22px}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -147,10 +188,24 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   <div class="cash-subtotal"><span>Schießzettel</span><strong id="cashPokalTotal">0,00 €</strong></div>
   <div class="cash-subtotal"><span>Preisscheiben</span><strong id="cashScheibenTotal">0,00 €</strong></div>
   <div class="cash-total"><span>Gesamt</span><strong id="cashGrandTotal">0,00 €</strong></div>
+  <div class="cash-actions">
+    <button type="button" id="openSummary" class="cash-summary-button">Auswertung anzeigen</button>
+    <button type="button" id="resetCash" class="cash-reset-button">Kasse auf 0 setzen</button>
+  </div>
   <p class="cash-note">Die Kasse aktualisiert sich automatisch.</p>
 </aside>
 </div>
 
+<div id="summaryModal" class="summary-modal hidden" role="dialog" aria-modal="true" aria-labelledby="summaryTitle">
+  <section class="summary-dialog">
+    <div class="summary-header">
+      <div><p class="summary-kicker">VEREINSÜBERSICHT</p><h2 id="summaryTitle">Schieß-Auswertung</h2></div>
+      <button type="button" id="closeSummary" class="summary-close" aria-label="Fenster schließen">×</button>
+    </div>
+    <div id="summaryContent"></div>
+    <button type="button" id="closeSummaryBottom" class="summary-done">Schließen</button>
+  </section>
+</div>
 <div id="preisscheibenModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="quantityTitle">
   <section class="quantity-dialog">
     <button type="button" id="closePreisscheiben" class="quantity-close" aria-label="Fenster schließen">×</button>
@@ -182,16 +237,16 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
     <div class="sets"><div class="set-head"><span class="set-number">1</span><h3>Erster Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><div class="kind-picker-group">
       <span class="kind-picker-label">Schießart</span>
       <div class="kind-picker" role="group" aria-label="Schießart auswählen">
-        <button type="button" class="kind-option" data-kind-target="art1" data-kind-value="Sandsack"><span class="kind-option-icon">🎯</span><span>Sandsack</span></button>
-        <button type="button" class="kind-option" data-kind-target="art1" data-kind-value="Nagel"><span class="kind-option-icon">🔨</span><span>Nagel</span></button>
+        <button type="button" class="kind-option" data-kind-target="art1" data-kind-value="Sandsack"><span>Sandsack</span></button>
+        <button type="button" class="kind-option" data-kind-target="art1" data-kind-value="Nagel"><span>Nagel</span></button>
       </div>
       <select id="art1" class="kind-native" aria-hidden="true" tabindex="-1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select>
     </div><label>Erste Scheibennummer für <span id="labelArt1">Sandsack</span><input id="start1" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label>
     <div class="set-divider"></div><div class="set-head"><span class="set-number">2</span><h3>Zweiter Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><div class="kind-picker-group">
       <span class="kind-picker-label">Schießart</span>
       <div class="kind-picker" role="group" aria-label="Schießart auswählen">
-        <button type="button" class="kind-option" data-kind-target="art2" data-kind-value="Sandsack"><span class="kind-option-icon">🎯</span><span>Sandsack</span></button>
-        <button type="button" class="kind-option" data-kind-target="art2" data-kind-value="Nagel"><span class="kind-option-icon">🔨</span><span>Nagel</span></button>
+        <button type="button" class="kind-option" data-kind-target="art2" data-kind-value="Sandsack"><span>Sandsack</span></button>
+        <button type="button" class="kind-option" data-kind-target="art2" data-kind-value="Nagel"><span>Nagel</span></button>
       </div>
       <select id="art2" class="kind-native" aria-hidden="true" tabindex="-1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select>
     </div><label>Erste Scheibennummer für <span id="labelArt2">Nagel</span><input id="start2" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label></div>
@@ -246,7 +301,8 @@ function render(){
     alert('Bitte Verein, beide Schießarten und jeweils die erste Scheibennummer eingeben. Die Telefonnummer ist optional.'); return;
   }
   const n1=[s1,s1+1,s1+2], n2=[s2,s2+1,s2+2];
-  pokalCount++;
+  shotRecords.push({club:verein,group:m,arts:[a1,a2],createdAt:new Date().toISOString()});
+  saveFinanceState();
   updateCashRegister();
   const p=positions;
   let o=`<article class="sheet"><img class="template" src="${IMG}" alt="Druckvorlage">`;
@@ -424,11 +480,22 @@ function selectGroup(group){
 $('chooseHerren').addEventListener('click',()=>selectGroup('Herren'));
 
 $('chooseDamen').addEventListener('click',()=>selectGroup('Damen'));
+const FINANCE_KEY='pokalschiessen_finance_v1';
 let preisscheibenCount=0;
+let shotRecords=[];
+try{
+  const savedFinance=JSON.parse(localStorage.getItem(FINANCE_KEY)||'{}');
+  preisscheibenCount=Math.max(0,Number(savedFinance.preisscheibenCount)||0);
+  shotRecords=Array.isArray(savedFinance.shotRecords)?savedFinance.shotRecords:[];
+}catch(e){preisscheibenCount=0;shotRecords=[];}
 const countOutput=$('preisscheibenCount');
-let pokalCount=0;
+let pokalCount=shotRecords.length;
 const euro=value=>value.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+function saveFinanceState(){
+  try{localStorage.setItem(FINANCE_KEY,JSON.stringify({preisscheibenCount,shotRecords}));}catch(e){}
+}
 function updateCashRegister(){
+  pokalCount=shotRecords.length;
   const pokalTotal=pokalCount*16;
   const scheibenTotal=preisscheibenCount*0.5;
   $('cashPokalCount').textContent=pokalCount+' × 16,00 €';
@@ -439,7 +506,40 @@ function updateCashRegister(){
 }
 function updatePreisscheibenCount(){
   countOutput.textContent=String(preisscheibenCount);
+  saveFinanceState();
   updateCashRegister();
+}
+function renderSummary(){
+  const sacks=shotRecords.reduce((n,r)=>n+(r.arts||[]).filter(a=>a==='Sandsack').length,0);
+  const nails=shotRecords.reduce((n,r)=>n+(r.arts||[]).filter(a=>a==='Nagel').length,0);
+  const sheetRevenue=shotRecords.length*16;
+  const discRevenue=preisscheibenCount*0.5;
+  const clubs={};
+  shotRecords.forEach(r=>{
+    const name=(r.club||'').trim();
+    if(!name)return;
+    if(!clubs[name])clubs[name]={Herren:false,Damen:false};
+    if(r.group==='Herren'||r.group==='Damen')clubs[name][r.group]=true;
+  });
+  const clubRows=Object.keys(clubs).sort((a,b)=>a.localeCompare(b,'de')).map(name=>{
+    const c=clubs[name];
+    return `<tr><td>${esc(name)}</td><td class="summary-status">${c.Herren?'<span class="status-yes" aria-label="geschossen">➜</span>':'<span class="status-no" aria-label="nicht geschossen">✕</span>'}</td><td class="summary-status">${c.Damen?'<span class="status-yes" aria-label="geschossen">➜</span>':'<span class="status-no" aria-label="nicht geschossen">✕</span>'}</td></tr>`;
+  }).join('');
+  $('summaryContent').innerHTML=`
+    <div class="summary-stats">
+      <div class="summary-stat"><span>Sandsack</span><strong>${sacks}</strong></div>
+      <div class="summary-stat"><span>Nagel</span><strong>${nails}</strong></div>
+      <div class="summary-stat"><span>Preisscheiben</span><strong>${preisscheibenCount}</strong></div>
+    </div>
+    <h3 class="summary-section-title">Einnahmen</h3>
+    <div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Position</th><th>Anzahl</th><th>Einnahmen</th></tr></thead><tbody>
+      <tr><td>Schießzettel</td><td>${shotRecords.length}</td><td>${euro(sheetRevenue)}</td></tr>
+      <tr><td>Preisscheiben</td><td>${preisscheibenCount}</td><td>${euro(discRevenue)}</td></tr>
+    </tbody></table></div>
+    <div class="summary-income" style="margin-top:10px"><span>Gesamteinnahmen</span><strong>${euro(sheetRevenue+discRevenue)}</strong></div>
+    <h3 class="summary-section-title">Vereine – geschossen</h3>
+    ${clubRows?`<div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Verein</th><th>Herren</th><th>Damen</th></tr></thead><tbody>${clubRows}</tbody></table></div>`:'<div class="summary-empty">Noch keine Schießzettel erstellt.</div>'}
+    <p class="cash-note" style="margin-top:12px">Grüner Pfeil = geschossen · Rotes Kreuz = noch nicht geschossen</p>`;
 }
 document.querySelectorAll('[data-quantity]').forEach(button=>{
   button.addEventListener('click',()=>{
@@ -470,6 +570,31 @@ document.addEventListener('keydown',event=>{
 });
 updatePreisscheibenCount();
 updateCashRegister();
+const summaryModal=$('summaryModal');
+function openSummary(){
+  renderSummary();
+  summaryModal.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+function closeSummary(){
+  summaryModal.classList.add('hidden');
+  document.body.style.overflow='';
+}
+$('openSummary').addEventListener('click',openSummary);
+$('closeSummary').addEventListener('click',closeSummary);
+$('closeSummaryBottom').addEventListener('click',closeSummary);
+summaryModal.addEventListener('click',event=>{if(event.target===summaryModal)closeSummary();});
+$('resetCash').addEventListener('click',()=>{
+  if(!confirm('Möchtest du die Kasse und die gesamte Schieß-Auswertung wirklich auf 0 setzen? Diese Aktion kann nicht rückgängig gemacht werden.'))return;
+  preisscheibenCount=0;
+  shotRecords=[];
+  saveFinanceState();
+  updatePreisscheibenCount();
+  renderSummary();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&!summaryModal.classList.contains('hidden'))closeSummary();
+});
 
 $('backToChoice').addEventListener('click',()=>{
   $('formScreen').classList.add('hidden');
