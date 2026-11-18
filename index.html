@@ -39,18 +39,23 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 #mannschaft{display:none!important}
 @media(max-width:600px){.choice-main{width:min(100% - 22px,760px);margin-top:-34px}.choice-card{border-radius:22px;padding:18px 16px}.choice-button{min-height:72px;padding:12px}.choice-symbol{width:52px;height:52px;flex-basis:52px}}
 
-.quantity-panel{margin-top:2px;padding:17px 18px 18px;border:1px solid #dce5dc;border-radius:18px;background:linear-gradient(145deg,#f8fbf7,#edf4ec)}
-.quantity-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
-.quantity-heading strong{display:block;font-size:16px;color:#17231b}
-.quantity-heading small{display:block;margin-top:4px;font-size:12px;color:#748078}
-#preisscheibenCount{display:grid;place-items:center;min-width:66px;height:52px;padding:0 12px;border:1px solid #cbd9cb;border-radius:13px;background:#fff;color:#082b17;font-size:26px;font-weight:850;font-variant-numeric:tabular-nums}
-.quantity-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.quantity-step{display:grid;grid-template-columns:1fr 42px;gap:5px}
-.quantity-step button{min-height:48px;padding:0 8px;border-radius:12px;background:#14502b;color:#fff;font-size:16px;box-shadow:none}
-.quantity-step button.minus{background:#fff;color:#14502b;border:1px solid #cbd9cb;font-size:22px}
-.quantity-step button:active{transform:scale(.98)}
-#choosePreisscheiben.is-selected{border-color:#1d6b35;background:#eef6ed;box-shadow:0 0 0 2px #1d6b3520}
-@media(max-width:420px){.quantity-panel{padding:14px 12px}.quantity-controls{gap:6px}.quantity-step{grid-template-columns:1fr 36px;gap:4px}.quantity-step button{font-size:14px;min-height:46px}}
+
+.quantity-modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(4,22,11,.72);backdrop-filter:blur(6px)}
+.quantity-modal.hidden{display:none!important}
+.quantity-dialog{position:relative;width:min(100%,480px);padding:30px 28px 26px;border:1px solid #e0e9df;border-radius:26px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.28);text-align:center}
+.quantity-close{position:absolute;right:15px;top:13px;width:38px;min-height:38px;padding:0;border-radius:50%;background:#eef4ed;color:#31543a;box-shadow:none;font-size:25px;line-height:1}
+.quantity-kicker{margin:0 0 7px;color:#77907c;font-size:11px;font-weight:850;letter-spacing:.2em}
+.quantity-dialog h2{margin:0;font-size:clamp(22px,4vw,28px);letter-spacing:-.035em;color:#17231b}
+.quantity-intro{margin:8px 0 20px;color:#718076;font-size:14px}
+.quantity-total{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px;padding:13px 16px;border:1px solid #dce7dc;border-radius:15px;background:#f5f9f4;color:#435548;font-weight:750}
+#preisscheibenCount{display:grid;place-items:center;min-width:68px;height:52px;padding:0 12px;border:1px solid #cbd9cb;border-radius:13px;background:#fff;color:#082b17;font-size:28px;font-weight:850;font-variant-numeric:tabular-nums}
+.quantity-controls{display:flex;flex-direction:column;gap:11px}
+.quantity-step{display:grid;grid-template-columns:58px 1fr 58px;align-items:center;gap:12px}
+.quantity-step button{min-height:58px;padding:0;border-radius:15px;font-size:26px;box-shadow:none}
+.quantity-step .quantity-minus,.quantity-step .quantity-plus{background:#f5f8f4;color:#14502b;border:1px solid #d4e0d3}
+.quantity-step .quantity-value{display:grid;place-items:center;min-height:58px;border-radius:15px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:23px;font-weight:850;box-shadow:0 7px 16px #14502b24}
+.quantity-done{width:100%;margin-top:21px;background:linear-gradient(135deg,#176236,#0b3c20)}
+@media(max-width:420px){.quantity-dialog{padding:27px 18px 20px;border-radius:22px}.quantity-step{grid-template-columns:54px 1fr 54px;gap:9px}.quantity-step button,.quantity-step .quantity-value{min-height:54px}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -84,20 +89,28 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
         <span class="choice-label"><strong>Preisscheiben</strong><small>Anzahl der benötigten Preisscheiben einstellen</small></span>
         <span class="choice-arrow" aria-hidden="true">›</span>
       </button>
-      <section class="quantity-panel" aria-label="Anzahl der Preisscheiben">
-        <div class="quantity-heading">
-          <div><strong>Anzahl Preisscheiben</strong><small>Mit den Schaltflächen die Menge anpassen</small></div>
-          <output id="preisscheibenCount" aria-live="polite">0</output>
-        </div>
-        <div class="quantity-controls">
-          <div class="quantity-step"><button type="button" data-quantity="-1" aria-label="Eine Preisscheibe hinzufügen">+ 1</button><button type="button" data-quantity="1" class="minus" aria-label="Eine Preisscheibe abziehen">−</button></div>
-          <div class="quantity-step"><button type="button" data-quantity="-5" aria-label="Fünf Preisscheiben hinzufügen">+ 5</button><button type="button" data-quantity="5" class="minus" aria-label="Fünf Preisscheiben abziehen">−</button></div>
-          <div class="quantity-step"><button type="button" data-quantity="-10" aria-label="Zehn Preisscheiben hinzufügen">+ 10</button><button type="button" data-quantity="10" class="minus" aria-label="Zehn Preisscheiben abziehen">−</button></div>
-        </div>
-      </section>
     </div>
   </section>
 </main>
+
+<div id="preisscheibenModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="quantityTitle">
+  <section class="quantity-dialog">
+    <button type="button" id="closePreisscheiben" class="quantity-close" aria-label="Fenster schließen">×</button>
+    <p class="quantity-kicker">PREISSCHEIBEN</p>
+    <h2 id="quantityTitle">Anzahl der Preisscheiben</h2>
+    <p class="quantity-intro">Wie viele Preisscheiben werden benötigt?</p>
+    <div class="quantity-total">
+      <span>Gesamtanzahl</span>
+      <output id="preisscheibenCount" aria-live="polite">0</output>
+    </div>
+    <div class="quantity-controls">
+      <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-1" aria-label="1 abziehen">−</button><div class="quantity-value">1</div><button type="button" class="quantity-plus" data-quantity="1" aria-label="1 hinzufügen">+</button></div>
+      <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-5" aria-label="5 abziehen">−</button><div class="quantity-value">5</div><button type="button" class="quantity-plus" data-quantity="5" aria-label="5 hinzufügen">+</button></div>
+      <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-10" aria-label="10 abziehen">−</button><div class="quantity-value">10</div><button type="button" class="quantity-plus" data-quantity="10" aria-label="10 hinzufügen">+</button></div>
+    </div>
+    <button type="button" id="donePreisscheiben" class="quantity-done">Fertig</button>
+  </section>
+</div>
 
 <main id="formScreen" class="hidden">
   <button class="back-choice" id="backToChoice" type="button">← Zurück zur Auswahl</button>
@@ -289,14 +302,29 @@ function updatePreisscheibenCount(){countOutput.textContent=String(preisscheiben
 document.querySelectorAll('[data-quantity]').forEach(button=>{
   button.addEventListener('click',()=>{
     const delta=Number(button.dataset.quantity);
-    preisscheibenCount=Math.max(0,preisscheibenCount-delta);
+    preisscheibenCount=Math.max(0,preisscheibenCount+delta);
     updatePreisscheibenCount();
   });
 });
-$('choosePreisscheiben').addEventListener('click',()=>{
-  const button=$('choosePreisscheiben');
-  button.classList.toggle('is-selected');
-  button.setAttribute('aria-pressed',button.classList.contains('is-selected')?'true':'false');
+const preisscheibenModal=$('preisscheibenModal');
+function openPreisscheibenModal(){
+  preisscheibenModal.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  $('closePreisscheiben').focus();
+}
+function closePreisscheibenModal(){
+  preisscheibenModal.classList.add('hidden');
+  document.body.style.overflow='';
+  $('choosePreisscheiben').focus();
+}
+$('choosePreisscheiben').addEventListener('click',openPreisscheibenModal);
+$('closePreisscheiben').addEventListener('click',closePreisscheibenModal);
+$('donePreisscheiben').addEventListener('click',closePreisscheibenModal);
+preisscheibenModal.addEventListener('click',event=>{
+  if(event.target===preisscheibenModal) closePreisscheibenModal();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&!preisscheibenModal.classList.contains('hidden')) closePreisscheibenModal();
 });
 updatePreisscheibenCount();
 
