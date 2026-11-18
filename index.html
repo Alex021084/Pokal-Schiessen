@@ -74,6 +74,23 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .cash-total strong{font-size:clamp(23px,2.5vw,30px);line-height:1.1;color:#f4cf22;font-variant-numeric:tabular-nums}
 .cash-note{margin:11px 0 0;color:#87938a;font-size:10px;line-height:1.4}
 @media(max-width:720px){.start-layout{width:min(100% - 22px,760px);margin-top:-34px;grid-template-columns:1fr;gap:14px}.cash-card{position:static;display:grid;grid-template-columns:1fr 1fr;column-gap:14px;padding:15px}.cash-head{grid-column:1/-1;padding-bottom:11px;margin-bottom:3px}.cash-line{display:block;padding:8px 0}.cash-line strong{display:block;margin-top:4px}.cash-subtotal{padding:7px 0}.cash-total{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;margin-top:8px}.cash-total strong{font-size:24px}.cash-note{grid-column:1/-1}}
+
+
+/* Großes Zahlen-Popup für Scheibennummern */
+.numberpad-modal{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(4,22,11,.76);backdrop-filter:blur(7px)}
+.numberpad-modal.hidden{display:none!important}
+.numberpad-dialog{position:relative;width:min(100%,420px);padding:27px 24px 23px;border:1px solid #e0e9df;border-radius:26px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.3);text-align:center}
+.numberpad-close{position:absolute;right:13px;top:12px;width:40px;min-height:40px;padding:0;border-radius:50%;background:#eef4ed;color:#31543a;box-shadow:none;font-size:25px}
+.numberpad-kicker{margin:0 0 7px;color:#77907c;font-size:11px;font-weight:850;letter-spacing:.2em}
+.numberpad-dialog h2{margin:0;color:#17231b;font-size:24px;letter-spacing:-.03em}
+.numberpad-display{display:grid;place-items:center;min-height:64px;margin:17px 0 14px;padding:8px 14px;border:2px solid #cbdcca;border-radius:16px;background:#f5f9f4;color:#0b3c20;font-size:34px;font-weight:850;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.numberpad-display.invalid{border-color:#b42318;background:#fff5f4}
+.numberpad-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.numberpad-grid button{min-height:62px;padding:0;border-radius:15px;background:#f0f5ef;border:1px solid #dce7db;color:#173b22;font-size:25px;font-weight:800;box-shadow:0 3px 8px rgba(8,43,23,.06)}
+.numberpad-grid button:active{background:#dcebdc;transform:scale(.98)}
+.numberpad-grid button.numberpad-action{background:#e8eee7;color:#4c6651;font-size:19px}
+.numberpad-confirm{width:100%;margin-top:14px;min-height:56px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:17px}
+@media(max-width:420px){.numberpad-dialog{padding:25px 17px 18px;border-radius:22px}.numberpad-grid{gap:7px}.numberpad-grid button{min-height:58px}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -113,9 +130,9 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 </main>
 <aside class="cash-card" aria-label="Vereinskasse">
   <div class="cash-head"><span class="cash-icon">€</span><div><strong>Vereinskasse</strong><small>Live-Übersicht</small></div></div>
-  <div class="cash-line"><span>Pokale</span><strong id="cashPokalCount">0 × 8,00 €</strong></div>
+  <div class="cash-line"><span>Schießzettel</span><strong id="cashPokalCount">0 × 16,00 €</strong></div>
   <div class="cash-line"><span>Preisscheiben</span><strong id="cashScheibenCount">0 × 0,50 €</strong></div>
-  <div class="cash-subtotal"><span>Pokale</span><strong id="cashPokalTotal">0,00 €</strong></div>
+  <div class="cash-subtotal"><span>Schießzettel</span><strong id="cashPokalTotal">0,00 €</strong></div>
   <div class="cash-subtotal"><span>Preisscheiben</span><strong id="cashScheibenTotal">0,00 €</strong></div>
   <div class="cash-total"><span>Gesamt</span><strong id="cashGrandTotal">0,00 €</strong></div>
   <p class="cash-note">Die Kasse aktualisiert sich automatisch.</p>
@@ -150,11 +167,26 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
     <input id="mannschaft" type="hidden" value="Herren">
     <label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label>
     <div class="grid"><label>Telefon<input id="telefon" type="tel" inputmode="tel"></label></div>
-    <div class="sets"><div class="set-head"><span class="set-number">1</span><h3>Erster Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt1">Sandsack</span><input id="start1" type="number" inputmode="numeric" min="1" disabled required></label>
-    <div class="set-divider"></div><div class="set-head"><span class="set-number">2</span><h3>Zweiter Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt2">Nagel</span><input id="start2" type="number" inputmode="numeric" min="1" disabled required></label></div>
+    <div class="sets"><div class="set-head"><span class="set-number">1</span><h3>Erster Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt1">Sandsack</span><input id="start1" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label>
+    <div class="set-divider"></div><div class="set-head"><span class="set-number">2</span><h3>Zweiter Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt2">Nagel</span><input id="start2" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label></div>
     <button id="make" type="button">Schießzettel erstellen</button><p class="form-foot">Deine Angaben werden für die Vorschau und den Druck verwendet.</p>
   </section>
 </main>
+<div id="numberPadModal" class="numberpad-modal hidden" role="dialog" aria-modal="true" aria-labelledby="numberPadTitle">
+  <section class="numberpad-dialog">
+    <button type="button" id="numberPadClose" class="numberpad-close" aria-label="Fenster schließen">×</button>
+    <p class="numberpad-kicker">SCHEIBENNUMMER</p>
+    <h2 id="numberPadTitle">Startnummer eingeben</h2>
+    <div class="numberpad-display" id="numberPadDisplay" aria-live="polite">—</div>
+    <div class="numberpad-grid">
+      <button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button>
+      <button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button>
+      <button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button>
+      <button type="button" class="numberpad-action" data-pad-action="clear">C</button><button type="button" data-digit="0">0</button><button type="button" class="numberpad-action" data-pad-action="back">⌫</button>
+    </div>
+    <button type="button" id="numberPadConfirm" class="numberpad-confirm">Übernehmen</button>
+  </section>
+</div>
 <div id="previewModal" class="preview-modal hidden"><div class="preview-toolbar"><strong>Pokalschießen – Vorschau</strong><div class="preview-actions"><button id="print">🖨️ Drucken</button><button id="close" class="close-btn">Schließen</button></div></div><div class="preview-content"><div id="out"></div></div></div>
 <script>
 const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -256,63 +288,85 @@ function setEditMode(on){
 }
 function setupSheetInputs(){
   const art1=$('art1'), art2=$('art2'), start1=$('start1'), start2=$('start2');
+  const pad=$('numberPadModal'), display=$('numberPadDisplay');
+  let targetInput=null, padValue='';
 
-  function activate(art, input){
+  function activate(art,input){
     const selected=!!art.value;
     input.disabled=!selected;
     input.required=selected;
+    input.placeholder=selected?'Startnummer eingeben':'Zuerst Schießart auswählen';
   }
-
-  let activeNumberInput=null;
-
-  function keepInputVisible(input){
-    activeNumberInput=input;
-    const scroll=()=>{
-      if(document.activeElement!==input) return;
-      input.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
-    };
-    setTimeout(scroll,80);
-    setTimeout(scroll,350);
-    setTimeout(scroll,700);
+  function updatePadDisplay(){
+    display.textContent=padValue||'—';
   }
-
-  function focusNumber(input){
-    setTimeout(()=>{
-      input.focus({preventScroll:true});
-      if(input.select) input.select();
-      keepInputVisible(input);
-    },120);
+  function openNumberPad(input){
+    targetInput=input;
+    padValue=input.value||'';
+    display.classList.remove('invalid');
+    updatePadDisplay();
+    pad.classList.remove('hidden');
+    document.body.style.overflow='hidden';
+    $('numberPadConfirm').focus();
   }
-
-  art1.addEventListener('change',()=>{
-    activate(art1,start1);
-    updateSheetLabels();
-    if(art1.value) focusNumber(start1);
+  function closeNumberPad(){
+    pad.classList.add('hidden');
+    document.body.style.overflow='';
+    targetInput=null;
+  }
+  $('numberPadClose').addEventListener('click',closeNumberPad);
+  pad.addEventListener('click',event=>{
+    if(event.target===pad) closeNumberPad();
   });
-  art2.addEventListener('change',()=>{
-    activate(art2,start2);
-    updateSheetLabels();
-    if(art2.value) focusNumber(start2);
-  });
-
-  start1.addEventListener('focus',()=>keepInputVisible(start1));
-  start2.addEventListener('focus',()=>keepInputVisible(start2));
-
-  if(window.visualViewport){
-    visualViewport.addEventListener('resize',()=>{
-      if(activeNumberInput && document.activeElement===activeNumberInput){
-        setTimeout(()=>activeNumberInput.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'}),80);
-      }
+  document.querySelectorAll('[data-digit]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      if(padValue.length<7) padValue+=button.dataset.digit;
+      updatePadDisplay();
     });
+  });
+  document.querySelectorAll('[data-pad-action]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      if(button.dataset.padAction==='clear') padValue='';
+      if(button.dataset.padAction==='back') padValue=padValue.slice(0,-1);
+      updatePadDisplay();
+    });
+  });
+  $('numberPadConfirm').addEventListener('click',()=>{
+    if(!targetInput) return;
+    if(!padValue||Number(padValue)<1){
+      display.classList.add('invalid');
+      return;
+    }
+    targetInput.value=String(Number(padValue));
+    targetInput.dispatchEvent(new Event('input',{bubbles:true}));
+    closeNumberPad();
+  });
+  document.addEventListener('keydown',event=>{
+    if(pad.classList.contains('hidden')) return;
+    if(/^\d$/.test(event.key)){
+      if(padValue.length<7) padValue+=event.key;
+      updatePadDisplay();
+    }else if(event.key==='Backspace'){
+      padValue=padValue.slice(0,-1);updatePadDisplay();
+    }else if(event.key==='Escape'){
+      closeNumberPad();
+    }else if(event.key==='Enter'){
+      $('numberPadConfirm').click();
+    }
+  });
+
+  function onArtChange(art,input){
+    activate(art,input);
+    updateSheetLabels();
+    if(art.value) openNumberPad(input);
+    else input.value='';
   }
-
-  start1.addEventListener('input',()=>{
-    start1.value=start1.value.replace(/\D/g,'');
-  });
-  start2.addEventListener('input',()=>{
-    start2.value=start2.value.replace(/\D/g,'');
-  });
-
+  art1.addEventListener('change',()=>onArtChange(art1,start1));
+  art2.addEventListener('change',()=>onArtChange(art2,start2));
+  start1.addEventListener('click',()=>{if(!start1.disabled)openNumberPad(start1);});
+  start2.addEventListener('click',()=>{if(!start2.disabled)openNumberPad(start2);});
+  start1.addEventListener('input',()=>{start1.value=start1.value.replace(/\D/g,'');});
+  start2.addEventListener('input',()=>{start2.value=start2.value.replace(/\D/g,'');});
   activate(art1,start1);
   activate(art2,start2);
 }
@@ -332,9 +386,9 @@ const countOutput=$('preisscheibenCount');
 let pokalCount=0;
 const euro=value=>value.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
 function updateCashRegister(){
-  const pokalTotal=pokalCount*8;
+  const pokalTotal=pokalCount*16;
   const scheibenTotal=preisscheibenCount*0.5;
-  $('cashPokalCount').textContent=pokalCount+' × 8,00 €';
+  $('cashPokalCount').textContent=pokalCount+' × 16,00 €';
   $('cashScheibenCount').textContent=preisscheibenCount+' × 0,50 €';
   $('cashPokalTotal').textContent=euro(pokalTotal);
   $('cashScheibenTotal').textContent=euro(scheibenTotal);

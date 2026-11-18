@@ -1,10 +1,10 @@
-# Pokalschießen – Redesign v3
+# Pokalschießen – Redesign v6
 
-Startseite des Schützenvereins Ostereistedt 1919 e.V. mit kompakterem Kopfbereich und drei Auswahlbereichen:
-- Pokalschießen Herren
-- Pokalschießen Damen
-- Preisscheiben mit Mengensteuerung (+/- 1, 5 und 10)
+- Startseite mit Auswahl Herren, Damen und Preisscheiben
+- Vereinskasse nur auf der Startseite
+- Ein vollständig erstellter Schießzettel (zwei Schießsätze) wird mit 16,00 € berechnet
+- Preisscheiben werden mit 0,50 € pro Stück berechnet
+- Bei Auswahl von Sandsack oder Nagel öffnet sich ein großes, touchfreundliches Zahlen-Popup zur Eingabe der Start-Scheibennummer
+- Bestehende Schießzettel-Vorschau, Positionsbearbeitung und Druck-/PDF-Funktion bleiben enthalten
 
-Die vorhandene Schießzettel-Erstellung, Vorschau und PDF-Druckfunktion bleiben enthalten.
-
-Die Website kann wie bisher über `index.html` geöffnet bzw. auf GitHub Pages veröffentlicht werden.
+Wie bisher `index.html` öffnen oder die Projektdateien auf GitHub Pages veröffentlichen.
