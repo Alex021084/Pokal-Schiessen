@@ -1,7 +1,19 @@
-# Pokalschießen v70
+# Pokalschießen – Redesign
 
-Diese Version basiert auf der bisherigen funktionierenden v68.
+Modernisiertes Design für die bestehende Pokalschießen-App des Schützenvereins 1919 Ostereistedt e.V.
 
-Neu: Beim Tippen auf „Drucken“ wird aus der festen A4-Darstellung zuerst eine echte einseitige PDF erzeugt. Vorlage, gespeicherte Positionen und die Eingabemaske bleiben unverändert.
+## Änderungen
+- Responsives Erscheinungsbild in Vereinsgrün und Gold
+- Originales Vereinswappen prominent im Kopfbereich
+- Das bestehende A4-Schießzettel-Layout enthält bereits das Wappen und bleibt für Vorschau und PDF-Druck erhalten
+- Eingabefelder, Satzbereiche und Aktionsflächen optisch überarbeitet
 
-Auf iPhone/iPad wird die fertige PDF über die iOS-Teilen-Funktion übergeben; dort kann „Drucken“ ausgewählt werden.
+## Bewahrt
+- Bestehende Eingabe-IDs und Auswahlmöglichkeiten
+- Validierung und Berechnung der Scheibennummern
+- Positionsbearbeitung des Schießzettels
+- PDF-Erstellung und iOS-Teilen/Drucken
+- Bestehende Druckvorlage und gespeicherte Positionsdaten
+
+## Start
+`index.html` direkt im Browser öffnen oder wie bisher auf dem Webspace veröffentlichen.
