@@ -4,9 +4,9 @@
 :root{--forest:#082b17;--forest-2:#104326;--leaf:#1d6b35;--gold:#f4cf22;--ink:#17231b;--muted:#65736a;--paper:#f4f7f3;--line:#dce5dc;--white:#fff;--shadow:0 18px 48px rgba(8,43,23,.10)}
 *{box-sizing:border-box}html{min-height:100%;background:var(--paper)}
 body{margin:0;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#eaf1e9 0,#f5f7f4 420px,var(--paper) 100%);min-height:100vh}
-.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 10%,rgba(244,207,34,.16),transparent 28%),linear-gradient(135deg,#061e10 0%,#0c3a20 58%,#14502b 100%);color:#fff;padding:34px 20px 78px;text-align:center}
+.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 10%,rgba(244,207,34,.16),transparent 28%),linear-gradient(135deg,#061e10 0%,#0c3a20 58%,#14502b 100%);color:#fff;padding:18px 20px 56px;text-align:center}
 .hero:after{content:"";position:absolute;inset:auto -10% -100px;height:180px;border-radius:50% 50% 0 0;background:var(--paper);opacity:.12}
-.brand{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:20px;max-width:900px;margin:0 auto}.brand-crest{width:118px;height:118px;object-fit:contain;border-radius:22px;box-shadow:0 12px 30px #0004;background:#fff;flex:0 0 auto}.brand-copy{text-align:left}
+.brand{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:20px;max-width:900px;margin:0 auto}.brand-crest{width:92px;height:92px;object-fit:contain;border-radius:22px;box-shadow:0 12px 30px #0004;background:#fff;flex:0 0 auto}.brand-copy{text-align:left}
 .eyebrow{margin:0 0 7px;color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.19em;text-transform:uppercase}.hero h1{margin:0;font-size:clamp(27px,5vw,42px);line-height:1.05;letter-spacing:-.035em;font-weight:850}.hero p{margin:10px 0 0;color:#e0eadf;font-size:15px}.hero-tag{display:inline-flex;align-items:center;gap:8px;margin-top:17px;padding:7px 12px;border:1px solid #ffffff35;border-radius:999px;color:#f5e7a0;font-size:12px;font-weight:700;letter-spacing:.04em;background:#ffffff0c}
 main{position:relative;z-index:2;width:min(100% - 32px,760px);margin:-48px auto 48px}.card{background:var(--white);border:1px solid #e8eee8;border-radius:24px;padding:clamp(20px,4vw,32px);box-shadow:var(--shadow)}
 .section-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}.section-icon{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border-radius:15px;background:#edf5ed;color:var(--leaf);font-size:22px}.section-head h2{margin:1px 0 4px;font-size:22px;letter-spacing:-.025em}.section-head p{margin:0;color:var(--muted);font-size:14px;line-height:1.45}
@@ -14,7 +14,7 @@ label{display:block;margin:16px 0 0;font-size:14px;font-weight:750;color:#26372b
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.sets{margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:19px;background:linear-gradient(145deg,#fbfdfb,#f4f8f3)}.set-head{display:flex;align-items:center;gap:11px;margin-bottom:8px}.set-number{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--forest);color:var(--gold);font-weight:850}.set-head h3{margin:0;font-size:16px}.set-sub{margin:0 0 10px 43px;color:var(--muted);font-size:12px}.set-divider{height:1px;background:var(--line);margin:20px 0}
 button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px;font-weight:800;background:var(--leaf);color:#fff;cursor:pointer;box-shadow:0 7px 16px #14502b24;transition:transform .15s,background .15s,box-shadow .15s}button:hover{background:var(--forest-2);box-shadow:0 9px 20px #14502b30}button:active{transform:translateY(1px)}#make{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:24px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff}#make:after{content:"→";font-size:20px;color:var(--gold)}.form-foot{margin:13px 0 0;text-align:center;color:var(--muted);font-size:12px}
 .hidden{display:none!important}.preview-modal{position:fixed;inset:0;background:#06180ee8;z-index:20;display:flex;flex-direction:column;backdrop-filter:blur(7px)}.preview-toolbar{background:var(--forest);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #ffffff20}.preview-toolbar strong{font-size:15px}.preview-actions{display:flex;gap:8px}.preview-actions button{min-height:42px;padding:0 15px;font-size:14px}.close-btn{background:#ffffff1c;box-shadow:none;border:1px solid #ffffff35}.preview-content{flex:1;overflow:auto;padding:16px 8px}#out{width:100%;margin:auto;display:flex;justify-content:center}.sheet{width:1452px;height:2054px;background:#fff;position:relative;overflow:hidden;transform-origin:top center;flex:0 0 1452px}.template{position:absolute;inset:0;width:1452px;height:2054px;z-index:1}.dyn{position:absolute;z-index:3;color:#111;white-space:nowrap}.value{font-size:20px;line-height:1.05}.heading,.kind{font-size:24px;font-weight:800;line-height:1}.smallnum{font-size:16px;line-height:1;text-align:center}.editable{outline:2px dashed #1683ff!important;outline-offset:3px;cursor:move;touch-action:none}.pos-label{position:absolute;z-index:10;background:#1683ff;color:#fff;font-size:12px;padding:2px 5px;border-radius:4px;pointer-events:none}#printHost{display:none}
-@media(max-width:600px){.hero{padding:26px 18px 72px}.brand{gap:13px}.brand-crest{width:86px;height:86px;border-radius:17px}.brand-copy{text-align:left}.hero p{font-size:13px}main{width:min(100% - 22px,760px);margin-top:-42px}.grid{grid-template-columns:1fr;gap:0}.card{border-radius:20px;padding:20px}.sets{padding:16px}.preview-content{padding:8px 0}.preview-actions button{padding:0 11px;font-size:13px}.preview-toolbar{padding:9px 10px}}
+@media(max-width:600px){.hero{padding:14px 18px 48px}.brand{gap:13px}.brand-crest{width:72px;height:72px;border-radius:14px}.brand-copy{text-align:left}.hero p{font-size:13px}main{width:min(100% - 22px,760px);margin-top:-42px}.grid{grid-template-columns:1fr;gap:0}.card{border-radius:20px;padding:20px}.sets{padding:16px}.preview-content{padding:8px 0}.preview-actions button{padding:0 11px;font-size:13px}.preview-toolbar{padding:9px 10px}}
 @media(max-width:360px){.brand{gap:9px}.brand-crest{width:72px;height:72px}.hero h1{font-size:25px}.hero p{font-size:12px}}
 @media print{@page{size:210mm 297mm;margin:0}html,body{margin:0!important;padding:0!important;width:210mm!important;height:296mm!important;min-height:296mm!important;max-height:296mm!important;overflow:hidden!important;background:#fff!important}body>*{display:none!important}body>#printHost{display:block!important;position:relative!important;left:auto!important;top:auto!important;width:210mm!important;height:296mm!important;min-height:296mm!important;max-height:296mm!important;margin:0!important;padding:0!important;overflow:hidden!important;break-before:avoid!important;break-after:avoid!important;page-break-before:avoid!important;page-break-after:avoid!important;break-inside:avoid!important;page-break-inside:avoid!important}#printImage{display:block!important;position:absolute!important;left:0!important;top:0!important;width:210mm!important;height:296mm!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important}}
 
@@ -23,8 +23,8 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .choice-card{background:#fff;border:1px solid #e8eee8;border-radius:26px;padding:clamp(22px,4vw,34px);box-shadow:var(--shadow)}
 .choice-kicker{margin:0 0 8px;color:#829087;font-size:12px;font-weight:850;letter-spacing:.2em;text-transform:uppercase}
 .choice-title{margin:0 0 24px;font-size:clamp(26px,4.5vw,36px);letter-spacing:-.04em;color:#17231b}
-.choice-buttons{display:grid;grid-template-columns:1fr;gap:14px}
-.choice-button{width:100%;min-height:96px;display:flex;align-items:center;gap:18px;text-align:left;padding:18px 22px;border:1px solid #dce5dc;border-radius:20px;background:linear-gradient(135deg,#fff,#f7faf6);color:#17231b;box-shadow:0 5px 18px rgba(8,43,23,.055)}
+.choice-buttons{display:grid;grid-template-columns:1fr;gap:11px}
+.choice-button{width:100%;min-height:82px;display:flex;align-items:center;gap:18px;text-align:left;padding:18px 22px;border:1px solid #dce5dc;border-radius:20px;background:linear-gradient(135deg,#fff,#f7faf6);color:#17231b;box-shadow:0 5px 18px rgba(8,43,23,.055)}
 .choice-button:hover{border-color:#8eae94;background:#f4f8f2;color:#082b17}
 .choice-symbol{display:grid;place-items:center;width:58px;height:58px;flex:0 0 58px;border-radius:17px;background:#edf5ed;color:#14502b;font-size:29px}
 .choice-label{display:flex;flex-direction:column;gap:5px;flex:1}
@@ -37,7 +37,20 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .section-icon{display:none!important}
 .section-head{gap:0}
 #mannschaft{display:none!important}
-@media(max-width:600px){.choice-main{width:min(100% - 22px,760px);margin-top:-42px}.choice-card{border-radius:22px;padding:22px 18px}.choice-button{min-height:88px;padding:15px}.choice-symbol{width:52px;height:52px;flex-basis:52px}}
+@media(max-width:600px){.choice-main{width:min(100% - 22px,760px);margin-top:-34px}.choice-card{border-radius:22px;padding:18px 16px}.choice-button{min-height:72px;padding:12px}.choice-symbol{width:52px;height:52px;flex-basis:52px}}
+
+.quantity-panel{margin-top:2px;padding:17px 18px 18px;border:1px solid #dce5dc;border-radius:18px;background:linear-gradient(145deg,#f8fbf7,#edf4ec)}
+.quantity-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.quantity-heading strong{display:block;font-size:16px;color:#17231b}
+.quantity-heading small{display:block;margin-top:4px;font-size:12px;color:#748078}
+#preisscheibenCount{display:grid;place-items:center;min-width:66px;height:52px;padding:0 12px;border:1px solid #cbd9cb;border-radius:13px;background:#fff;color:#082b17;font-size:26px;font-weight:850;font-variant-numeric:tabular-nums}
+.quantity-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.quantity-step{display:grid;grid-template-columns:1fr 42px;gap:5px}
+.quantity-step button{min-height:48px;padding:0 8px;border-radius:12px;background:#14502b;color:#fff;font-size:16px;box-shadow:none}
+.quantity-step button.minus{background:#fff;color:#14502b;border:1px solid #cbd9cb;font-size:22px}
+.quantity-step button:active{transform:scale(.98)}
+#choosePreisscheiben.is-selected{border-color:#1d6b35;background:#eef6ed;box-shadow:0 0 0 2px #1d6b3520}
+@media(max-width:420px){.quantity-panel{padding:14px 12px}.quantity-controls{gap:6px}.quantity-step{grid-template-columns:1fr 36px;gap:4px}.quantity-step button{font-size:14px;min-height:46px}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -66,6 +79,22 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
         <span class="choice-label"><strong>Pokalschießen Damen</strong><small>Schießzettel für die Damen erstellen</small></span>
         <span class="choice-arrow" aria-hidden="true">›</span>
       </button>
+      <button class="choice-button" id="choosePreisscheiben" type="button" aria-pressed="false">
+        <span class="choice-symbol" aria-hidden="true">🎯</span>
+        <span class="choice-label"><strong>Preisscheiben</strong><small>Anzahl der benötigten Preisscheiben einstellen</small></span>
+        <span class="choice-arrow" aria-hidden="true">›</span>
+      </button>
+      <section class="quantity-panel" aria-label="Anzahl der Preisscheiben">
+        <div class="quantity-heading">
+          <div><strong>Anzahl Preisscheiben</strong><small>Mit den Schaltflächen die Menge anpassen</small></div>
+          <output id="preisscheibenCount" aria-live="polite">0</output>
+        </div>
+        <div class="quantity-controls">
+          <div class="quantity-step"><button type="button" data-quantity="-1" aria-label="Eine Preisscheibe hinzufügen">+ 1</button><button type="button" data-quantity="1" class="minus" aria-label="Eine Preisscheibe abziehen">−</button></div>
+          <div class="quantity-step"><button type="button" data-quantity="-5" aria-label="Fünf Preisscheiben hinzufügen">+ 5</button><button type="button" data-quantity="5" class="minus" aria-label="Fünf Preisscheiben abziehen">−</button></div>
+          <div class="quantity-step"><button type="button" data-quantity="-10" aria-label="Zehn Preisscheiben hinzufügen">+ 10</button><button type="button" data-quantity="10" class="minus" aria-label="Zehn Preisscheiben abziehen">−</button></div>
+        </div>
+      </section>
     </div>
   </section>
 </main>
@@ -252,7 +281,25 @@ function selectGroup(group){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 $('chooseHerren').addEventListener('click',()=>selectGroup('Herren'));
+
 $('chooseDamen').addEventListener('click',()=>selectGroup('Damen'));
+let preisscheibenCount=0;
+const countOutput=$('preisscheibenCount');
+function updatePreisscheibenCount(){countOutput.textContent=String(preisscheibenCount);}
+document.querySelectorAll('[data-quantity]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const delta=Number(button.dataset.quantity);
+    preisscheibenCount=Math.max(0,preisscheibenCount-delta);
+    updatePreisscheibenCount();
+  });
+});
+$('choosePreisscheiben').addEventListener('click',()=>{
+  const button=$('choosePreisscheiben');
+  button.classList.toggle('is-selected');
+  button.setAttribute('aria-pressed',button.classList.contains('is-selected')?'true':'false');
+});
+updatePreisscheibenCount();
+
 $('backToChoice').addEventListener('click',()=>{
   $('formScreen').classList.add('hidden');
   $('choiceScreen').classList.remove('hidden');

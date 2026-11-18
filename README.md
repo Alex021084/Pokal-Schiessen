@@ -1,14 +1,10 @@
-# Pokalschießen – Redesign v2
+# Pokalschießen – Redesign v3
 
-## Änderungen
-- Startseite mit zwei großen Auswahlflächen: „Pokalschießen Herren“ und „Pokalschießen Damen“
-- Geschlecht wird bereits bei der Auswahl gesetzt und muss im Formular nicht erneut ausgewählt werden
-- Vereinsname korrigiert auf „Schützenverein Ostereistedt 1919 e.V.“
-- Vereinswappen direkt in die HTML-Datei eingebettet, damit es auch bei abweichendem Upload-/Ordnerpfad sicher angezeigt wird
-- Dekoratives Quadrat mit Stern neben „Schießzettel erstellen“ entfernt
+Startseite des Schützenvereins Ostereistedt 1919 e.V. mit kompakterem Kopfbereich und drei Auswahlbereichen:
+- Pokalschießen Herren
+- Pokalschießen Damen
+- Preisscheiben mit Mengensteuerung (+/- 1, 5 und 10)
 
-## Erhalten
-Die vorhandene Schießzettel-Erstellung, Nummernberechnung, Vorschau, Positionsbearbeitung und PDF-/Druckfunktion bleiben im vorhandenen Projekt enthalten.
+Die vorhandene Schießzettel-Erstellung, Vorschau und PDF-Druckfunktion bleiben enthalten.
 
-## Start
-`index.html` im Browser öffnen oder den gesamten Ordner `Pokalschießen` auf den Webspace hochladen.
+Die Website kann wie bisher über `index.html` geöffnet bzw. auf GitHub Pages veröffentlicht werden.
