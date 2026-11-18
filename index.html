@@ -91,6 +91,18 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .numberpad-grid button.numberpad-action{background:#e8eee7;color:#4c6651;font-size:19px}
 .numberpad-confirm{width:100%;margin-top:14px;min-height:56px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:17px}
 @media(max-width:420px){.numberpad-dialog{padding:25px 17px 18px;border-radius:22px}.numberpad-grid{gap:7px}.numberpad-grid button{min-height:58px}}
+
+/* Moderne Schießart-Auswahl */
+.kind-picker-group{margin-top:16px}
+.kind-picker-label{display:block;margin:0 0 8px;font-size:14px;font-weight:750;color:#26372b}
+.kind-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kind-option{display:flex;align-items:center;justify-content:center;gap:10px;min-height:62px;padding:10px 14px;border:1.5px solid #d5e1d5;border-radius:15px;background:linear-gradient(145deg,#fff,#f6faf5);color:#31513a;box-shadow:0 3px 10px rgba(8,43,23,.045);font-size:16px;font-weight:800}
+.kind-option:hover{border-color:#8eaf91;background:#f0f7ef}
+.kind-option.is-active{border-color:#14502b;background:linear-gradient(135deg,#14502b,#1d6b35);color:#fff;box-shadow:0 7px 16px rgba(20,80,43,.2)}
+.kind-option-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#eaf2e8;font-size:19px}
+.kind-option.is-active .kind-option-icon{background:#ffffff20}
+.kind-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media(max-width:420px){.kind-option{min-height:58px;padding:8px;font-size:14px;gap:7px}.kind-option-icon{width:30px;height:30px}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -167,8 +179,22 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
     <input id="mannschaft" type="hidden" value="Herren">
     <label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label>
     <div class="grid"><label>Telefon<input id="telefon" type="tel" inputmode="tel"></label></div>
-    <div class="sets"><div class="set-head"><span class="set-number">1</span><h3>Erster Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><label>Schießart<select id="art1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt1">Sandsack</span><input id="start1" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label>
-    <div class="set-divider"></div><div class="set-head"><span class="set-number">2</span><h3>Zweiter Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><label>Schießart<select id="art2"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select></label><label>Erste Scheibennummer für <span id="labelArt2">Nagel</span><input id="start2" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label></div>
+    <div class="sets"><div class="set-head"><span class="set-number">1</span><h3>Erster Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><div class="kind-picker-group">
+      <span class="kind-picker-label">Schießart</span>
+      <div class="kind-picker" role="group" aria-label="Schießart auswählen">
+        <button type="button" class="kind-option" data-kind-target="art1" data-kind-value="Sandsack"><span class="kind-option-icon">🎯</span><span>Sandsack</span></button>
+        <button type="button" class="kind-option" data-kind-target="art1" data-kind-value="Nagel"><span class="kind-option-icon">🔨</span><span>Nagel</span></button>
+      </div>
+      <select id="art1" class="kind-native" aria-hidden="true" tabindex="-1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select>
+    </div><label>Erste Scheibennummer für <span id="labelArt1">Sandsack</span><input id="start1" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label>
+    <div class="set-divider"></div><div class="set-head"><span class="set-number">2</span><h3>Zweiter Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><div class="kind-picker-group">
+      <span class="kind-picker-label">Schießart</span>
+      <div class="kind-picker" role="group" aria-label="Schießart auswählen">
+        <button type="button" class="kind-option" data-kind-target="art2" data-kind-value="Sandsack"><span class="kind-option-icon">🎯</span><span>Sandsack</span></button>
+        <button type="button" class="kind-option" data-kind-target="art2" data-kind-value="Nagel"><span class="kind-option-icon">🔨</span><span>Nagel</span></button>
+      </div>
+      <select id="art2" class="kind-native" aria-hidden="true" tabindex="-1"><option value="">Bitte auswählen</option><option>Sandsack</option><option>Nagel</option></select>
+    </div><label>Erste Scheibennummer für <span id="labelArt2">Nagel</span><input id="start2" type="text" inputmode="none" readonly disabled required placeholder="Nummer auswählen"></label></div>
     <button id="make" type="button">Schießzettel erstellen</button><p class="form-foot">Deine Angaben werden für die Vorschau und den Druck verwendet.</p>
   </section>
 </main>
@@ -288,6 +314,18 @@ function setEditMode(on){
 }
 function setupSheetInputs(){
   const art1=$('art1'), art2=$('art2'), start1=$('start1'), start2=$('start2');
+  document.querySelectorAll('[data-kind-target]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const select=$(button.dataset.kindTarget);
+      select.value=button.dataset.kindValue;
+      select.dispatchEvent(new Event('change',{bubbles:true}));
+      document.querySelectorAll('[data-kind-target="'+button.dataset.kindTarget+'"]').forEach(option=>{
+        const active=option===button;
+        option.classList.toggle('is-active',active);
+        option.setAttribute('aria-pressed',active?'true':'false');
+      });
+    });
+  });
   const pad=$('numberPadModal'), display=$('numberPadDisplay');
   let targetInput=null, padValue='';
 
@@ -356,6 +394,11 @@ function setupSheetInputs(){
   });
 
   function onArtChange(art,input){
+    document.querySelectorAll('[data-kind-target="'+art.id+'"]').forEach(option=>{
+      const active=option.dataset.kindValue===art.value;
+      option.classList.toggle('is-active',active);
+      option.setAttribute('aria-pressed',active?'true':'false');
+    });
     activate(art,input);
     updateSheetLabels();
     if(art.value) openNumberPad(input);
@@ -374,7 +417,7 @@ function setupSheetInputs(){
 function selectGroup(group){
   $('mannschaft').value=group;
   $('formTitle').textContent='Schießzettel '+group;
-  $('choiceScreen').classList.add('hidden');
+  $('startLayout').classList.add('hidden');
   $('formScreen').classList.remove('hidden');
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -430,7 +473,7 @@ updateCashRegister();
 
 $('backToChoice').addEventListener('click',()=>{
   $('formScreen').classList.add('hidden');
-  $('choiceScreen').classList.remove('hidden');
+  $('startLayout').classList.remove('hidden');
   window.scrollTo({top:0,behavior:'smooth'});
 });
 
