@@ -56,6 +56,24 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .quantity-step .quantity-value{display:grid;place-items:center;min-height:58px;border-radius:15px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:23px;font-weight:850;box-shadow:0 7px 16px #14502b24}
 .quantity-done{width:100%;margin-top:21px;background:linear-gradient(135deg,#176236,#0b3c20)}
 @media(max-width:420px){.quantity-dialog{padding:27px 18px 20px;border-radius:22px}.quantity-step{grid-template-columns:54px 1fr 54px;gap:9px}.quantity-step button,.quantity-step .quantity-value{min-height:54px}}
+
+/* Startseite mit seitlicher Vereinskasse */
+.start-layout{width:min(100% - 32px,1100px);margin:-48px auto 48px;position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,3fr) minmax(230px,1fr);gap:18px;align-items:start}
+.choice-main{width:100%;margin:0}
+.cash-card{position:sticky;top:18px;background:#fff;border:1px solid #e1eae0;border-radius:22px;padding:19px 17px;box-shadow:var(--shadow);min-width:0}
+.cash-head{display:flex;align-items:center;gap:11px;padding-bottom:15px;border-bottom:1px solid #e7eee6;margin-bottom:10px}
+.cash-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#edf5ed;color:#14502b;font-size:24px;font-weight:850}
+.cash-head strong{display:block;font-size:17px;color:#17231b}
+.cash-head small{display:block;margin-top:3px;color:#829087;font-size:11px}
+.cash-line{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 0;color:#66746a;font-size:12px;border-bottom:1px solid #f0f3ef}
+.cash-line strong{color:#26372b;font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cash-subtotal{display:flex;justify-content:space-between;gap:8px;padding:8px 0;color:#65736a;font-size:12px}
+.cash-subtotal strong{color:#26372b;font-variant-numeric:tabular-nums}
+.cash-total{display:flex;flex-direction:column;gap:5px;margin-top:9px;padding:13px 12px;border-radius:14px;background:linear-gradient(135deg,#0d3a20,#176236);color:#e8f1e7}
+.cash-total span{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.cash-total strong{font-size:clamp(23px,2.5vw,30px);line-height:1.1;color:#f4cf22;font-variant-numeric:tabular-nums}
+.cash-note{margin:11px 0 0;color:#87938a;font-size:10px;line-height:1.4}
+@media(max-width:720px){.start-layout{width:min(100% - 22px,760px);margin-top:-34px;grid-template-columns:1fr;gap:14px}.cash-card{position:static;display:grid;grid-template-columns:1fr 1fr;column-gap:14px;padding:15px}.cash-head{grid-column:1/-1;padding-bottom:11px;margin-bottom:3px}.cash-line{display:block;padding:8px 0}.cash-line strong{display:block;margin-top:4px}.cash-subtotal{padding:7px 0}.cash-total{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;margin-top:8px}.cash-total strong{font-size:24px}.cash-note{grid-column:1/-1}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -69,6 +87,7 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   </div>
 </header>
 
+<div class="start-layout" id="startLayout">
 <main id="choiceScreen" class="choice-main">
   <section class="choice-card">
     <p class="choice-kicker">Pokalschießen</p>
@@ -92,6 +111,16 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
     </div>
   </section>
 </main>
+<aside class="cash-card" aria-label="Vereinskasse">
+  <div class="cash-head"><span class="cash-icon">€</span><div><strong>Vereinskasse</strong><small>Live-Übersicht</small></div></div>
+  <div class="cash-line"><span>Pokale</span><strong id="cashPokalCount">0 × 8,00 €</strong></div>
+  <div class="cash-line"><span>Preisscheiben</span><strong id="cashScheibenCount">0 × 0,50 €</strong></div>
+  <div class="cash-subtotal"><span>Pokale</span><strong id="cashPokalTotal">0,00 €</strong></div>
+  <div class="cash-subtotal"><span>Preisscheiben</span><strong id="cashScheibenTotal">0,00 €</strong></div>
+  <div class="cash-total"><span>Gesamt</span><strong id="cashGrandTotal">0,00 €</strong></div>
+  <p class="cash-note">Die Kasse aktualisiert sich automatisch.</p>
+</aside>
+</div>
 
 <div id="preisscheibenModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="quantityTitle">
   <section class="quantity-dialog">
@@ -159,6 +188,8 @@ function render(){
     alert('Bitte Verein, beide Schießarten und jeweils die erste Scheibennummer eingeben. Die Telefonnummer ist optional.'); return;
   }
   const n1=[s1,s1+1,s1+2], n2=[s2,s2+1,s2+2];
+  pokalCount++;
+  updateCashRegister();
   const p=positions;
   let o=`<article class="sheet"><img class="template" src="${IMG}" alt="Druckvorlage">`;
   o+=text('verein',p.verein[0],p.verein[1],'value',verein);
@@ -298,7 +329,21 @@ $('chooseHerren').addEventListener('click',()=>selectGroup('Herren'));
 $('chooseDamen').addEventListener('click',()=>selectGroup('Damen'));
 let preisscheibenCount=0;
 const countOutput=$('preisscheibenCount');
-function updatePreisscheibenCount(){countOutput.textContent=String(preisscheibenCount);}
+let pokalCount=0;
+const euro=value=>value.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
+function updateCashRegister(){
+  const pokalTotal=pokalCount*8;
+  const scheibenTotal=preisscheibenCount*0.5;
+  $('cashPokalCount').textContent=pokalCount+' × 8,00 €';
+  $('cashScheibenCount').textContent=preisscheibenCount+' × 0,50 €';
+  $('cashPokalTotal').textContent=euro(pokalTotal);
+  $('cashScheibenTotal').textContent=euro(scheibenTotal);
+  $('cashGrandTotal').textContent=euro(pokalTotal+scheibenTotal);
+}
+function updatePreisscheibenCount(){
+  countOutput.textContent=String(preisscheibenCount);
+  updateCashRegister();
+}
 document.querySelectorAll('[data-quantity]').forEach(button=>{
   button.addEventListener('click',()=>{
     const delta=Number(button.dataset.quantity);
@@ -327,6 +372,7 @@ document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&!preisscheibenModal.classList.contains('hidden')) closePreisscheibenModal();
 });
 updatePreisscheibenCount();
+updateCashRegister();
 
 $('backToChoice').addEventListener('click',()=>{
   $('formScreen').classList.add('hidden');
