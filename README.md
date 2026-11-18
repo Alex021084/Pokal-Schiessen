@@ -1,19 +1,14 @@
-# Pokalschießen – Redesign
-
-Modernisiertes Design für die bestehende Pokalschießen-App des Schützenvereins 1919 Ostereistedt e.V.
+# Pokalschießen – Redesign v2
 
 ## Änderungen
-- Responsives Erscheinungsbild in Vereinsgrün und Gold
-- Originales Vereinswappen prominent im Kopfbereich
-- Das bestehende A4-Schießzettel-Layout enthält bereits das Wappen und bleibt für Vorschau und PDF-Druck erhalten
-- Eingabefelder, Satzbereiche und Aktionsflächen optisch überarbeitet
+- Startseite mit zwei großen Auswahlflächen: „Pokalschießen Herren“ und „Pokalschießen Damen“
+- Geschlecht wird bereits bei der Auswahl gesetzt und muss im Formular nicht erneut ausgewählt werden
+- Vereinsname korrigiert auf „Schützenverein Ostereistedt 1919 e.V.“
+- Vereinswappen direkt in die HTML-Datei eingebettet, damit es auch bei abweichendem Upload-/Ordnerpfad sicher angezeigt wird
+- Dekoratives Quadrat mit Stern neben „Schießzettel erstellen“ entfernt
 
-## Bewahrt
-- Bestehende Eingabe-IDs und Auswahlmöglichkeiten
-- Validierung und Berechnung der Scheibennummern
-- Positionsbearbeitung des Schießzettels
-- PDF-Erstellung und iOS-Teilen/Drucken
-- Bestehende Druckvorlage und gespeicherte Positionsdaten
+## Erhalten
+Die vorhandene Schießzettel-Erstellung, Nummernberechnung, Vorschau, Positionsbearbeitung und PDF-/Druckfunktion bleiben im vorhandenen Projekt enthalten.
 
 ## Start
-`index.html` direkt im Browser öffnen oder wie bisher auf dem Webspace veröffentlichen.
+`index.html` im Browser öffnen oder den gesamten Ordner `Pokalschießen` auf den Webspace hochladen.
