@@ -262,6 +262,10 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   user-select:none;
   -webkit-user-select:none;
 }
+
+.summary-pdf-button{display:block;margin-top:12px;width:100%;padding:11px 12px;border:0;border-radius:10px;background:#315f43;color:#fff;font:700 15px/1.2 inherit;cursor:pointer}
+.summary-pdf-button:active{transform:scale(.99)}
+@media print{.summary-pdf-button{display:none}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -716,7 +720,7 @@ function renderSummary(){
     <div class="summary-stats">
       <div class="summary-stat"><span>Sandsack</span><strong>${sacks}</strong></div>
       <div class="summary-stat"><span>Nagel</span><strong>${nails}</strong></div>
-      <div class="summary-stat"><span>Preisscheiben</span><strong>${totalPreisscheibenCount}</strong></div>
+      <div class="summary-stat"><span>Preisscheiben</span><strong>${totalPreisscheibenCount}</strong><button type="button" id="exportShooterPdf" class="summary-pdf-button">PDF öffnen / Drucken</button></div>
     </div>
     <h3 class="summary-section-title">Einnahmen</h3>
     <div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Position</th><th>Anzahl</th><th>Einnahmen</th></tr></thead><tbody>
@@ -727,6 +731,7 @@ function renderSummary(){
     <h3 class="summary-section-title">Vereine – geschossen</h3>
     ${clubRows?`<div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Verein</th><th>Herren</th><th>Damen</th></tr></thead><tbody>${clubRows}</tbody></table></div>`:'<div class="summary-empty">Noch keine Schießzettel erstellt.</div>'}
     <p class="cash-note" style="margin-top:12px">Grüner Haken = geschossen · Rotes Kreuz = noch nicht geschossen</p>`;
+  $('exportShooterPdf').addEventListener('click',openShooterPdf);
 }
 document.querySelectorAll('[data-quantity]').forEach(button=>{
   button.addEventListener('click',()=>{
@@ -839,6 +844,57 @@ document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&!paymentModal.classList.contains('hidden'))closePayment();
 });
 const summaryModal=$('summaryModal');
+function openShooterPdf(){
+  const records=[...shooterRecords].sort((a,b)=>(Number(a.number)||0)-(Number(b.number)||0));
+  const totalDiscs=records.reduce((sum,r)=>sum+Math.max(0,Number(r.quantity)||0),0);
+  const totalPrice=totalDiscs*0.5;
+  const rows=records.map(r=>`<tr>
+    <td>${escapeShooterText(r.number)}</td>
+    <td>${escapeShooterText(r.name||'')}</td>
+    <td>${escapeShooterText(r.club||'—')}</td>
+    <td class="num">${Math.max(0,Number(r.quantity)||0)}</td>
+    <td class="num">${euro(Math.max(0,Number(r.quantity)||0)*0.5)}</td>
+  </tr>`).join('');
+  const report=`
+  <!doctype html><html lang="de"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Preisscheiben – Schützenübersicht</title>
+  <style>
+    *{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#1c2a20;margin:0;padding:28px}
+    h1{font-size:25px;margin:0 0 6px} .sub{color:#647268;margin:0 0 22px;font-size:13px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{background:#edf3ed;text-align:left;color:#425448}
+    th,td{padding:11px 9px;border-bottom:1px solid #dce5dc}
+    .num{text-align:right;white-space:nowrap}
+    tfoot td{font-weight:bold;background:#f5f8f5}
+    .totals{margin-top:22px;display:flex;gap:12px}
+    .total{flex:1;border:1px solid #dce5dc;border-radius:10px;padding:14px}
+    .total span{display:block;color:#647268;font-size:12px;margin-bottom:5px}
+    .total strong{font-size:20px}
+    .note{margin-top:20px;color:#78857b;font-size:11px}
+    @page{size:A4;margin:15mm}
+    @media print{body{padding:0}.no-print{display:none}}
+  </style></head><body>
+    <h1>Preisscheiben – Schützenübersicht</h1>
+    <p class="sub">Erstellt am ${new Date().toLocaleDateString('de-DE')}</p>
+    <table><thead><tr><th>Nr.</th><th>Name</th><th>Verein</th><th class="num">Scheiben</th><th class="num">Betrag</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="5">Noch keine Schützen mit Preisscheiben erfasst.</td></tr>'}</tbody>
+    <tfoot><tr><td colspan="3">Gesamt</td><td class="num">${totalDiscs}</td><td class="num">${euro(totalPrice)}</td></tr></tfoot></table>
+    <div class="totals">
+      <div class="total"><span>Gesamtscheiben</span><strong>${totalDiscs}</strong></div>
+      <div class="total"><span>Gesamtpreis (0,50 € je Scheibe)</span><strong>${euro(totalPrice)}</strong></div>
+    </div>
+    <p class="note">Die Übersicht enthält die gespeicherten Verkäufe je Schütze.</p>
+    <p class="no-print" style="margin-top:24px"><button onclick="window.print()" style="padding:12px 18px;background:#315f43;color:white;border:0;border-radius:8px;font-weight:bold">Drucken / Als PDF sichern</button></p>
+  </body></html>`;
+  const win=window.open('','_blank');
+  if(!win){alert('Das PDF-Fenster wurde blockiert. Bitte Pop-ups für diese Seite erlauben.');return;}
+  win.document.open();
+  win.document.write(report);
+  win.document.close();
+  win.focus();
+  setTimeout(()=>win.print(),700);
+}
 function openSummary(){
   renderSummary();
   summaryModal.classList.remove('hidden');
