@@ -411,7 +411,7 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   <label style="display:block;margin:12px 0 8px">Name des Schützen<input id="shooterName" type="text" placeholder="Vor- und Nachname" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
   <label style="display:block;margin:8px 0">Verein (optional)<input id="shooterClub" type="text" placeholder="Verein" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
   <label style="display:block;margin:8px 0">Telefon (optional)<input id="shooterPhone" type="tel" placeholder="Telefonnummer" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
-  <label style="display:block;margin:8px 0">Anzahl Preisscheiben<input id="shooterQuantity" type="number" min="1" step="1" value="1" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
+  <label style="display:block;margin:8px 0">Anzahl Preisscheiben<input id="shooterQuantity" type="number" min="1" step="1" value="1" readonly style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
   <button type="button" id="addShooter" class="quantity-done">Schützen / Verkauf speichern</button>
  </section>
 </div>
@@ -674,6 +674,7 @@ $('chooseHerren').addEventListener('click',()=>selectGroup('Herren'));
 $('chooseDamen').addEventListener('click',()=>selectGroup('Damen'));
 const FINANCE_KEY='pokalschiessen_finance_v1';
 let preisscheibenCount=0;
+let draftPreisscheibenCount=0;
 let shotRecords=[];
 let pendingPokalCount=0;
 let paidPreisscheibenCount=0;
@@ -741,11 +742,14 @@ function renderSummary(){
     <p class="cash-note" style="margin-top:12px">Grüner Haken = geschossen · Rotes Kreuz = noch nicht geschossen</p>`;
   $('exportShooterPdf').addEventListener('click',openShooterPdf);
 }
+function updateDraftPreisscheibenCount(){
+  countOutput.textContent=String(draftPreisscheibenCount);
+}
 document.querySelectorAll('[data-quantity]').forEach(button=>{
   button.addEventListener('click',()=>{
     const delta=Number(button.dataset.quantity);
-    preisscheibenCount=Math.max(0,preisscheibenCount+delta);
-    updatePreisscheibenCount();
+    draftPreisscheibenCount=Math.max(0,draftPreisscheibenCount+delta);
+    updateDraftPreisscheibenCount();
   });
 });
 const preisscheibenModal=$('preisscheibenModal');
@@ -753,26 +757,42 @@ const preisscheibenModal=$('preisscheibenModal');
 $('preisscheibenModal').addEventListener('dblclick',event=>event.preventDefault(),{passive:false});
 
 function openPreisscheibenModal(){
+  draftPreisscheibenCount=0;
+  updateDraftPreisscheibenCount();
   preisscheibenModal.classList.remove('hidden');
   document.body.style.overflow='hidden';
   $('closePreisscheiben').focus();
 }
-function closePreisscheibenModal(){
+function cancelPreisscheibenFlow(){
+  draftPreisscheibenCount=0;
+  updateDraftPreisscheibenCount();
   preisscheibenModal.classList.add('hidden');
+  shooterChoiceModal.classList.add('hidden');
+  assignShooterModal.classList.add('hidden');
+  shooterRegisterModal.classList.add('hidden');
   document.body.style.overflow='';
+}
+function closePreisscheibenModal(){
+  cancelPreisscheibenFlow();
   $('choosePreisscheiben').focus();
 }
 $('choosePreisscheiben').addEventListener('click',openPreisscheibenModal);
 $('closePreisscheiben').addEventListener('click',closePreisscheibenModal);
 $('donePreisscheiben').addEventListener('click',()=>{
-  $('choiceDiscCount').textContent=String(preisscheibenCount);
+  if(draftPreisscheibenCount<1){alert('Bitte zuerst mindestens eine Preisscheibe auswählen.');return;}
+  $('choiceDiscCount').textContent=String(draftPreisscheibenCount);
   shooterChoiceModal.classList.remove('hidden');
 });
 preisscheibenModal.addEventListener('click',event=>{
   if(event.target===preisscheibenModal) closePreisscheibenModal();
 });
 document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'&&!preisscheibenModal.classList.contains('hidden')) closePreisscheibenModal();
+  if(event.key==='Escape'&&(
+    !preisscheibenModal.classList.contains('hidden')||
+    !shooterChoiceModal.classList.contains('hidden')||
+    !assignShooterModal.classList.contains('hidden')||
+    !shooterRegisterModal.classList.contains('hidden')
+  )) closePreisscheibenModal();
 });
 updatePreisscheibenCount();
 updateCashRegister();
@@ -1082,7 +1102,7 @@ function updateNextShooterNumber(){
   $('nextShooterNumber').textContent=String(getNextShooterNumber());
 }
 function openShooterRegisterForNew(){
-  $('shooterQuantity').value=String(Math.max(1,preisscheibenCount));
+  $('shooterQuantity').value=String(Math.max(1,draftPreisscheibenCount));
   $('shooterRegisterTitle').textContent='Neuen Schützen anlegen';
   $('addShooter').textContent='Schütze speichern';
   updateNextShooterNumber();
@@ -1091,7 +1111,8 @@ function openShooterRegisterForNew(){
 }
 function assignPreisscheibenToShooter(rec){
   if(!rec)return;
-  rec.quantity+=preisscheibenCount;
+  rec.quantity+=draftPreisscheibenCount;
+  preisscheibenCount+=draftPreisscheibenCount;
   updatePreisscheibenCount();
   saveFinanceState();
   assignShooterModal.classList.add('hidden');
@@ -1101,7 +1122,7 @@ function shooterChoiceButton(r){
   return `<button type="button" data-assign-shooter="${escapeShooterText(r.id)}" style="display:block;width:100%;text-align:left;padding:15px;margin:8px 0;border:1px solid #dce7dc;border-radius:12px;background:#f5f8f5;color:#173321"><strong>Nr. ${escapeShooterText(r.number)} · ${escapeShooterText(r.name)}</strong><div style="font-size:14px;color:#526257">${escapeShooterText(r.club||'')} · bisher ${r.quantity} Scheiben</div></button>`;
 }
 function openAssignShooter(){
-  $('assignDiscCount').textContent=String(preisscheibenCount);
+  $('assignDiscCount').textContent=String(draftPreisscheibenCount);
   $('assignShooterNumber').value='';
   $('assignShooterMatch').innerHTML='';
   const list=$('assignShooterList');
@@ -1134,20 +1155,20 @@ $('assignShooterNumber').addEventListener('input',()=>{
 
 $('chooseNewShooter').addEventListener('click',openShooterRegisterForNew);
 $('chooseExistingShooter').addEventListener('click',openAssignShooter);
-$('closeShooterChoice').addEventListener('click',()=>shooterChoiceModal.classList.add('hidden'));
-$('closeAssignShooter').addEventListener('click',()=>assignShooterModal.classList.add('hidden'));
+$('closeShooterChoice').addEventListener('click',cancelPreisscheibenFlow);
+$('closeAssignShooter').addEventListener('click',cancelPreisscheibenFlow);
 
 function escapeShooterText(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function closeShooterRegister(){shooterRegisterModal.classList.add('hidden');document.body.style.overflow='';}
+function closeShooterRegister(){cancelPreisscheibenFlow();}
 $('closeShooterRegister').addEventListener('click',closeShooterRegister);
 shooterRegisterModal.addEventListener('click',e=>{if(e.target===shooterRegisterModal)closeShooterRegister();});
 $('addShooter').addEventListener('click',()=>{
- const name=$('shooterName').value.trim(),quantity=Number($('shooterQuantity').value);
+ const name=$('shooterName').value.trim(),quantity=draftPreisscheibenCount;
  if(!name){alert('Bitte den Namen des Schützen eingeben.');$('shooterName').focus();return;}
  if(!Number.isInteger(quantity)||quantity<1){alert('Bitte eine gültige Anzahl Preisscheiben eingeben.');return;}
  const number=getNextShooterNumber();
  shooterRecords.push({id:'sh-'+Date.now()+'-'+number,number,name,club:$('shooterClub').value.trim(),phone:$('shooterPhone').value.trim(),quantity});
- preisscheibenCount=quantity;
+ preisscheibenCount+=quantity;
  updatePreisscheibenCount();
  $('shooterName').value='';$('shooterClub').value='';$('shooterPhone').value='';$('shooterQuantity').value='1';
  updateNextShooterNumber();
