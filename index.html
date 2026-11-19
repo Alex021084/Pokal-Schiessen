@@ -158,6 +158,12 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .status-no{color:#cf3434;font-size:20px}
 .summary-reset{width:100%;margin-top:9px;min-height:45px;border:1px solid #edcaca;border-radius:12px;background:#fff5f4;color:#a52a2a;font-size:13px;font-weight:750;box-shadow:none}
 .summary-reset:hover{background:#fbe8e6;color:#8e1e1e}
+
+/* Einnahmen-Tabelle: Anzahl und Einnahmen sauber mittig ausrichten */
+.summary-table-wrap .summary-table thead th:nth-child(2),
+.summary-table-wrap .summary-table thead th:nth-child(3),
+.summary-table-wrap .summary-table tbody td:nth-child(2),
+.summary-table-wrap .summary-table tbody td:nth-child(3){text-align:center}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -197,9 +203,9 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 </main>
 <aside class="cash-card" aria-label="Vereinskasse">
   <div class="cash-head"><span class="cash-icon">€</span><div><strong>Vereinskasse</strong><small>Live-Übersicht</small></div></div>
-  <div class="cash-line"><span>Schießzettel</span><strong id="cashPokalCount">0 × 16,00 €</strong></div>
+  <div class="cash-line"><span>Pokale</span><strong id="cashPokalCount">0 × 8,00 €</strong></div>
   <div class="cash-line"><span>Preisscheiben</span><strong id="cashScheibenCount">0 × 0,50 €</strong></div>
-  <div class="cash-subtotal"><span>Schießzettel</span><strong id="cashPokalTotal">0,00 €</strong></div>
+  <div class="cash-subtotal"><span>Pokale</span><strong id="cashPokalTotal">0,00 €</strong></div>
   <div class="cash-subtotal"><span>Preisscheiben</span><strong id="cashScheibenTotal">0,00 €</strong></div>
   <div class="cash-total"><span>Gesamt</span><strong id="cashGrandTotal">0,00 €</strong></div>
   <div class="cash-actions">
@@ -510,9 +516,10 @@ function saveFinanceState(){
 }
 function updateCashRegister(){
   pokalCount=shotRecords.length;
-  const pokalTotal=pokalCount*16;
+  const trophyCount=pokalCount*2;
+  const pokalTotal=trophyCount*8;
   const scheibenTotal=preisscheibenCount*0.5;
-  $('cashPokalCount').textContent=pokalCount+' × 16,00 €';
+  $('cashPokalCount').textContent=trophyCount+' × 8,00 €';
   $('cashScheibenCount').textContent=preisscheibenCount+' × 0,50 €';
   $('cashPokalTotal').textContent=euro(pokalTotal);
   $('cashScheibenTotal').textContent=euro(scheibenTotal);
@@ -547,7 +554,7 @@ function renderSummary(){
     </div>
     <h3 class="summary-section-title">Einnahmen</h3>
     <div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Position</th><th>Anzahl</th><th>Einnahmen</th></tr></thead><tbody>
-      <tr><td>Schießzettel</td><td>${shotRecords.length}</td><td>${euro(sheetRevenue)}</td></tr>
+      <tr><td>Pokale</td><td>${shotRecords.length*2}</td><td>${euro(sheetRevenue)}</td></tr>
       <tr><td>Preisscheiben</td><td>${preisscheibenCount}</td><td>${euro(discRevenue)}</td></tr>
     </tbody></table></div>
     <div class="summary-income" style="margin-top:10px"><span>Gesamteinnahmen</span><strong>${euro(sheetRevenue+discRevenue)}</strong></div>

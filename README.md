@@ -1,10 +1,10 @@
-# Pokalschießen – Redesign v9
+# Pokalschießen – Redesign v10
 
-Änderungen gegenüber v8:
-- Startseiten-Überschrift auf „Gruppe auswählen“ verkürzt (einzeilig).
-- Reset-Schaltfläche aus der Kassenkarte entfernt und ans Ende der Schieß-Auswertung verschoben.
-- Reset-Schaltfläche heißt „Alles zurücksetzen“ und setzt nach Bestätigung Kasse, Preisscheibenanzahl und Schieß-Auswertung zurück.
-- Vereinsstatus zeigt einen grünen Haken für geschossen und ein rotes Kreuz für noch nicht geschossen.
-- Herren- und Damen-Statuszeichen sind mittig unter ihren jeweiligen Spaltenüberschriften ausgerichtet.
+- Ein vollständiger Schießzettel zählt als zwei Pokale.
+- Jeder Pokal wird einzeln mit 8,00 € berechnet.
+- Kassenübersicht zeigt Pokale statt Schießzettel, z. B. 4 × 8,00 € bei zwei vollständigen Schießzetteln.
+- Einnahmen-Auswertung zeigt ebenfalls die Anzahl der Pokale (zwei je Schießzettel) und den Gesamtbetrag.
+- In der Einnahmen-Tabelle sind die Werte unter „Anzahl“ und „Einnahmen“ mittig ausgerichtet.
+- Preisscheiben bleiben bei 0,50 € pro Stück.
 
-Preise und bisherige Funktionen bleiben unverändert.
+Alle weiteren Funktionen aus v9 bleiben erhalten.
