@@ -391,7 +391,11 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   <button type="button" id="closeAssignShooter" class="quantity-close" aria-label="Fenster schließen">×</button>
   <p class="quantity-kicker">PREISSCHEIBEN</p><h2 id="assignShooterTitle">Schützen zuordnen</h2>
   <p class="quantity-intro">Wähle die Schützennummer für <strong id="assignDiscCount">0</strong> Preisscheiben.</p>
-  <div id="assignShooterList" style="max-height:45vh;overflow:auto"></div>
+  <label style="display:block;text-align:left;margin:14px 0 8px;font-weight:700">Startnummer direkt eingeben
+   <input id="assignShooterNumber" type="number" min="1" step="1" inputmode="numeric" placeholder="z. B. 13" style="display:block;width:100%;margin-top:8px;padding:14px;border:1px solid #cbd9cb;border-radius:12px;font-size:20px;box-sizing:border-box">
+  </label>
+  <div id="assignShooterMatch" aria-live="polite" style="margin-bottom:12px"></div>
+  <div id="assignShooterList" style="max-height:35vh;overflow:auto"></div>
  </section>
 </div>
 <div id="shooterRegisterModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="shooterRegisterTitle">
@@ -1085,24 +1089,49 @@ function openShooterRegisterForNew(){
   shooterChoiceModal.classList.add('hidden');
   shooterRegisterModal.classList.remove('hidden');
 }
+function assignPreisscheibenToShooter(rec){
+  if(!rec)return;
+  rec.quantity+=preisscheibenCount;
+  updatePreisscheibenCount();
+  saveFinanceState();
+  assignShooterModal.classList.add('hidden');
+  closePreisscheibenModal();
+}
+function shooterChoiceButton(r){
+  return `<button type="button" data-assign-shooter="${escapeShooterText(r.id)}" style="display:block;width:100%;text-align:left;padding:15px;margin:8px 0;border:1px solid #dce7dc;border-radius:12px;background:#f5f8f5;color:#173321"><strong>Nr. ${escapeShooterText(r.number)} · ${escapeShooterText(r.name)}</strong><div style="font-size:14px;color:#526257">${escapeShooterText(r.club||'')} · bisher ${r.quantity} Scheiben</div></button>`;
+}
 function openAssignShooter(){
   $('assignDiscCount').textContent=String(preisscheibenCount);
+  $('assignShooterNumber').value='';
+  $('assignShooterMatch').innerHTML='';
   const list=$('assignShooterList');
-  if(!shooterRecords.length){list.innerHTML='<p style="color:#718076">Es sind noch keine Schützen angelegt. Bitte zuerst „Neuer Schütze“ wählen.</p>';}
-  else {
-    list.innerHTML=shooterRecords.map(r=>`<button type="button" data-assign-shooter="${r.id}" style="display:block;width:100%;text-align:left;padding:15px;margin:8px 0;border:1px solid #dce7dc;border-radius:12px;background:#f5f8f5;color:#173321"><strong>Nr. ${r.number} · ${escapeShooterText(r.name)}</strong><div style="font-size:14px;color:#526257">${escapeShooterText(r.club||'')} · bisher ${r.quantity} Scheiben</div></button>`).join('');
-    list.querySelectorAll('[data-assign-shooter]').forEach(b=>b.addEventListener('click',()=>{
-      const rec=shooterRecords.find(r=>r.id===b.dataset.assignShooter);if(!rec)return;
-      rec.quantity+=preisscheibenCount;
-      updatePreisscheibenCount();
-      saveFinanceState();
-      assignShooterModal.classList.add('hidden');
-      closePreisscheibenModal();
-    }));
+  if(!shooterRecords.length){
+    list.innerHTML='<p style="color:#718076">Es sind noch keine Schützen angelegt. Bitte zuerst „Neuer Schütze“ wählen.</p>';
+  }else{
+    list.innerHTML=shooterRecords.map(shooterChoiceButton).join('');
   }
+  list.querySelectorAll('[data-assign-shooter]').forEach(b=>b.addEventListener('click',()=>{
+    const rec=shooterRecords.find(r=>r.id===b.dataset.assignShooter);
+    assignPreisscheibenToShooter(rec);
+  }));
   shooterChoiceModal.classList.add('hidden');
   assignShooterModal.classList.remove('hidden');
+  setTimeout(()=>$('assignShooterNumber').focus(),100);
 }
+$('assignShooterNumber').addEventListener('input',()=>{
+  const raw=$('assignShooterNumber').value.trim();
+  const matchBox=$('assignShooterMatch');
+  if(!raw){matchBox.innerHTML='';return;}
+  const number=Number(raw);
+  const rec=Number.isInteger(number)&&number>0?shooterRecords.find(r=>Number(r.number)===number):null;
+  if(!rec){
+    matchBox.innerHTML='<p style="padding:12px;border-radius:10px;background:#fff4e8;color:#805522;margin:0">Keine Schützennummer gefunden.</p>';
+    return;
+  }
+  matchBox.innerHTML=shooterChoiceButton(rec);
+  matchBox.querySelector('[data-assign-shooter]').addEventListener('click',()=>assignPreisscheibenToShooter(rec));
+});
+
 $('chooseNewShooter').addEventListener('click',openShooterRegisterForNew);
 $('chooseExistingShooter').addEventListener('click',openAssignShooter);
 $('closeShooterChoice').addEventListener('click',()=>shooterChoiceModal.classList.add('hidden'));
