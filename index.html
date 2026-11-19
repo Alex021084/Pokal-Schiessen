@@ -144,6 +144,20 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .summary-income strong{color:#f4cf22;font-size:20px}
 .summary-done{width:100%;margin-top:18px;background:#14502b}
 @media(max-width:560px){.summary-dialog{padding:19px 15px;border-radius:20px}.summary-stats{grid-template-columns:1fr 1fr}.summary-stat:last-child{grid-column:1/-1}.summary-header h2{font-size:22px}}
+
+/* Kleine, einzeilige Überschrift auf der Startseite */
+.choice-title{white-space:nowrap;font-size:clamp(20px,2.4vw,30px);line-height:1.2}
+@media(max-width:520px){.choice-title{font-size:clamp(18px,5vw,24px)}}
+
+/* Vereinsstatus mittig unter den Spaltenüberschriften */
+.summary-table th:nth-child(2),.summary-table th:nth-child(3),
+.summary-table td.summary-status{text-align:center;vertical-align:middle}
+.summary-table td.summary-status{width:90px}
+.status-yes,.status-no{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;line-height:1;border-radius:50%}
+.status-yes{color:#188343;font-size:24px}
+.status-no{color:#cf3434;font-size:20px}
+.summary-reset{width:100%;margin-top:9px;min-height:45px;border:1px solid #edcaca;border-radius:12px;background:#fff5f4;color:#a52a2a;font-size:13px;font-weight:750;box-shadow:none}
+.summary-reset:hover{background:#fbe8e6;color:#8e1e1e}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -161,7 +175,7 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 <main id="choiceScreen" class="choice-main">
   <section class="choice-card">
     <p class="choice-kicker">Pokalschießen</p>
-    <h2 class="choice-title">Für welche Gruppe möchtest du einen Schießzettel erstellen?</h2>
+    <h2 class="choice-title">Gruppe auswählen</h2>
     <div class="choice-buttons">
       <button class="choice-button" id="chooseHerren" type="button">
         <span class="choice-symbol" aria-hidden="true">🏆</span>
@@ -190,7 +204,6 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   <div class="cash-total"><span>Gesamt</span><strong id="cashGrandTotal">0,00 €</strong></div>
   <div class="cash-actions">
     <button type="button" id="openSummary" class="cash-summary-button">Auswertung anzeigen</button>
-    <button type="button" id="resetCash" class="cash-reset-button">Kasse auf 0 setzen</button>
   </div>
   <p class="cash-note">Die Kasse aktualisiert sich automatisch.</p>
 </aside>
@@ -204,6 +217,7 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
     </div>
     <div id="summaryContent"></div>
     <button type="button" id="closeSummaryBottom" class="summary-done">Schließen</button>
+    <button type="button" id="resetCash" class="summary-reset">Alles zurücksetzen</button>
   </section>
 </div>
 <div id="preisscheibenModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="quantityTitle">
@@ -523,7 +537,7 @@ function renderSummary(){
   });
   const clubRows=Object.keys(clubs).sort((a,b)=>a.localeCompare(b,'de')).map(name=>{
     const c=clubs[name];
-    return `<tr><td>${esc(name)}</td><td class="summary-status">${c.Herren?'<span class="status-yes" aria-label="geschossen">➜</span>':'<span class="status-no" aria-label="nicht geschossen">✕</span>'}</td><td class="summary-status">${c.Damen?'<span class="status-yes" aria-label="geschossen">➜</span>':'<span class="status-no" aria-label="nicht geschossen">✕</span>'}</td></tr>`;
+    return `<tr><td>${esc(name)}</td><td class="summary-status">${c.Herren?'<span class="status-yes" aria-label="geschossen">✓</span>':'<span class="status-no" aria-label="nicht geschossen">✕</span>'}</td><td class="summary-status">${c.Damen?'<span class="status-yes" aria-label="geschossen">✓</span>':'<span class="status-no" aria-label="nicht geschossen">✕</span>'}</td></tr>`;
   }).join('');
   $('summaryContent').innerHTML=`
     <div class="summary-stats">
@@ -539,7 +553,7 @@ function renderSummary(){
     <div class="summary-income" style="margin-top:10px"><span>Gesamteinnahmen</span><strong>${euro(sheetRevenue+discRevenue)}</strong></div>
     <h3 class="summary-section-title">Vereine – geschossen</h3>
     ${clubRows?`<div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Verein</th><th>Herren</th><th>Damen</th></tr></thead><tbody>${clubRows}</tbody></table></div>`:'<div class="summary-empty">Noch keine Schießzettel erstellt.</div>'}
-    <p class="cash-note" style="margin-top:12px">Grüner Pfeil = geschossen · Rotes Kreuz = noch nicht geschossen</p>`;
+    <p class="cash-note" style="margin-top:12px">Grüner Haken = geschossen · Rotes Kreuz = noch nicht geschossen</p>`;
 }
 document.querySelectorAll('[data-quantity]').forEach(button=>{
   button.addEventListener('click',()=>{
