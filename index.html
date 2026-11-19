@@ -913,6 +913,9 @@ function openShooterPdf(){
     @page{size:A4;margin:10mm}
     @media print{body{padding:0}.no-print{display:none}}
   </style></head><body>
+    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <button type="button" onclick="if(window.opener){window.close()}else{history.back()}" style="padding:9px 14px;background:#eaf1ea;color:#24432d;border:1px solid #cbd9cb;border-radius:7px;font-weight:bold;font-size:12px">← Zurück zur Auswertung</button>
+    </div>
     <h1>Preisscheiben – Schützenübersicht</h1>
     <p class="sub">Erstellt am ${new Date().toLocaleDateString('de-DE')}</p>
     <table><thead><tr><th>Nr.</th><th>Name</th><th>Verein</th>${phoneHead}<th class="num">Scheiben</th><th class="num">Betrag</th></tr></thead>
