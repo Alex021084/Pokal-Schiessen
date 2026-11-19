@@ -369,8 +369,23 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
       <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-5" aria-label="5 abziehen">−</button><div class="quantity-value">5</div><button type="button" class="quantity-plus" data-quantity="5" aria-label="5 hinzufügen">+</button></div>
       <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-10" aria-label="10 abziehen">−</button><div class="quantity-value">10</div><button type="button" class="quantity-plus" data-quantity="10" aria-label="10 hinzufügen">+</button></div>
     </div>
+    <button type="button" id="openShooterRegister" class="quantity-done" style="margin-bottom:10px;background:#315f43">Schützenverwaltung öffnen</button>
     <button type="button" id="donePreisscheiben" class="quantity-done">Fertig</button>
   </section>
+</div>
+
+<div id="shooterRegisterModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="shooterRegisterTitle">
+ <section class="quantity-dialog" style="max-width:560px">
+  <button type="button" id="closeShooterRegister" class="quantity-close" aria-label="Fenster schließen">×</button>
+  <p class="quantity-kicker">PREISSCHEIBEN</p><h2 id="shooterRegisterTitle">Schützenverwaltung</h2>
+  <p class="quantity-intro">Jeder Verkauf wird einem Schützen zugeordnet. Weitere Käufe kannst du später ergänzen.</p>
+  <label style="display:block;margin:12px 0 8px">Name des Schützen<input id="shooterName" type="text" placeholder="Vor- und Nachname" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
+  <label style="display:block;margin:8px 0">Verein (optional)<input id="shooterClub" type="text" placeholder="Verein" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
+  <label style="display:block;margin:8px 0">Telefon (optional)<input id="shooterPhone" type="tel" placeholder="Telefonnummer" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
+  <label style="display:block;margin:8px 0">Anzahl Preisscheiben<input id="shooterQuantity" type="number" min="1" step="1" value="1" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
+  <button type="button" id="addShooter" class="quantity-done">Schützen / Verkauf speichern</button>
+  <div id="shooterRegisterList" style="margin-top:16px;max-height:35vh;overflow:auto"></div>
+ </section>
 </div>
 
 <main id="formScreen" class="hidden">
@@ -634,6 +649,7 @@ let preisscheibenCount=0;
 let shotRecords=[];
 let pendingPokalCount=0;
 let paidPreisscheibenCount=0;
+let shooterRecords=[];
 try{
   const savedFinance=JSON.parse(localStorage.getItem(FINANCE_KEY)||'{}');
   preisscheibenCount=Math.max(0,Number(savedFinance.preisscheibenCount)||0);
@@ -641,12 +657,13 @@ try{
   pendingPokalCount=Number.isFinite(Number(savedFinance.pendingPokalCount))
     ?Math.max(0,Number(savedFinance.pendingPokalCount)):shotRecords.length*2;
   paidPreisscheibenCount=Math.max(0,Number(savedFinance.paidPreisscheibenCount)||0);
-}catch(e){preisscheibenCount=0;shotRecords=[];pendingPokalCount=0;paidPreisscheibenCount=0;}
+  shooterRecords=Array.isArray(savedFinance.shooterRecords)?savedFinance.shooterRecords:[];
+}catch(e){preisscheibenCount=0;shotRecords=[];pendingPokalCount=0;paidPreisscheibenCount=0;shooterRecords=[];}
 const countOutput=$('preisscheibenCount');
 let pokalCount=shotRecords.length;
 const euro=value=>value.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
 function saveFinanceState(){
-  try{localStorage.setItem(FINANCE_KEY,JSON.stringify({preisscheibenCount,shotRecords,pendingPokalCount,paidPreisscheibenCount}));}catch(e){}
+  try{localStorage.setItem(FINANCE_KEY,JSON.stringify({preisscheibenCount,shotRecords,pendingPokalCount,paidPreisscheibenCount,shooterRecords}));}catch(e){}
 }
 function updateCashRegister(){
   const pokalTotal=pendingPokalCount*8;
@@ -822,6 +839,7 @@ $('resetCash').addEventListener('click',()=>{
   shotRecords=[];
   pendingPokalCount=0;
   paidPreisscheibenCount=0;
+  shooterRecords=[];
   saveFinanceState();
   updatePreisscheibenCount();
   renderSummary();
@@ -960,4 +978,32 @@ function buildSimplePdf(base64Jpeg,w,h){
   chunks.push(enc.encode(xref));
   return new Blob(chunks,{type:'application/pdf'});
 }
+
+const shooterRegisterModal=$('shooterRegisterModal');
+function renderShooterRegister(){
+ const list=$('shooterRegisterList');
+ if(!shooterRecords.length){list.innerHTML='<p style="color:#718076">Noch keine Schützen erfasst.</p>';return;}
+ list.innerHTML=shooterRecords.map(r=>`<div style="padding:12px;margin:8px 0;border:1px solid #dce7dc;border-radius:12px"><strong>#${r.number} · ${escapeShooterText(r.name)}</strong><div style="font-size:14px;color:#526257">${escapeShooterText(r.club||'')} ${r.phone?'· '+escapeShooterText(r.phone):''}</div><div style="margin-top:5px">${r.quantity} Scheiben · ${euro(r.quantity*.5)}</div><button type="button" data-add-discs="${r.id}" style="margin-top:8px;padding:8px 12px;border:0;border-radius:8px;background:#315f43;color:white">Weitere Scheiben hinzufügen</button></div>`).join('');
+ list.querySelectorAll('[data-add-discs]').forEach(b=>b.addEventListener('click',()=>{
+  const rec=shooterRecords.find(r=>r.id===b.dataset.addDiscs);if(!rec)return;
+  const amount=Number(prompt('Wie viele weitere Preisscheiben für '+rec.name+'?', '1'));
+  if(!Number.isInteger(amount)||amount<1)return;
+  rec.quantity+=amount;preisscheibenCount+=amount;updatePreisscheibenCount();renderShooterRegister();
+ }));
+}
+function escapeShooterText(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('openShooterRegister').addEventListener('click',()=>{renderShooterRegister();shooterRegisterModal.classList.remove('hidden');document.body.style.overflow='hidden';});
+function closeShooterRegister(){shooterRegisterModal.classList.add('hidden');document.body.style.overflow='';}
+$('closeShooterRegister').addEventListener('click',closeShooterRegister);
+shooterRegisterModal.addEventListener('click',e=>{if(e.target===shooterRegisterModal)closeShooterRegister();});
+$('addShooter').addEventListener('click',()=>{
+ const name=$('shooterName').value.trim(),quantity=Number($('shooterQuantity').value);
+ if(!name){alert('Bitte den Namen des Schützen eingeben.');$('shooterName').focus();return;}
+ if(!Number.isInteger(quantity)||quantity<1){alert('Bitte eine gültige Anzahl Preisscheiben eingeben.');return;}
+ const number=shooterRecords.reduce((m,r)=>Math.max(m,Number(r.number)||0),0)+1;
+ shooterRecords.push({id:'sh-'+Date.now()+'-'+number,number,name,club:$('shooterClub').value.trim(),phone:$('shooterPhone').value.trim(),quantity});
+ preisscheibenCount+=quantity;updatePreisscheibenCount();
+ $('shooterName').value='';$('shooterClub').value='';$('shooterPhone').value='';$('shooterQuantity').value='1';
+ renderShooterRegister();
+});
 </script></body></html>
