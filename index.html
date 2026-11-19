@@ -369,11 +369,27 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
       <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-5" aria-label="5 abziehen">−</button><div class="quantity-value">5</div><button type="button" class="quantity-plus" data-quantity="5" aria-label="5 hinzufügen">+</button></div>
       <div class="quantity-step"><button type="button" class="quantity-minus" data-quantity="-10" aria-label="10 abziehen">−</button><div class="quantity-value">10</div><button type="button" class="quantity-plus" data-quantity="10" aria-label="10 hinzufügen">+</button></div>
     </div>
-    <button type="button" id="openShooterRegister" class="quantity-done" style="margin-bottom:10px;background:#315f43">Schützenverwaltung öffnen</button>
-    <button type="button" id="donePreisscheiben" class="quantity-done">Fertig</button>
+    <button type="button" id="donePreisscheiben" class="quantity-done">Weiter</button>
   </section>
 </div>
 
+<div id="shooterChoiceModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="shooterChoiceTitle">
+ <section class="quantity-dialog" style="max-width:560px">
+  <button type="button" id="closeShooterChoice" class="quantity-close" aria-label="Fenster schließen">×</button>
+  <p class="quantity-kicker">PREISSCHEIBEN</p><h2 id="shooterChoiceTitle">Schütze auswählen</h2>
+  <p class="quantity-intro">Wie möchtest du die <strong id="choiceDiscCount">0</strong> Preisscheiben zuordnen?</p>
+  <button type="button" id="chooseNewShooter" class="quantity-done" style="margin-bottom:12px">Neuer Schütze</button>
+  <button type="button" id="chooseExistingShooter" class="quantity-done" style="background:#315f43">Schützen zuordnen</button>
+ </section>
+</div>
+<div id="assignShooterModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="assignShooterTitle">
+ <section class="quantity-dialog" style="max-width:560px">
+  <button type="button" id="closeAssignShooter" class="quantity-close" aria-label="Fenster schließen">×</button>
+  <p class="quantity-kicker">PREISSCHEIBEN</p><h2 id="assignShooterTitle">Schützen zuordnen</h2>
+  <p class="quantity-intro">Wähle die Schützennummer für <strong id="assignDiscCount">0</strong> Preisscheiben.</p>
+  <div id="assignShooterList" style="max-height:45vh;overflow:auto"></div>
+ </section>
+</div>
 <div id="shooterRegisterModal" class="quantity-modal hidden" role="dialog" aria-modal="true" aria-labelledby="shooterRegisterTitle">
  <section class="quantity-dialog" style="max-width:560px">
   <button type="button" id="closeShooterRegister" class="quantity-close" aria-label="Fenster schließen">×</button>
@@ -735,7 +751,10 @@ function closePreisscheibenModal(){
 }
 $('choosePreisscheiben').addEventListener('click',openPreisscheibenModal);
 $('closePreisscheiben').addEventListener('click',closePreisscheibenModal);
-$('donePreisscheiben').addEventListener('click',closePreisscheibenModal);
+$('donePreisscheiben').addEventListener('click',()=>{
+  $('choiceDiscCount').textContent=String(preisscheibenCount);
+  shooterChoiceModal.classList.remove('hidden');
+});
 preisscheibenModal.addEventListener('click',event=>{
   if(event.target===preisscheibenModal) closePreisscheibenModal();
 });
@@ -980,6 +999,39 @@ function buildSimplePdf(base64Jpeg,w,h){
 }
 
 const shooterRegisterModal=$('shooterRegisterModal');
+const shooterChoiceModal=$('shooterChoiceModal');
+const assignShooterModal=$('assignShooterModal');
+function openShooterRegisterForNew(){
+  $('shooterQuantity').value=String(Math.max(1,preisscheibenCount));
+  $('shooterRegisterTitle').textContent='Neuen Schützen anlegen';
+  $('addShooter').textContent='Schütze speichern';
+  renderShooterRegister();
+  shooterChoiceModal.classList.add('hidden');
+  shooterRegisterModal.classList.remove('hidden');
+}
+function openAssignShooter(){
+  $('assignDiscCount').textContent=String(preisscheibenCount);
+  const list=$('assignShooterList');
+  if(!shooterRecords.length){list.innerHTML='<p style="color:#718076">Es sind noch keine Schützen angelegt. Bitte zuerst „Neuer Schütze“ wählen.</p>';}
+  else {
+    list.innerHTML=shooterRecords.map(r=>`<button type="button" data-assign-shooter="${r.id}" style="display:block;width:100%;text-align:left;padding:15px;margin:8px 0;border:1px solid #dce7dc;border-radius:12px;background:#f5f8f5;color:#173321"><strong>Nr. ${r.number} · ${escapeShooterText(r.name)}</strong><div style="font-size:14px;color:#526257">${escapeShooterText(r.club||'')} · bisher ${r.quantity} Scheiben</div></button>`).join('');
+    list.querySelectorAll('[data-assign-shooter]').forEach(b=>b.addEventListener('click',()=>{
+      const rec=shooterRecords.find(r=>r.id===b.dataset.assignShooter);if(!rec)return;
+      rec.quantity+=preisscheibenCount;
+      updatePreisscheibenCount();
+      saveFinanceState();
+      assignShooterModal.classList.add('hidden');
+      closePreisscheibenModal();
+    }));
+  }
+  shooterChoiceModal.classList.add('hidden');
+  assignShooterModal.classList.remove('hidden');
+}
+$('chooseNewShooter').addEventListener('click',openShooterRegisterForNew);
+$('chooseExistingShooter').addEventListener('click',openAssignShooter);
+$('closeShooterChoice').addEventListener('click',()=>shooterChoiceModal.classList.add('hidden'));
+$('closeAssignShooter').addEventListener('click',()=>assignShooterModal.classList.add('hidden'));
+
 function renderShooterRegister(){
  const list=$('shooterRegisterList');
  if(!shooterRecords.length){list.innerHTML='<p style="color:#718076">Noch keine Schützen erfasst.</p>';return;}
@@ -992,7 +1044,6 @@ function renderShooterRegister(){
  }));
 }
 function escapeShooterText(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-$('openShooterRegister').addEventListener('click',()=>{renderShooterRegister();shooterRegisterModal.classList.remove('hidden');document.body.style.overflow='hidden';});
 function closeShooterRegister(){shooterRegisterModal.classList.add('hidden');document.body.style.overflow='';}
 $('closeShooterRegister').addEventListener('click',closeShooterRegister);
 shooterRegisterModal.addEventListener('click',e=>{if(e.target===shooterRegisterModal)closeShooterRegister();});
@@ -1002,8 +1053,11 @@ $('addShooter').addEventListener('click',()=>{
  if(!Number.isInteger(quantity)||quantity<1){alert('Bitte eine gültige Anzahl Preisscheiben eingeben.');return;}
  const number=shooterRecords.reduce((m,r)=>Math.max(m,Number(r.number)||0),0)+1;
  shooterRecords.push({id:'sh-'+Date.now()+'-'+number,number,name,club:$('shooterClub').value.trim(),phone:$('shooterPhone').value.trim(),quantity});
- preisscheibenCount+=quantity;updatePreisscheibenCount();
+ preisscheibenCount=quantity;
+ updatePreisscheibenCount();
  $('shooterName').value='';$('shooterClub').value='';$('shooterPhone').value='';$('shooterQuantity').value='1';
  renderShooterRegister();
+ shooterRegisterModal.classList.add('hidden');
+ closePreisscheibenModal();
 });
 </script></body></html>
