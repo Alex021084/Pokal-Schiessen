@@ -1,5 +1,9 @@
-# Pokalschießen – Redesign v16
+# Pokalschießen – Redesign v17
 
-- Startansicht auf Tablet und Laptop im Querformat nach unten verschoben.
-- Kopfbereich mit Vereinswappen und Titel sowie Auswahl- und Kassenkacheln sitzen dadurch optisch mittiger im Bildschirm.
-- Mobile Hochkantansicht und die restlichen Funktionen bleiben unverändert.
+Korrekturen am gedruckten Schießzettel:
+- Scheibennummern bei den Teiler-Zeilen höher und auf Beschriftungshöhe ausgerichtet.
+- Vereinsname näher an „Verein:“ gesetzt.
+- Telefonnummer näher an „Telefon:“ gesetzt.
+- Druckpositionen-Schlüssel auf v53 aktualisiert, damit ältere gespeicherte Positionen nicht die neuen Standardpositionen überschreiben.
+
+Alle übrigen Funktionen und die Startseite bleiben unverändert.
