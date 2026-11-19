@@ -1,10 +1,9 @@
-# Pokalschießen – Redesign v10
+# Pokalschießen – Redesign v11
 
-- Ein vollständiger Schießzettel zählt als zwei Pokale.
-- Jeder Pokal wird einzeln mit 8,00 € berechnet.
-- Kassenübersicht zeigt Pokale statt Schießzettel, z. B. 4 × 8,00 € bei zwei vollständigen Schießzetteln.
-- Einnahmen-Auswertung zeigt ebenfalls die Anzahl der Pokale (zwei je Schießzettel) und den Gesamtbetrag.
-- In der Einnahmen-Tabelle sind die Werte unter „Anzahl“ und „Einnahmen“ mittig ausgerichtet.
-- Preisscheiben bleiben bei 0,50 € pro Stück.
+Änderungen gegenüber v10:
+- Preisscheiben-Auswahl nutzt ein schlichtes Fadenkreuz-SVG statt des Zielscheiben-Emojis.
+- Der „Vereins-App“-Badge unter dem Titel wurde entfernt.
+- Das Vereinswappen im Kopfbereich nutzt eine transparente PNG-Datei ohne weißen Hintergrund.
+- Das Wappen ist größer und links neben dem Schriftzug ausgerichtet.
 
-Alle weiteren Funktionen aus v9 bleiben erhalten.
+Alle Funktionen und die Abrechnung aus v10 bleiben erhalten.
