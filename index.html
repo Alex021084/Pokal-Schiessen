@@ -410,7 +410,7 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   </div>
   <label style="display:block;margin:12px 0 8px">Name des Schützen<input id="shooterName" type="text" placeholder="Vor- und Nachname" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
   <label style="display:block;margin:8px 0">Verein (optional)<input id="shooterClub" type="text" placeholder="Verein" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
-  <label style="display:block;margin:8px 0">Telefon (optional)<input id="shooterPhone" type="tel" placeholder="Telefonnummer" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
+  <label style="display:block;margin:8px 0">Telefon (optional)<input id="shooterPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Telefonnummer" style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
   <label style="display:block;margin:8px 0">Anzahl Preisscheiben<input id="shooterQuantity" type="number" min="1" step="1" value="1" readonly style="width:100%;padding:13px;border:1px solid #cbd9cb;border-radius:10px"></label>
   <button type="button" id="addShooter" class="quantity-done">Schützen / Verkauf speichern</button>
  </section>
@@ -423,8 +423,8 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
       <div><h2 id="formTitle">Schießzettel Herren</h2><p>Trage die Angaben ein und erstelle anschließend deinen Schießzettel.</p></div>
     </div>
     <input id="mannschaft" type="hidden" value="Herren">
-    <label>Verein<input id="verein" placeholder="z. B. Badenstedt"></label>
-    <div class="grid"><label>Telefon<input id="telefon" type="tel" inputmode="tel"></label></div>
+    <label>Verein<input id="verein" placeholder=""></label>
+    <div class="grid"><label>Telefon<input id="telefon" type="tel" inputmode="numeric" autocomplete="tel"></label></div>
     <div class="sets"><div class="set-head"><span class="set-number">1</span><h3>Erster Schießsatz</h3></div><p class="set-sub">Schießart und Startnummer festlegen</p><div class="kind-picker-group">
       <span class="kind-picker-label">Schießart</span>
       <div class="kind-picker" role="group" aria-label="Schießart auswählen">
@@ -911,7 +911,7 @@ function openShooterPdf(){
     .total strong{font-size:15px}
     .note{margin-top:10px;color:#78857b;font-size:9px}
     @page{size:A4;margin:10mm}
-    @media print{body{padding:0}.no-print{display:none}}
+    @media print{body{padding:0}.no-print,.no-print *{display:none!important;visibility:hidden!important}button{display:none!important}}
   </style></head><body>
     <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
       <button type="button" onclick="if(window.opener){window.close()}else{history.back()}" style="padding:9px 14px;background:#eaf1ea;color:#24432d;border:1px solid #cbd9cb;border-radius:7px;font-weight:bold;font-size:12px">← Zurück zur Auswertung</button>
