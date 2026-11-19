@@ -423,14 +423,14 @@ const IMG='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABk0AAAjqCAIAAACzKNuVAAA
 function text(x,y,cls,txt,extra=''){return `<div class="dyn ${cls}" style="left:${x}px;top:${y}px;${extra}">${esc(txt)}</div>`}
 function center(x,y,w,cls,txt){return `<div class="dyn ${cls}" style="left:${x}px;top:${y}px;width:${w}px">${esc(txt)}</div>`}
 
-const POSKEY='pokalschiessen_positions_v52';
+const POSKEY='pokalschiessen_positions_v53';
 const defaultPos = {
-  verein:[232,324], telefon:[625,324],
+  verein:[165,324], telefon:[550,324],
   heading1:[82,430], kind1:[82,458],
   heading2:[82,1118], kind2:[82,1146],
   n11:[1265,602], n12:[1265,673], n13:[1265,744],
   n21:[1265,1284], n22:[1265,1355], n23:[1265,1426],
-  n14:[1265,1000], n24:[1265,1680]
+  n14:[1265,950], n24:[1265,1630]
 };
 let positions = JSON.parse(localStorage.getItem(POSKEY)||'null') || structuredClone(defaultPos);
 let editMode=false;
