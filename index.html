@@ -464,12 +464,9 @@ html,body,button,input,select,textarea,a{touch-action:manipulation}
 </div>
 <div id="previewModal" class="preview-modal hidden"><div class="preview-toolbar"><strong>Pokalschießen – Vorschau</strong><div class="preview-actions"><button id="print">🖨️ Drucken</button><button id="close" class="close-btn">Schließen</button></div></div><div class="preview-content"><div id="out"></div></div></div>
 <script>
-let lastTouchEnd=0;
-document.addEventListener('touchend',event=>{
-  const now=Date.now();
-  if(now-lastTouchEnd<=300) event.preventDefault();
-  lastTouchEnd=now;
-},{passive:false});
+/* Zoom-Sperre ohne Touch-Ende zu blockieren:
+   touch-action:manipulation und viewport verhindern Doppeltipp-Zoom,
+   schnelle aufeinanderfolgende Tastenanschläge bleiben dadurch zuverlässig. */
 ['gesturestart','gesturechange','gestureend'].forEach(type=>{
   document.addEventListener(type,event=>event.preventDefault(),{passive:false});
 });
