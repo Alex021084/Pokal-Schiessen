@@ -180,6 +180,35 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   .brand{gap:10px}
   .brand-crest{width:78px;height:78px}
 }
+
+/* Kassen-Zahlungsfenster */
+.cash-pay-button{min-height:48px;padding:10px;border-radius:13px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:15px;font-weight:850;box-shadow:0 5px 14px rgba(12,65,31,.16)}
+.cash-pay-button:disabled{opacity:.42;cursor:not-allowed;filter:grayscale(.3)}
+.payment-modal{position:fixed;inset:0;z-index:85;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(4,22,11,.78);backdrop-filter:blur(7px)}
+.payment-modal.hidden{display:none!important}
+.payment-dialog{position:relative;width:min(100%,430px);max-height:94vh;overflow:auto;padding:25px 23px 21px;border:1px solid #e0e9df;border-radius:25px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.32)}
+.payment-close{position:absolute;right:13px;top:12px;width:39px;min-height:39px;padding:0;border-radius:50%;background:#eef4ed;color:#31543a;box-shadow:none;font-size:24px}
+.payment-kicker{margin:0 0 6px;color:#78917c;font-size:10px;font-weight:850;letter-spacing:.2em}
+.payment-dialog h2{margin:0 35px 16px 0;color:#17231b;font-size:23px}
+.payment-due{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;border-radius:14px;background:#edf5ed;color:#31513a}
+.payment-due span,.payment-given label{font-size:13px;font-weight:750}
+.payment-due strong{font-size:23px;color:#14502b;font-variant-numeric:tabular-nums}
+.payment-given{margin:15px 0 11px}
+.payment-given label{display:block;margin-bottom:7px;color:#526457}
+.payment-given output{display:flex;align-items:center;justify-content:flex-end;min-height:58px;padding:8px 14px;border:2px solid #cbdcca;border-radius:14px;background:#f8fbf7;color:#0b3c20;font-size:29px;font-weight:850;font-variant-numeric:tabular-nums}
+.payment-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.payment-keypad button{min-height:52px;padding:0;border:1px solid #dce7db;border-radius:13px;background:#f0f5ef;color:#173b22;font-size:23px;font-weight:800;box-shadow:0 2px 6px rgba(8,43,23,.05)}
+.payment-keypad button:active{background:#dcebdc;transform:scale(.98)}
+.payment-keypad button.payment-key-action{background:#e8eee7;color:#4c6651;font-size:17px}
+.payment-keypad button.payment-key-comma{grid-column:2;background:#e8eee7;font-size:23px}
+.payment-change{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:13px;padding:13px 14px;border-radius:13px;background:#f3f6f2;color:#526457;font-size:14px;font-weight:750}
+.payment-change strong{font-size:22px;color:#14502b;font-variant-numeric:tabular-nums}
+.payment-change.is-short{background:#fff2f0;color:#a52a2a}
+.payment-change.is-short strong{color:#b42318}
+.payment-hint{min-height:18px;margin:9px 0 0;color:#7a887e;font-size:11px;text-align:center}
+.payment-finish{width:100%;min-height:53px;margin-top:10px;border-radius:13px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:16px;font-weight:850}
+.payment-finish:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:420px){.payment-dialog{padding:23px 17px 18px}.payment-keypad{gap:7px}.payment-keypad button{min-height:49px}}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -227,16 +256,37 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
   <div class="cash-head"><span class="cash-icon">€</span><div><strong>Vereinskasse</strong><small>Live-Übersicht</small></div></div>
   <div class="cash-line"><span>Pokale</span><strong id="cashPokalCount">0 × 8,00 €</strong></div>
   <div class="cash-line"><span>Preisscheiben</span><strong id="cashScheibenCount">0 × 0,50 €</strong></div>
-  <div class="cash-subtotal"><span>Pokale</span><strong id="cashPokalTotal">0,00 €</strong></div>
-  <div class="cash-subtotal"><span>Preisscheiben</span><strong id="cashScheibenTotal">0,00 €</strong></div>
   <div class="cash-total"><span>Gesamt</span><strong id="cashGrandTotal">0,00 €</strong></div>
   <div class="cash-actions">
+    <button type="button" id="payCash" class="cash-pay-button">Bezahlen</button>
     <button type="button" id="openSummary" class="cash-summary-button">Auswertung anzeigen</button>
   </div>
   <p class="cash-note">Die Kasse aktualisiert sich automatisch.</p>
 </aside>
 </div>
 
+<div id="paymentModal" class="payment-modal hidden" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+  <section class="payment-dialog">
+    <button type="button" id="closePayment" class="payment-close" aria-label="Fenster schließen">×</button>
+    <p class="payment-kicker">VEREINSKASSE</p>
+    <h2 id="paymentTitle">Zahlung entgegennehmen</h2>
+    <div class="payment-due"><span>Zu zahlen</span><strong id="paymentDue">0,00 €</strong></div>
+    <div class="payment-given">
+      <label for="paymentAmountDisplay">Gegebener Betrag</label>
+      <output id="paymentAmountDisplay">0,00 €</output>
+    </div>
+    <div class="payment-keypad">
+      <button type="button" data-payment-key="1">1</button><button type="button" data-payment-key="2">2</button><button type="button" data-payment-key="3">3</button>
+      <button type="button" data-payment-key="4">4</button><button type="button" data-payment-key="5">5</button><button type="button" data-payment-key="6">6</button>
+      <button type="button" data-payment-key="7">7</button><button type="button" data-payment-key="8">8</button><button type="button" data-payment-key="9">9</button>
+      <button type="button" class="payment-key-action" data-payment-key="clear">C</button><button type="button" data-payment-key="0">0</button><button type="button" class="payment-key-action" data-payment-key="back">⌫</button>
+      <button type="button" class="payment-key-comma" data-payment-key="comma">,</button>
+    </div>
+    <div class="payment-change"><span id="paymentChangeLabel">Rückgeld</span><strong id="paymentChange">0,00 €</strong></div>
+    <p id="paymentHint" class="payment-hint">Gegebenen Betrag eingeben.</p>
+    <button type="button" id="finishPayment" class="payment-finish" disabled>Fertig</button>
+  </section>
+</div>
 <div id="summaryModal" class="summary-modal hidden" role="dialog" aria-modal="true" aria-labelledby="summaryTitle">
   <section class="summary-dialog">
     <div class="summary-header">
@@ -344,6 +394,7 @@ function render(){
   }
   const n1=[s1,s1+1,s1+2], n2=[s2,s2+1,s2+2];
   shotRecords.push({club:verein,group:m,arts:[a1,a2],createdAt:new Date().toISOString()});
+  pendingPokalCount+=2;
   saveFinanceState();
   updateCashRegister();
   const p=positions;
@@ -525,27 +576,30 @@ $('chooseDamen').addEventListener('click',()=>selectGroup('Damen'));
 const FINANCE_KEY='pokalschiessen_finance_v1';
 let preisscheibenCount=0;
 let shotRecords=[];
+let pendingPokalCount=0;
+let paidPreisscheibenCount=0;
 try{
   const savedFinance=JSON.parse(localStorage.getItem(FINANCE_KEY)||'{}');
   preisscheibenCount=Math.max(0,Number(savedFinance.preisscheibenCount)||0);
   shotRecords=Array.isArray(savedFinance.shotRecords)?savedFinance.shotRecords:[];
-}catch(e){preisscheibenCount=0;shotRecords=[];}
+  pendingPokalCount=Number.isFinite(Number(savedFinance.pendingPokalCount))
+    ?Math.max(0,Number(savedFinance.pendingPokalCount)):shotRecords.length*2;
+  paidPreisscheibenCount=Math.max(0,Number(savedFinance.paidPreisscheibenCount)||0);
+}catch(e){preisscheibenCount=0;shotRecords=[];pendingPokalCount=0;paidPreisscheibenCount=0;}
 const countOutput=$('preisscheibenCount');
 let pokalCount=shotRecords.length;
 const euro=value=>value.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
 function saveFinanceState(){
-  try{localStorage.setItem(FINANCE_KEY,JSON.stringify({preisscheibenCount,shotRecords}));}catch(e){}
+  try{localStorage.setItem(FINANCE_KEY,JSON.stringify({preisscheibenCount,shotRecords,pendingPokalCount,paidPreisscheibenCount}));}catch(e){}
 }
 function updateCashRegister(){
-  pokalCount=shotRecords.length;
-  const trophyCount=pokalCount*2;
-  const pokalTotal=trophyCount*8;
+  const pokalTotal=pendingPokalCount*8;
   const scheibenTotal=preisscheibenCount*0.5;
-  $('cashPokalCount').textContent=trophyCount+' × 8,00 €';
+  const due=pokalTotal+scheibenTotal;
+  $('cashPokalCount').textContent=pendingPokalCount+' × 8,00 €';
   $('cashScheibenCount').textContent=preisscheibenCount+' × 0,50 €';
-  $('cashPokalTotal').textContent=euro(pokalTotal);
-  $('cashScheibenTotal').textContent=euro(scheibenTotal);
-  $('cashGrandTotal').textContent=euro(pokalTotal+scheibenTotal);
+  $('cashGrandTotal').textContent=euro(due);
+  $('payCash').disabled=due<=0;
 }
 function updatePreisscheibenCount(){
   countOutput.textContent=String(preisscheibenCount);
@@ -556,7 +610,8 @@ function renderSummary(){
   const sacks=shotRecords.reduce((n,r)=>n+(r.arts||[]).filter(a=>a==='Sandsack').length,0);
   const nails=shotRecords.reduce((n,r)=>n+(r.arts||[]).filter(a=>a==='Nagel').length,0);
   const sheetRevenue=shotRecords.length*16;
-  const discRevenue=preisscheibenCount*0.5;
+  const totalPreisscheibenCount=paidPreisscheibenCount+preisscheibenCount;
+  const discRevenue=totalPreisscheibenCount*0.5;
   const clubs={};
   shotRecords.forEach(r=>{
     const name=(r.club||'').trim();
@@ -572,12 +627,12 @@ function renderSummary(){
     <div class="summary-stats">
       <div class="summary-stat"><span>Sandsack</span><strong>${sacks}</strong></div>
       <div class="summary-stat"><span>Nagel</span><strong>${nails}</strong></div>
-      <div class="summary-stat"><span>Preisscheiben</span><strong>${preisscheibenCount}</strong></div>
+      <div class="summary-stat"><span>Preisscheiben</span><strong>${totalPreisscheibenCount}</strong></div>
     </div>
     <h3 class="summary-section-title">Einnahmen</h3>
     <div class="summary-table-wrap"><table class="summary-table"><thead><tr><th>Position</th><th>Anzahl</th><th>Einnahmen</th></tr></thead><tbody>
       <tr><td>Pokale</td><td>${shotRecords.length*2}</td><td>${euro(sheetRevenue)}</td></tr>
-      <tr><td>Preisscheiben</td><td>${preisscheibenCount}</td><td>${euro(discRevenue)}</td></tr>
+      <tr><td>Preisscheiben</td><td>${totalPreisscheibenCount}</td><td>${euro(discRevenue)}</td></tr>
     </tbody></table></div>
     <div class="summary-income" style="margin-top:10px"><span>Gesamteinnahmen</span><strong>${euro(sheetRevenue+discRevenue)}</strong></div>
     <h3 class="summary-section-title">Vereine – geschossen</h3>
@@ -613,6 +668,83 @@ document.addEventListener('keydown',event=>{
 });
 updatePreisscheibenCount();
 updateCashRegister();
+
+const paymentModal=$('paymentModal');
+let paymentDigits='';
+let paymentDueCents=0;
+function parsePaymentCents(value){
+  if(!value)return 0;
+  const parts=value.replace(',', '.').split('.');
+  const whole=Math.max(0,parseInt(parts[0]||'0',10)||0);
+  const decimals=(parts[1]||'').slice(0,2).padEnd(2,'0');
+  return whole*100+(parseInt(decimals||'0',10)||0);
+}
+function updatePaymentDisplay(){
+  const given=parsePaymentCents(paymentDigits);
+  $('paymentAmountDisplay').textContent=paymentDigits
+    ?(paymentDigits.includes(',')?paymentDigits:paymentDigits+',00')+' €'
+    :'0,00 €';
+  const difference=given-paymentDueCents;
+  const change=$('paymentChange');
+  const changeBox=change.parentElement;
+  if(difference>=0){
+    $('paymentChangeLabel').textContent='Rückgeld';
+    change.textContent=euro(difference/100);
+    changeBox.classList.remove('is-short');
+    $('paymentHint').textContent='Der Betrag ist ausreichend.';
+  }else{
+    $('paymentChangeLabel').textContent='Es fehlen';
+    change.textContent=euro(Math.abs(difference)/100);
+    changeBox.classList.add('is-short');
+    $('paymentHint').textContent='Bitte noch den fehlenden Betrag eingeben.';
+  }
+  $('finishPayment').disabled=given<paymentDueCents||paymentDueCents<=0;
+}
+function openPayment(){
+  paymentDueCents=Math.round((pendingPokalCount*8+preisscheibenCount*.5)*100);
+  if(paymentDueCents<=0)return;
+  paymentDigits='';
+  $('paymentDue').textContent=euro(paymentDueCents/100);
+  updatePaymentDisplay();
+  paymentModal.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+}
+function closePayment(){
+  paymentModal.classList.add('hidden');
+  document.body.style.overflow='';
+}
+$('payCash').addEventListener('click',openPayment);
+$('closePayment').addEventListener('click',closePayment);
+paymentModal.addEventListener('click',event=>{if(event.target===paymentModal)closePayment();});
+document.querySelectorAll('[data-payment-key]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const key=button.dataset.paymentKey;
+    if(key==='clear')paymentDigits='';
+    else if(key==='back')paymentDigits=paymentDigits.slice(0,-1);
+    else if(key==='comma'){
+      if(!paymentDigits.includes(','))paymentDigits=paymentDigits||'0',paymentDigits+=',';
+    }else if(paymentDigits.replace(',','').length<9){
+      if(paymentDigits.includes(',')){
+        if(paymentDigits.split(',')[1].length<2)paymentDigits+=key;
+      }else paymentDigits+=key;
+    }
+    updatePaymentDisplay();
+  });
+});
+$('finishPayment').addEventListener('click',()=>{
+  if(parsePaymentCents(paymentDigits)<paymentDueCents||paymentDueCents<=0)return;
+  // Abschluss: offene Kasse leeren, die Vereins-/Veranstaltungsstatistik bleibt erhalten.
+  pendingPokalCount=0;
+  paidPreisscheibenCount+=preisscheibenCount;
+  preisscheibenCount=0;
+  countOutput.textContent='0';
+  saveFinanceState();
+  updateCashRegister();
+  closePayment();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&!paymentModal.classList.contains('hidden'))closePayment();
+});
 const summaryModal=$('summaryModal');
 function openSummary(){
   renderSummary();
@@ -631,6 +763,8 @@ $('resetCash').addEventListener('click',()=>{
   if(!confirm('Möchtest du die Kasse und die gesamte Schieß-Auswertung wirklich auf 0 setzen? Diese Aktion kann nicht rückgängig gemacht werden.'))return;
   preisscheibenCount=0;
   shotRecords=[];
+  pendingPokalCount=0;
+  paidPreisscheibenCount=0;
   saveFinanceState();
   updatePreisscheibenCount();
   renderSummary();
