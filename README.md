@@ -1,16 +1,7 @@
-# Pokalschießen – Redesign v12
+# Pokalschießen – Redesign v13
 
-## Vereinskasse
-- Die Kassenkarte zeigt nur offene Positionen: Pokale (Anzahl × 8,00 €), Preisscheiben (Anzahl × 0,50 €) und den Gesamtbetrag.
-- Der Button „Bezahlen“ öffnet ein Kassenfenster mit großem Zahlenfeld.
-- Im Zahlungsfenster werden „Zu zahlen“, „Gegebener Betrag“ und das automatisch berechnete Rückgeld angezeigt.
-- „Fertig“ ist erst aktiv, wenn der gegebene Betrag mindestens dem Zahlbetrag entspricht.
-- Nach „Fertig“ wird die offene Kasse auf 0,00 € gesetzt.
-- Die Veranstaltungs-Auswertung und Vereinsübersicht bleiben erhalten; bezahlte Preisscheiben werden in der Auswertung weiter mitgezählt.
-- „Alles zurücksetzen“ in der Auswertung löscht weiterhin die gesamte Veranstaltungsauswertung und Kasse.
-
-Preise:
-- Pokal: 8,00 € je Pokal (ein vollständiger Schießzettel = zwei Pokale)
-- Preisscheibe: 0,50 € je Stück
-
-Wie bisher `index.html` öffnen oder die Projektdateien auf GitHub Pages veröffentlichen.
+- Zahlungsfenster für Laptop und Tablet im Querformat auf zweispaltiges Layout umgestellt: Zahlbetrag, gegebener Betrag und Rückgeld links; großes Zahlenfeld und Fertig-Schaltfläche rechts.
+- Im Hochformat bleibt das Fenster untereinander angeordnet.
+- Der Hinweistext „Der Betrag ist ausreichend“ bzw. „Bitte noch den fehlenden Betrag eingeben“ wurde entfernt.
+- Die Rückgeldfläche bleibt grün bei ausreichendem Betrag und wird rot bei noch fehlendem Geld.
+- Alle Kassenfunktionen und bisherigen Preise bleiben erhalten.

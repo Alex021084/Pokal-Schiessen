@@ -209,6 +209,45 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 .payment-finish{width:100%;min-height:53px;margin-top:10px;border-radius:13px;background:linear-gradient(135deg,#176236,#0b3c20);color:#fff;font-size:16px;font-weight:850}
 .payment-finish:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:420px){.payment-dialog{padding:23px 17px 18px}.payment-keypad{gap:7px}.payment-keypad button{min-height:49px}}
+
+/* Querformat: Kassenfenster nutzt die breite Bildschirmfläche */
+.payment-dialog{width:min(100%,900px)}
+.payment-main,.payment-entry{min-width:0}
+@media (orientation:landscape) and (min-width:700px){
+  .payment-modal{padding:18px}
+  .payment-dialog{
+    width:min(92vw,900px);
+    max-height:92vh;
+    padding:30px;
+    display:grid;
+    grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);
+    column-gap:28px;
+    align-items:center;
+  }
+  .payment-main{padding-right:4px}
+  .payment-dialog h2{font-size:clamp(24px,2.4vw,32px);margin-bottom:22px}
+  .payment-due{padding:17px 18px}
+  .payment-due strong{font-size:clamp(25px,2.5vw,34px)}
+  .payment-given{margin:20px 0 16px}
+  .payment-given output{min-height:72px;font-size:clamp(30px,3vw,40px)}
+  .payment-change{margin-top:0;padding:17px 18px}
+  .payment-change strong{font-size:clamp(25px,2.5vw,34px)}
+  .payment-entry{padding-top:22px}
+  .payment-keypad{gap:10px}
+  .payment-keypad button{min-height:clamp(58px,8vh,78px);font-size:clamp(24px,2.3vw,30px)}
+  .payment-keypad button.payment-key-action{font-size:20px}
+  .payment-finish{min-height:62px;margin-top:14px;font-size:19px}
+}
+@media (orientation:landscape) and (min-width:700px) and (max-height:520px){
+  .payment-dialog{max-height:96vh;padding:18px 24px;column-gap:22px}
+  .payment-dialog h2{margin-bottom:12px;font-size:22px}
+  .payment-given{margin:10px 0}
+  .payment-given output{min-height:52px}
+  .payment-entry{padding-top:12px}
+  .payment-keypad{gap:6px}
+  .payment-keypad button{min-height:42px}
+  .payment-finish{min-height:46px;margin-top:8px}
+}
 </style></head><body>
 <header class="hero">
   <div class="brand">
@@ -268,23 +307,26 @@ button{min-height:52px;border:0;border-radius:14px;padding:0 20px;font-size:16px
 <div id="paymentModal" class="payment-modal hidden" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
   <section class="payment-dialog">
     <button type="button" id="closePayment" class="payment-close" aria-label="Fenster schließen">×</button>
-    <p class="payment-kicker">VEREINSKASSE</p>
-    <h2 id="paymentTitle">Zahlung entgegennehmen</h2>
-    <div class="payment-due"><span>Zu zahlen</span><strong id="paymentDue">0,00 €</strong></div>
-    <div class="payment-given">
-      <label for="paymentAmountDisplay">Gegebener Betrag</label>
-      <output id="paymentAmountDisplay">0,00 €</output>
+    <div class="payment-main">
+      <p class="payment-kicker">VEREINSKASSE</p>
+      <h2 id="paymentTitle">Zahlung entgegennehmen</h2>
+      <div class="payment-due"><span>Zu zahlen</span><strong id="paymentDue">0,00 €</strong></div>
+      <div class="payment-given">
+        <label for="paymentAmountDisplay">Gegebener Betrag</label>
+        <output id="paymentAmountDisplay">0,00 €</output>
+      </div>
+      <div class="payment-change"><span id="paymentChangeLabel">Rückgeld</span><strong id="paymentChange">0,00 €</strong></div>
     </div>
-    <div class="payment-keypad">
-      <button type="button" data-payment-key="1">1</button><button type="button" data-payment-key="2">2</button><button type="button" data-payment-key="3">3</button>
-      <button type="button" data-payment-key="4">4</button><button type="button" data-payment-key="5">5</button><button type="button" data-payment-key="6">6</button>
-      <button type="button" data-payment-key="7">7</button><button type="button" data-payment-key="8">8</button><button type="button" data-payment-key="9">9</button>
-      <button type="button" class="payment-key-action" data-payment-key="clear">C</button><button type="button" data-payment-key="0">0</button><button type="button" class="payment-key-action" data-payment-key="back">⌫</button>
-      <button type="button" class="payment-key-comma" data-payment-key="comma">,</button>
+    <div class="payment-entry">
+      <div class="payment-keypad">
+        <button type="button" data-payment-key="1">1</button><button type="button" data-payment-key="2">2</button><button type="button" data-payment-key="3">3</button>
+        <button type="button" data-payment-key="4">4</button><button type="button" data-payment-key="5">5</button><button type="button" data-payment-key="6">6</button>
+        <button type="button" data-payment-key="7">7</button><button type="button" data-payment-key="8">8</button><button type="button" data-payment-key="9">9</button>
+        <button type="button" class="payment-key-action" data-payment-key="clear">C</button><button type="button" data-payment-key="0">0</button><button type="button" class="payment-key-action" data-payment-key="back">⌫</button>
+        <button type="button" class="payment-key-comma" data-payment-key="comma">,</button>
+      </div>
+      <button type="button" id="finishPayment" class="payment-finish" disabled>Fertig</button>
     </div>
-    <div class="payment-change"><span id="paymentChangeLabel">Rückgeld</span><strong id="paymentChange">0,00 €</strong></div>
-    <p id="paymentHint" class="payment-hint">Gegebenen Betrag eingeben.</p>
-    <button type="button" id="finishPayment" class="payment-finish" disabled>Fertig</button>
   </section>
 </div>
 <div id="summaryModal" class="summary-modal hidden" role="dialog" aria-modal="true" aria-labelledby="summaryTitle">
@@ -691,12 +733,10 @@ function updatePaymentDisplay(){
     $('paymentChangeLabel').textContent='Rückgeld';
     change.textContent=euro(difference/100);
     changeBox.classList.remove('is-short');
-    $('paymentHint').textContent='Der Betrag ist ausreichend.';
   }else{
     $('paymentChangeLabel').textContent='Es fehlen';
     change.textContent=euro(Math.abs(difference)/100);
     changeBox.classList.add('is-short');
-    $('paymentHint').textContent='Bitte noch den fehlenden Betrag eingeben.';
   }
   $('finishPayment').disabled=given<paymentDueCents||paymentDueCents<=0;
 }
