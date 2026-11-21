@@ -494,17 +494,15 @@ function text(id,x,y,cls,txt,extra=''){
 function center(id,x,y,w,cls,txt){
   return `<div id="${id}" data-pos="${id}" class="dyn ${cls}" style="left:${x}px;top:${y}px;width:${w}px">${esc(txt)}</div>`;
 }
+let currentSheetRegistered=false;
 function render(){
+  currentSheetRegistered=false;
   const verein=$('verein').value.trim(), telefon=$('telefon').value.trim(), m=$('mannschaft').value, a1=$('art1').value, a2=$('art2').value;
   const s1=Number($('start1').value), s2=Number($('start2').value);
   if(!verein||!a1||!a2||!Number.isInteger(s1)||!Number.isInteger(s2)||s1<1||s2<1){
     alert('Bitte Verein, beide Schießarten und jeweils die erste Scheibennummer eingeben. Die Telefonnummer ist optional.'); return;
   }
   const n1=[s1,s1+1,s1+2], n2=[s2,s2+1,s2+2];
-  shotRecords.push({club:verein,group:m,arts:[a1,a2],createdAt:new Date().toISOString()});
-  pendingPokalCount+=2;
-  saveFinanceState();
-  updateCashRegister();
   const p=positions;
   let o=`<article class="sheet"><img class="template" src="${IMG}" alt="Druckvorlage">`;
   o+=text('verein',p.verein[0],p.verein[1],'value',verein);
@@ -1057,6 +1055,34 @@ $('print').addEventListener('click',async()=>{
   const jpeg=canvas.toDataURL('image/jpeg',0.95).split(',')[1];
   const pdfBlob=buildSimplePdf(jpeg,W,H);
   const file=new File([pdfBlob],'Schießzettel.pdf',{type:'application/pdf'});
+
+  // Erst beim Tippen auf „Drucken“ wird der Pokalzettel in der Kasse verbucht.
+  if(!currentSheetRegistered){
+    shotRecords.push({club:verein,group:m,arts:[a1,a2],createdAt:new Date().toISOString()});
+    pendingPokalCount+=2;
+    currentSheetRegistered=true;
+    saveFinanceState();
+    updateCashRegister();
+  }
+
+  // Eingaben für den nächsten Pokalzettel zurücksetzen.
+  $('verein').value='';
+  $('telefon').value='';
+  $('art1').value='';
+  $('art2').value='';
+  $('start1').value='';
+  $('start2').value='';
+  $('start1').disabled=true;
+  $('start2').disabled=true;
+  $('start1').required=false;
+  $('start2').required=false;
+  $('start1').placeholder='Zuerst Schießart auswählen';
+  $('start2').placeholder='Zuerst Schießart auswählen';
+  document.querySelectorAll('[data-kind-target]').forEach(option=>{
+    option.classList.remove('is-active');
+    option.setAttribute('aria-pressed','false');
+  });
+  updateSheetLabels();
 
   // Auf iPhone/iPad die fertige PDF an das System übergeben. Dort kann
   // direkt "Drucken" gewählt werden; alternativ wird die PDF geöffnet.
